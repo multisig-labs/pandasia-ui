@@ -8,7 +8,12 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery, useQueryClient } from 'react-query';
-import { useContractRead, useNetwork, useQueryClient as useWagmiClient } from 'wagmi';
+import {
+  useContractRead,
+  useNetwork,
+  usePrepareContractWrite,
+  useQueryClient as useWagmiClient,
+} from 'wagmi';
 import { getAccount, getContract } from 'wagmi/actions';
 
 async function getTrees() {
@@ -19,18 +24,21 @@ async function getTrees() {
 export default function Register() {
   const [pChain, setPChain] = useState('');
   const [signature, setSignature] = useState('');
-  //latest block hash 0xd661ff6692e4767d2cf8102744384489da2b1eab0d7b9a8df6cc9d73e3e3ab7
-  // const thing = getAccount()
-  // const contract = getContract({
-  //   address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-  //   abi: Pandasia,
+  //TODO: Get address from .env in ../pandasia need to figure out how to get this dynamically later
+
+  // TODO NEXT: Figure out how to write to contract with viem
+  // const customTransport = http(process.env.API_RPC_ENDPOINT)
+
+  // const client = createPublicClient({
+  //   chain: avalanche,
+  //   transport: customTransport,
   // })
 
-  // const otherThing = useContractRead({
-  //   address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-  //   abi: Pandasia,
-  //   functionName: 'stakingContract'
-  // })
+  const otherThing = useContractRead({
+    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    abi: Pandasia,
+    functionName: 'stakingContract',
+  });
 
   const { data: rootNodes } = useQuery('trees', getTrees);
   async function submitStuff() {
