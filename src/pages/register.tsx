@@ -1,5 +1,7 @@
 import Button from '@/components/ui/Button/Button';
 import { CustomConnectButton } from '@/components/ui/Button/CustomConnectButton';
+import { anvil } from '@/config/chains';
+import { publicClient } from '@/config/wagmi';
 import Pandasia from '@/contracts/Pandasia';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import axios from 'axios';
@@ -8,7 +10,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery, useQueryClient } from 'react-query';
+import { createPublicClient, createWalletClient, custom, http } from 'viem';
 import {
+  useAccount,
   useContractRead,
   useNetwork,
   usePrepareContractWrite,
@@ -21,18 +25,29 @@ async function getTrees() {
   return response.data;
 }
 
+const customTransport = http('http://localhost:9650');
+
+// Client is the anvil node connector
+const client = createPublicClient({
+  chain: anvil,
+  transport: customTransport,
+});
+
+// Wallet is a connector to your 3rd party extension wallet, found by using window.ethereum object
+const wallet = createWalletClient({
+  chain: anvil,
+  transport: custom(window.ethereum),
+});
+
 export default function Register() {
-  const [pChain, setPChain] = useState('');
-  const [signature, setSignature] = useState('');
+  const [pChain, setPChain] = useState('P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww');
+  const [signature, setSignature] = useState(
+    '24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx',
+  );
+  const account = useAccount();
   //TODO: Get address from .env in ../pandasia need to figure out how to get this dynamically later
 
   // TODO NEXT: Figure out how to write to contract with viem
-  // const customTransport = http(process.env.API_RPC_ENDPOINT)
-
-  // const client = createPublicClient({
-  //   chain: avalanche,
-  //   transport: customTransport,
-  // })
 
   const otherThing = useContractRead({
     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
@@ -43,12 +58,21 @@ export default function Register() {
   const { data: rootNodes } = useQuery('trees', getTrees);
   async function submitStuff() {
     try {
-      const res = await axios.get(
+      const { data: treedata } = await axios.get(
         `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
       );
-      // console.log(res)
+      const { request } = await client.simulateContract({
+        account: account.address,
+        address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+        abi: Pandasia,
+        functionName: 'registerPChainAddr',
+        args: [parseInt(treedata.SigV, 16), treedata.SigR, treedata.SigS, treedata.Proof],
+      });
+      const walletTry = await wallet.writeContract(request);
+
+      // console.log({ walletTry })
     } catch (err) {
-      // console.log(err.response.data.message)
+      // console.log(err)
     }
   }
 
@@ -63,7 +87,7 @@ export default function Register() {
       5. once we have the proof, we pass to the smart contract register using wagmi hooks to blockchain
         5a. pandasia::registerPChainAddr(proof.SigV, proof.SigR, proof.SigS, proof.Proof) This is in solidity
       
-      6. returns nothing (maybe wagmi returns status:200 code??) or
+      6. returns transaction hash or one of the following errors:
          "0x3d5607fc": "PAddrNotInValidatorMerkleTree()"
          "0x21ea10f8": "PAddrAlreadyRegistered()"
      
