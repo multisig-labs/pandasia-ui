@@ -6,6 +6,21 @@ import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
 export default function Register() {
+  function submitSignature() {
+    // call to localhost:8000 register
+    // get the proof from 	proof = `${pandasiaUrl}/proof/${root}?addr=${addrToRegister}&sig=${sigToVerify}`
+    // then call the smart contract to register
+    // pandasia::registerPChainAddr(proof.SigV, proof.SigR, proof.SigS, proof.Proof)
+    //
+    // returns nothing or
+    //    "0x3d5607fc": "PAddrNotInValidatorMerkleTree()"
+    //    "0x21ea10f8": "PAddrAlreadyRegistered()"
+    //
+    // Test signature 24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx
+    // P-addr P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww
+    // hex    0x424328bf10cdaeeda6bb05a78cff90a0bea12c02
+  }
+
   return (
     <main className="flex">
       <section className={`p-6 flex flex-col w-full items-center min-h-screen bg-secondary-800`}>
@@ -25,7 +40,7 @@ export default function Register() {
         <div className="flex flex-col gap-2 p-12">
           <CustomConnectButton />
           <textarea className="p-4 text-secondary-800" placeholder="Submit Signature" />
-          <Button>Submit Signature</Button>
+          <Button onClick={submitSignature}>Submit Signature</Button>
           <Button>Go To Claim Page</Button>
         </div>
       </section>
