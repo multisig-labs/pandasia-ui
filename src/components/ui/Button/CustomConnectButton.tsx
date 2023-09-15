@@ -38,7 +38,6 @@ export function CustomConnectButton() {
                   <div
                     className="cursor-pointer border-black border-4 p-1"
                     onClick={openConnectModal}
-                    type="button"
                   >
                     <div className="text-black border-black border-2 font-bold p-2">
                       CONNECT WALLET
@@ -54,8 +53,8 @@ export function CustomConnectButton() {
                 );
               }
               return (
-                <div className="cursor-pointer border-black border-4 p-1">
-                  <div className="flex gap-4 text-black border-black border-2 font-bold p-2">
+                <div className="flex justify-between cursor-pointer border-black border-4 p-1">
+                  <div className="text-black px-3 border-black border-2 font-bold p-2">
                     <button
                       onClick={openChainModal}
                       className="flex gap-2 items-center"
@@ -75,6 +74,8 @@ export function CustomConnectButton() {
                       )}
                       {chain.name}
                     </button>
+                  </div>
+                  <div className="text-black px-3 border-black border-2 font-bold p-2">
                     <button onClick={openAccountModal} type="button">
                       {account.displayName}
                       {account.displayBalance ? ` (${account.displayBalance})` : ''}
