@@ -40,7 +40,7 @@ const wallet = createWalletClient({
 });
 
 export default function Register() {
-  const [pChain, setPChain] = useState('P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww');
+  const [pChain, setPChain] = useState('0x424328bf10cdaeeda6bb05a78cff90a0bea12c02');
   const [signature, setSignature] = useState(
     '24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx',
   );
@@ -61,15 +61,31 @@ export default function Register() {
       const { data: treedata } = await axios.get(
         `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
       );
-      const { request } = await client.simulateContract({
-        account: account.address,
-        address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-        abi: Pandasia,
-        functionName: 'registerPChainAddr',
-        args: [parseInt(treedata.SigV, 16), treedata.SigR, treedata.SigS, treedata.Proof],
-      });
-      const walletTry = await wallet.writeContract(request);
+      // console.log(treedata)
+      // const { request } = await client.simulateContract({
+      //   account: account.address,
+      //   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+      //   abi: Pandasia,
+      //   functionName: 'registerPChainAddr',
+      //   args: [parseInt(treedata.SigV, 16), treedata.SigR, treedata.SigS, treedata.Proof],
+      // });
+      // const walletTry = await wallet.writeContract(request);
 
+      //testing verify delete later
+      const verify = await client.readContract({
+        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+        abi: Pandasia,
+        functionName: 'verify',
+        args: [rootNodes[0].Root, '0x424328bf10cdaeeda6bb05a78cff90a0bea12c02', treedata.Proof],
+      });
+      const p2c = await client.readContract({
+        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+        abi: Pandasia,
+        functionName: 'p2c',
+        args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
+      });
+      // console.log({ verify })
+      // console.log({ p2c })
       // console.log({ walletTry })
     } catch (err) {
       // console.log(err)
