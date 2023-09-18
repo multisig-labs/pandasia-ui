@@ -1,5 +1,5 @@
 export const anvil = {
-  id: 31337,
+  id: 43114,
   name: 'anvil',
   network: 'anvil',
   nativeCurrency: {
