@@ -9,3 +9,5 @@ export type TreeData = {
   SigV: HexString;
   TreeType: string;
 };
+
+export type ContractErrors = 'PAddrAlreadyRegistered()';
