@@ -18,13 +18,16 @@ export default function Home() {
 
   return (
     <main className={`flex flex-col p-12 justify-center min-h-screen bg-secondary-800`}>
-      <div className="flex flex-col w-80 gap-2">
+      <div className="flex flex-col w-full gap-2">
         <span className="text-4xl text-primary-300">PANDASIA</span>
-        <span className="font-bold text-primary-500">
-          Connect Wallet To determine if you're already registered
+        <div className="flex font-semibold justify-between text-primary-300 items-center border-b border-black">
+          <span className="text-2xl tracking-wide">CONNECT</span>
+        </div>
+        <CustomConnectButton />
+        <span className="text-primary-300">
+          Connect wallet to begin. If you have already registered, Welcome to Pandasia.
         </span>
 
-        <CustomConnectButton />
         {accountAddr !== contractZeroHexString ? (
           <Link href={'/pandasia'}>
             <Button>Enter Pandasia</Button>

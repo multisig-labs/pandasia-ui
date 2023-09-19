@@ -7,6 +7,7 @@ type Props = {
   treeData: TreeData;
 };
 
+// Figure out how to do this with Viem
 export default function RegisterButton({ treeData }: Props) {
   console.log(treeData);
   const { config: registerConfig, error: configError } = usePrepareContractWrite({

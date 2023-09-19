@@ -28,7 +28,8 @@ const client = createPublicClient({
 export default function Register() {
   const [pChain, setPChain] = useState('');
   const [signature, setSignature] = useState('');
-  const [proof, setProof] = useState(null);
+  const [proof, setProof] = useState();
+  const [sigError, setSigError] = useState('');
 
   const { data: rootNodes, isLoading: rootNodesLoading } = useQuery('root-nodes', getTreeData);
 
@@ -39,48 +40,53 @@ export default function Register() {
   console.log(rootNodes);
 
   const submitSignature = async () => {
-    const proof = await axios.get(
-      `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
-    );
-
-    setProof(proof.data);
+    // Given the signature, we can recover the pChain address, so the user actually only needs
+    // a signature. Maybe try hitting the contract with the signature to recover P-Chain addr
+    try {
+      const proof = await axios.get(
+        `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
+      );
+      setProof(proof.data);
+      setSigError('');
+    } catch (err) {
+      console.warn(err);
+      setSigError(err.response.data.message);
+      setProof(undefined);
+    }
   };
-
-  console.log(proof);
-
-  // console.log(proofDataLoading)
 
   // if (proofDataLoading) {
   //   return null;
   // }
 
-  // const test = async () => {
-  //   const p2c = await client.readContract({
-  //     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-  //     abi: Pandasia,
-  //     functionName: 'p2c',
-  //     args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
-  //   });
-  //   console.log('p2c', p2c);
+  const test = async () => {
+    const p2c = await client.readContract({
+      address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+      abi: Pandasia,
+      functionName: 'p2c',
+      args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
+    });
+    console.log('p2c', p2c);
 
-  //   const verify = await client.readContract({
-  //     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-  //     abi: Pandasia,
-  //     functionName: 'verify',
-  //     args: [proofData.Root, '0x424328bf10cdaeeda6bb05a78cff90a0bea12c02', proofData.Proof],
-  //   });
-  //   console.log('verify', verify);
-  // };
+    const verify = await client.readContract({
+      address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+      abi: Pandasia,
+      functionName: 'verify',
+      args: [proof.Root, '0x424328bf10cdaeeda6bb05a78cff90a0bea12c02', proof.Proof],
+    });
+    console.log('verify', verify);
+  };
 
   /*
       Test signature 24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx
       P-addr P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww
       hex    0x424328bf10cdaeeda6bb05a78cff90a0bea12c02
   */
-
   return (
     <main className="flex">
-      <section className={`p-6 flex flex-col w-full items-center min-h-screen bg-secondary-800`}>
+      <section
+        className={`hidden md:flex p-6 flex-col w-full items-center min-h-screen bg-secondary-800`}
+      >
         <Link className="self-start flex items-center gap-2 text-primary-500" href={'/'}>
           <BsArrowLeft size={'24px'} />
           <span>RETURN</span>
@@ -96,26 +102,65 @@ export default function Register() {
       >
         <div className="flex flex-col gap-2 p-12">
           <CustomConnectButton />
+          <div className="flex font-semibold justify-between text-black items-center border-b border-black">
+            <span className="text-2xl">S I G N</span>
+          </div>
+          <span className="text-black">
+            Please Input your P-Chain Address and Signature by following the steps below.
+          </span>
+          <span className="text-black font-semibold tracking-[4px]">STEPS TO COMPLETE</span>
+          <ol className="text-black">
+            <li className="flex gap-2">
+              <span>1.</span>
+              <span>
+                Go to{' '}
+                <a className="font-bold" href="https://wallet.avax.network" target="_blank">
+                  wallet.avax.network
+                </a>{' '}
+                and access your wallet
+              </span>
+            </li>
+            <li className="flex gap-2">
+              <span>2.</span>
+              <span>
+                Select the Advanced tab. Copy your P-Chain address and paste it in the Address Field
+                under the Sign Message column.
+              </span>
+            </li>
+
+            <li className="flex gap-2">
+              <span>3.</span>
+              <span>
+                Copy your C-Chain address and paste it in the Message box, and click Sign Message.
+              </span>
+            </li>
+            <li className="flex gap-2">
+              <span>4.</span>
+              <span>Copy your P-Chain string, and paste it in P-Chain Address input below.</span>
+            </li>
+            <li className="flex gap-2">
+              <span>5.</span>
+              <span>Copy your signature string, and paste it in the Signature input below.</span>
+            </li>
+          </ol>
           <label>P-Chain Address</label>
           <textarea
             value={pChain}
-            onChange={(e) => setPChain(e.target.value)}
+            onChange={(e) => setPChain(e.target.value.trim())}
             className="resize-none p-4 text-secondary-800"
             placeholder="P-Chain Address"
           />
           <label>Signature</label>
           <textarea
             value={signature}
-            onChange={(e) => setSignature(e.target.value)}
+            onChange={(e) => setSignature(e.target.value.trim())}
             className="resize-none p-4 text-secondary-800"
             placeholder="Signature"
           />
-          {/*
+          {sigError && <div className="text-red-500">{sigError}</div>}
           <Button onClick={test}>Test</Button>
-          <RegisterButton treeData={proofData} />
-          */}
           <Button onClick={submitSignature}>Submit Sig</Button>
-          <Button>Go To Claim Page</Button>
+          {proof && <RegisterButton treeData={proof} />}
         </div>
       </section>
     </main>
