@@ -5,8 +5,6 @@ import { HexString } from '@/types/cryptoGenerics';
 import Link from 'next/link';
 import { useAccount, useContractRead } from 'wagmi';
 
-const contractZeroHexString = '0x0000000000000000000000000000000000000000';
-
 export default function Home() {
   const { address: account } = useAccount();
   const { data: accountAddr } = useContractRead({
@@ -28,7 +26,7 @@ export default function Home() {
           Connect wallet to begin. If you have already registered, Welcome to Pandasia.
         </span>
 
-        {accountAddr !== contractZeroHexString ? (
+        {accountAddr && parseInt(accountAddr, 16) !== 0 ? (
           <Link href={'/pandasia'}>
             <Button>Enter Pandasia</Button>
           </Link>
