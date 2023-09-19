@@ -7,18 +7,15 @@ import { TreeData } from '@/types/pandasia';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { setPriority } from 'os';
 import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery } from 'react-query';
 import { createPublicClient, http } from 'viem';
 
-async function getTreeData(pChain: string, signature: string) {
+async function getTreeData() {
   const { data: rootNodes } = await axios.get('http://localhost:8000/trees');
-  const treeDataRes = await axios.get(
-    `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
-  );
-
-  return treeDataRes.data;
+  return rootNodes;
 }
 
 const customTransport = http('http://localhost:9650');
@@ -29,37 +26,51 @@ const client = createPublicClient({
 });
 
 export default function Register() {
-  const [pChain, setPChain] = useState('0x424328bf10cdaeeda6bb05a78cff90a0bea12c02');
-  const [signature, setSignature] = useState(
-    '24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx',
-  );
+  const [pChain, setPChain] = useState('');
+  const [signature, setSignature] = useState('');
+  const [proof, setProof] = useState(null);
 
-  const { data: treeData, isLoading: treeDataLoading } = useQuery<TreeData>({
-    queryKey: ['tree-data'],
-    queryFn: () => getTreeData(pChain, signature),
-  });
+  const { data: rootNodes, isLoading: rootNodesLoading } = useQuery('root-nodes', getTreeData);
 
-  if (treeDataLoading || !treeData) {
+  if (rootNodesLoading) {
     return null;
   }
 
-  const test = async () => {
-    const p2c = await client.readContract({
-      address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-      abi: Pandasia,
-      functionName: 'p2c',
-      args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
-    });
-    console.log('p2c', p2c);
+  console.log(rootNodes);
 
-    const verify = await client.readContract({
-      address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-      abi: Pandasia,
-      functionName: 'verify',
-      args: [treeData.Root, '0x424328bf10cdaeeda6bb05a78cff90a0bea12c02', treeData.Proof],
-    });
-    console.log('verify', verify);
+  const submitSignature = async () => {
+    const proof = await axios.get(
+      `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
+    );
+
+    setProof(proof.data);
   };
+
+  console.log(proof);
+
+  // console.log(proofDataLoading)
+
+  // if (proofDataLoading) {
+  //   return null;
+  // }
+
+  // const test = async () => {
+  //   const p2c = await client.readContract({
+  //     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+  //     abi: Pandasia,
+  //     functionName: 'p2c',
+  //     args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
+  //   });
+  //   console.log('p2c', p2c);
+
+  //   const verify = await client.readContract({
+  //     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+  //     abi: Pandasia,
+  //     functionName: 'verify',
+  //     args: [proofData.Root, '0x424328bf10cdaeeda6bb05a78cff90a0bea12c02', proofData.Proof],
+  //   });
+  //   console.log('verify', verify);
+  // };
 
   /*
       Test signature 24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx
@@ -99,8 +110,11 @@ export default function Register() {
             className="resize-none p-4 text-secondary-800"
             placeholder="Signature"
           />
+          {/*
           <Button onClick={test}>Test</Button>
-          <RegisterButton treeData={treeData} />
+          <RegisterButton treeData={proofData} />
+          */}
+          <Button onClick={submitSignature}>Submit Sig</Button>
           <Button>Go To Claim Page</Button>
         </div>
       </section>

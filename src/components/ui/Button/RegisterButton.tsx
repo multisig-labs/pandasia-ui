@@ -8,6 +8,7 @@ type Props = {
 };
 
 export default function RegisterButton({ treeData }: Props) {
+  console.log(treeData);
   const { config: registerConfig, error: configError } = usePrepareContractWrite({
     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
     abi: Pandasia,
@@ -15,10 +16,11 @@ export default function RegisterButton({ treeData }: Props) {
     args: [parseInt(treeData.SigV, 16), treeData.SigR, treeData.SigS, treeData.Proof],
   });
 
-  // R
   const regex = /Error: (.*)/;
   const match = configError?.message.match(regex);
   const errorMessage = match ? match[1] : null;
+
+  console.log(registerConfig);
 
   const { write: registerAddress } = useContractWrite({
     ...registerConfig,

@@ -5,6 +5,8 @@ import { HexString } from '@/types/cryptoGenerics';
 import Link from 'next/link';
 import { useAccount, useContractRead } from 'wagmi';
 
+const contractZeroHexString = '0x0000000000000000000000000000000000000000';
+
 export default function Home() {
   const { address: account } = useAccount();
   const { data: accountAddr } = useContractRead({
@@ -12,8 +14,8 @@ export default function Home() {
     abi: Pandasia,
     functionName: 'c2p',
     args: [account as HexString],
-    watch: true,
   });
+
   return (
     <main className={`flex flex-col p-12 justify-center min-h-screen bg-secondary-800`}>
       <div className="flex flex-col w-80 gap-2">
@@ -23,7 +25,7 @@ export default function Home() {
         </span>
 
         <CustomConnectButton />
-        {accountAddr ? (
+        {accountAddr !== contractZeroHexString ? (
           <Link href={'/pandasia'}>
             <Button>Enter Pandasia</Button>
           </Link>
