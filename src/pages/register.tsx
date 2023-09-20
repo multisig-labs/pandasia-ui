@@ -1,11 +1,11 @@
-import { getProof, getTreeData } from '@/async_fns/pandasia';
+import { getProof, getSig, getTreeData } from '@/async_fns/pandasia';
 import { verify } from '@/async_fns/viem';
 import Button from '@/components/ui/Button/Button';
 import { CustomConnectButton } from '@/components/ui/Button/CustomConnectButton';
+import { returnErrString } from '@/config/axios';
 import { publicClient, walletClient } from '@/config/viem';
 import Pandasia from '@/contracts/Pandasia';
-import { Proof, Trees } from '@/types/pandasia';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -13,10 +13,8 @@ import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery } from 'react-query';
 
 export default function Register() {
-  console.log(walletClient);
-
-  const [pChain, setPChain] = useState('');
   const [signature, setSignature] = useState('');
+  const [sigError, setSigError] = useState('');
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
   if (treesLoading) {
@@ -28,62 +26,49 @@ export default function Register() {
   }
 
   const submitSignature = async () => {
-    // Given the signature, we can recover the pChain address, so the user actually only needs
-    // a signature. Maybe try hitting the contract with the signature to recover P-Chain addr
     try {
-      const { data: proof } = await getProof(trees[0].Root, pChain, signature);
-      if (proof === undefined) return;
+      // Gets SigV, SigR, SigS from a given signature
+      const { data: sig } = await getSig(signature);
+      if (sig === undefined) {
+        console.warn('sig undefined');
+        return;
+      }
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      // Recovers the pChain address from the signature
+      const pAddr = await publicClient.readContract({
+        account: address,
+        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+        abi: Pandasia,
+        functionName: 'recoverMessage',
+        args: [parseInt(sig.SigV, 16), sig.SigR, sig.SigS],
+      });
 
-      console.log(walletClient);
-      // const [address] = await walletClient.getAddresses();
-
-      const { request } = await publicClient.simulateContract({
+      // Using the merkle root, pChain address, and signature we can obtain a proof that the pChain address is in the merkle tree
+      const { data: proof } = await getProof(trees[0].Root, pAddr, signature);
+      if (proof === undefined) {
+        console.warn('proof undefined');
+        return;
+      }
+      const { request: register } = await publicClient.simulateContract({
         account: address,
         address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
         abi: Pandasia,
         functionName: 'registerPChainAddr',
         args: [parseInt(proof.SigV, 16), proof.SigR, proof.SigS, proof.Proof],
       });
-      console.log(request);
 
-      const txnHash = await walletClient.writeContract(request);
-      console.log({ txnHash });
-
+      // After confirming the pChain address is in the tree, we register the pChain address
+      const txnHash = await walletClient.writeContract(register);
       const transaction = await publicClient.waitForTransactionReceipt({ hash: txnHash });
-      console.log('TRANSCACTION', transaction);
+      setSigError('');
     } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  const test = async () => {
-    try {
-      const { data: proof } = await axios.get<Proof>(
-        `http://localhost:8000/proof/${trees[0].Root}?addr=${pChain}&sig=${signature}`,
-      );
-
-      if (proof === undefined) return;
-      const p2c = await publicClient.readContract({
-        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-        abi: Pandasia,
-        functionName: 'p2c',
-        args: ['0x424328bf10cdaeeda6bb05a78cff90a0bea12c02'],
-      });
-      console.log('p2c', p2c);
-
-      const c2p = await publicClient.readContract({
-        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-        abi: Pandasia,
-        functionName: 'c2p',
-        args: [p2c],
-      });
-      console.log('c2p', c2p);
-
-      const ver = await verify(proof);
-      console.log('verify', ver);
-    } catch (err) {
-      console.warn(err);
+      if (axios.isAxiosError(err)) {
+        const error = returnErrString(err);
+        console.warn(err);
+        setSigError(error);
+      } else {
+        console.warn(err);
+      }
     }
   };
 
@@ -103,7 +88,7 @@ export default function Register() {
         </Link>
 
         <div className="h-full flex flex-col items-center justify-center">
-          <Image src="/pandasia-logo.svg" alt="Next.js Logo" width={180} height={180} priority />
+          <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={180} height={180} priority />
           <span className="text-primary-500">BY GOGOPOOL</span>
         </div>
       </section>
@@ -115,9 +100,6 @@ export default function Register() {
           <div className="flex font-semibold justify-between text-black items-center border-b border-black">
             <span className="text-2xl">S I G N</span>
           </div>
-          <span className="text-black">
-            Please Input your P-Chain Address and Signature by following the steps below.
-          </span>
           <span className="text-black font-semibold tracking-[4px]">STEPS TO COMPLETE</span>
           <ol className="text-black">
             <li className="flex gap-2">
@@ -146,20 +128,9 @@ export default function Register() {
             </li>
             <li className="flex gap-2">
               <span>4.</span>
-              <span>Copy your P-Chain string, and paste it in P-Chain Address input below.</span>
-            </li>
-            <li className="flex gap-2">
-              <span>5.</span>
               <span>Copy your signature string, and paste it in the Signature input below.</span>
             </li>
           </ol>
-          <label>P-Chain Address</label>
-          <textarea
-            value={pChain}
-            onChange={(e) => setPChain(e.target.value.trim())}
-            className="resize-none p-4 text-secondary-800"
-            placeholder="P-Chain Address"
-          />
           <label>Signature</label>
           <textarea
             value={signature}
@@ -167,7 +138,7 @@ export default function Register() {
             className="resize-none p-4 text-secondary-800"
             placeholder="Signature"
           />
-          <Button onClick={test}>Test</Button>
+          <span className="text-red-800">{sigError}</span>
           <Button onClick={submitSignature}>Submit Sig</Button>
         </div>
       </section>

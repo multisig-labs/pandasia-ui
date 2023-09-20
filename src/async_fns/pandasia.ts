@@ -8,6 +8,11 @@ export async function getProof(rootHash: string, pChain: string, signature: stri
   return res;
 }
 
+export async function getSig(signature: string) {
+  const res = await axios.get<Proof>(`http://localhost:8000/signature/${signature}`);
+  return res;
+}
+
 export async function getTreeData() {
   const { data: trees } = await axios.get<Trees>('http://localhost:8000/trees');
   return trees;
