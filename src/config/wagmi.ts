@@ -1,9 +1,9 @@
 import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig } from 'wagmi';
-import { anvil } from './chains';
+import { forky } from './chains';
 import { publicProvider } from 'wagmi/providers/public';
 
-export const { chains, publicClient } = configureChains([anvil], [publicProvider()]);
+export const { chains, publicClient } = configureChains([forky], [publicProvider()]);
 
 export const { connectors } = getDefaultWallets({
   appName: 'Pandasia',
