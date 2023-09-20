@@ -6,10 +6,8 @@ import { walletClient, publicClient } from '@/config/viem';
 export default function UnregisterButton() {
   async function unregister() {
     try {
-      console.log('starting addresses');
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
       // const [address] = await walletClient.getAddresses();
-      console.log('done with addresses');
 
       const { request } = await publicClient.simulateContract({
         account: address,
@@ -17,9 +15,7 @@ export default function UnregisterButton() {
         abi: Pandasia,
         functionName: 'unregisterPChainAddr',
       });
-      console.log('staring run ');
       const txHash = await walletClient.writeContract(request);
-      console.log('done with run');
     } catch (err) {
       console.warn(err);
     }

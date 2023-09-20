@@ -1,6 +1,16 @@
 import { HexString } from './cryptoGenerics';
 
-export type TreeData = {
+export type Tree = {
+  ID: number;
+  Height: number;
+  TreeType: string;
+  Root: string;
+  Description: string;
+};
+
+export type Trees = Tree[];
+
+export type Proof = {
   Height: number;
   Proof: HexString[];
   Root: HexString;

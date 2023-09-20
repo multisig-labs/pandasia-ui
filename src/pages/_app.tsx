@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { useAccount, WagmiConfig } from 'wagmi';
+import { WagmiConfig } from 'wagmi';
 import { colors } from '@/styles/theme/colors';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { chains, wagmiConfig } from '@/config/wagmi';
