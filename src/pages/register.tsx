@@ -1,6 +1,7 @@
 import Button from '@/components/ui/Button/Button';
 import { CustomConnectButton } from '@/components/ui/Button/CustomConnectButton';
 import { forky } from '@/config/chains';
+import { publicClient } from '@/config/viem';
 import Pandasia from '@/contracts/Pandasia';
 import axios from 'axios';
 import Image from 'next/image';
@@ -15,13 +16,6 @@ async function getTreeData() {
   return rootNodes;
 }
 
-const customTransport = http('http://localhost:9650');
-
-const publicClient = createPublicClient({
-  chain: forky,
-  transport: customTransport,
-});
-
 let walletClient;
 if (typeof window !== 'undefined') {
   walletClient = createWalletClient({
@@ -31,6 +25,8 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Register() {
+  console.log(walletClient);
+
   const [pChain, setPChain] = useState('');
   const [signature, setSignature] = useState('');
 
@@ -47,36 +43,38 @@ export default function Register() {
         `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
       );
       if (proof === undefined) return;
-      try {
-        const [address] = await walletClient.getAddresses();
-        console.log(proof);
-        const { request } = await publicClient.simulateContract({
-          account: address,
-          address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-          abi: Pandasia,
-          functionName: 'registerPChainAddr',
-          args: [parseInt(proof.SigV, 16), proof.SigR, proof.SigS, proof.Proof],
-        });
-        console.log(request);
-        const txnHash = await walletClient.writeContract(request);
-        console.log({ txnHash });
-      } catch (err) {
-        console.warn(err);
-      }
+
+      const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      console.log(account);
+
+      console.log(walletClient);
+      // const [address] = await walletClient.getAddresses();
+
+      const { request } = await publicClient.simulateContract({
+        account: address,
+        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+        abi: Pandasia,
+        functionName: 'registerPChainAddr',
+        args: [parseInt(proof.SigV, 16), proof.SigR, proof.SigS, proof.Proof],
+      });
+      console.log(request);
+
+      const txnHash = await walletClient.writeContract(request);
+      console.log({ txnHash });
+
+      const transaction = await publicClient.waitForTransactionReceipt({ hash: txnHash });
+      console.log('TRANSCACTION', transaction);
     } catch (err) {
       console.warn(err);
     }
   };
-
-  // if (proofDataLoading) {
-  //   return null;
-  // }
 
   const test = async () => {
     try {
       const { data: proof } = await axios.get(
         `http://localhost:8000/proof/${rootNodes[0].Root}?addr=${pChain}&sig=${signature}`,
       );
+
       if (proof === undefined) return;
       const p2c = await publicClient.readContract({
         address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',

@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button/Button';
 import { CustomConnectButton } from '@/components/ui/Button/CustomConnectButton';
+import UnregisterButton from '@/components/ui/Button/UnregisterButton';
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
 import Link from 'next/link';
@@ -12,6 +13,7 @@ export default function Home() {
     abi: Pandasia,
     functionName: 'c2p',
     args: [account as HexString],
+    watch: true,
   });
 
   return (
@@ -27,9 +29,12 @@ export default function Home() {
         </span>
 
         {accountAddr && parseInt(accountAddr, 16) !== 0 ? (
-          <Link href={'/pandasia'}>
-            <Button>Enter Pandasia</Button>
-          </Link>
+          <>
+            <Link href={'/pandasia'}>
+              <Button>Enter Pandasia</Button>
+            </Link>
+            <UnregisterButton />
+          </>
         ) : (
           <Link href={'/register'}>
             <Button>Register</Button>

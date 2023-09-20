@@ -561,6 +561,35 @@ const Pandasia = [
         name: 's',
         type: 'bytes32',
       },
+    ],
+    name: 'recoverMessage',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
+      },
       {
         internalType: 'bytes32[]',
         name: 'proof',
@@ -640,6 +669,13 @@ const Pandasia = [
       },
     ],
     name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'unregisterPChainAddr',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
