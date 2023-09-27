@@ -6,6 +6,7 @@ import { walletClient, publicClient } from '@/config/viem';
 export default function UnregisterButton() {
   async function unregister() {
     try {
+      //@ts-ignore
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
       // const [address] = await walletClient.getAddresses();
 
