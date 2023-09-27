@@ -3,6 +3,7 @@ import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import UnregisterButton from '@/components/Button/UnregisterButton';
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useAccount, useContractRead } from 'wagmi';
@@ -23,9 +24,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`flex min-h-screen flex-col justify-center bg-secondary-800 p-12`}>
+    <main className={`relative flex min-h-screen flex-col justify-center bg-secondary-800 p-12`}>
+      <Image
+        src={'/welcome-page-bg.svg'}
+        alt="Pandasia Background"
+        layout="fill"
+        objectFit="cover"
+      />
       {isClient && (
-        <div className="flex w-full flex-col gap-2">
+        <div className="z-10 flex w-full flex-col gap-2">
           <span className="text-4xl text-primary-300">PANDASIA</span>
           <div className="flex items-center justify-between border-b border-black font-semibold text-primary-300">
             <span className="text-2xl tracking-wide">CONNECT</span>
