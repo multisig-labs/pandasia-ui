@@ -4,8 +4,8 @@ import { BsArrowLeft } from 'react-icons/bs';
 export default function Pandasia() {
   return (
     <main className="flex">
-      <section className={`p-6 flex flex-col w-full items-center min-h-screen bg-secondary-800`}>
-        <Link className="self-start flex items-center gap-2 text-primary-500" href={'/'}>
+      <section className={`flex min-h-screen w-full flex-col items-center bg-secondary-800 p-6`}>
+        <Link className="flex items-center gap-2 self-start text-primary-500" href={'/'}>
           <BsArrowLeft size={'24px'} />
           <span>RETURN</span>
         </Link>
