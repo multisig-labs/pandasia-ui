@@ -6,7 +6,7 @@ type Props = {
 
 export default function Button({ children, ...props }: Props) {
   return (
-    <button className="bg-secondary-700 p-4" {...props}>
+    <button className="p-4" {...props}>
       {children}
     </button>
   );

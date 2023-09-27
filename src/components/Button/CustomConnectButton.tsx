@@ -36,7 +36,7 @@ export function CustomConnectButton() {
               if (!connected) {
                 return (
                   <div
-                    className="cursor-pointer border-4 border-black p-1"
+                    className="flex w-[400px] cursor-pointer justify-between border-4 border-black p-1"
                     onClick={openConnectModal}
                   >
                     <div className="border-2 border-black p-2 font-bold text-black">
@@ -53,7 +53,7 @@ export function CustomConnectButton() {
                 );
               }
               return (
-                <div className="flex cursor-pointer justify-between border-4 border-black p-1">
+                <div className="flex w-[420px] cursor-pointer justify-between border-4 border-black p-1">
                   <div className="border-2 border-black p-2 px-3 font-bold text-black">
                     <button
                       onClick={openChainModal}
