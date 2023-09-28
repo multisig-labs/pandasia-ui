@@ -4,4 +4,5 @@ module.exports = {
     'react/no-unescaped-entities': 0,
     // 'no-console': 'error',
   },
+  plugins: ['prettier', 'unused-imports'],
 };

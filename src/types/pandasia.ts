@@ -1,3 +1,4 @@
+import { Log } from 'viem';
 import { HexString } from './cryptoGenerics';
 
 export type Tree = {

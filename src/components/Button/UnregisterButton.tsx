@@ -1,13 +1,11 @@
 import Pandasia from '@/contracts/Pandasia';
-import Button from './Button';
 import { walletClient, publicClient } from '@/config/viem';
 
-// Figure out how to do this with Viem
 export default function UnregisterButton() {
   async function unregister() {
     try {
+      //@ts-ignore
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      // const [address] = await walletClient.getAddresses();
 
       const { request } = await publicClient.simulateContract({
         account: address,
@@ -20,5 +18,9 @@ export default function UnregisterButton() {
       console.warn(err);
     }
   }
-  return <Button onClick={unregister}>Unregister</Button>;
+  return (
+    <button onClick={unregister} className="tracking-[4px] text-primary-500">
+      UNREGISTER
+    </button>
+  );
 }
