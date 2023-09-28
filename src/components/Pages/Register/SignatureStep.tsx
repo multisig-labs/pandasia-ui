@@ -17,9 +17,8 @@ export default function SignatureStep({
 }: Props) {
   return (
     <section
-      className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-500 p-12`}
+      className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12`}
     >
-      <CustomConnectButton />
       <div className="flex h-full flex-col justify-center p-12">
         <div className="flex items-center justify-between pb-2 font-semibold text-black">
           <span className="text-2xl">S I G N</span>
@@ -82,11 +81,6 @@ export default function SignatureStep({
           >
             SUBMIT SIGNATURE
           </button>
-        </div>
-        <div className="flex justify-center">
-          <span className="flex max-w-sm pt-2 text-center text-sm font-bold tracking-[4px] text-primary-700 underline">
-            CANCEL
-          </span>
         </div>
       </div>
     </section>

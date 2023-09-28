@@ -24,36 +24,43 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`relative flex min-h-screen flex-col justify-center bg-secondary-800 p-12`}>
-      <Image
-        src={'/welcome-page-bg.svg'}
-        alt="Pandasia Background"
-        layout="fill"
-        objectFit="cover"
-      />
+    <main className={`welcome-bg relative flex min-h-screen flex-col justify-center`}>
       {isClient && (
-        <div className="z-10 flex w-full flex-col gap-2">
-          <span className="text-4xl text-primary-300">PANDASIA</span>
-          <div className="flex items-center justify-between border-b border-black font-semibold text-primary-300">
-            <span className="text-2xl tracking-wide">CONNECT</span>
+        <div className="flex h-screen w-full flex-col items-center">
+          <Image
+            className="absolute"
+            width={88}
+            height={103}
+            alt="pandasia logo"
+            src={'/favicon.svg'}
+          />
+          <div className="absolute top-1/2 z-10 mt-[-12px] border-4 border-primary-600 bg-secondary-900 p-1">
+            <div className="border border-primary-600 p-1">
+              {accountAddr && parseInt(accountAddr, 16) !== 0 ? (
+                <>
+                  <Link href={'/pandasia'}>
+                    <button className="hover-underline-animation tracking-[4px] text-primary-600">
+                      ENTER PANDASIA
+                    </button>
+                  </Link>
+                  <UnregisterButton />
+                </>
+              ) : (
+                <Link href={'/register'}>
+                  <button className="hover-underline-animation tracking-[4px] text-primary-500">
+                    REGISTER
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
-          <CustomConnectButton />
-          <span className="text-primary-300">
-            Connect wallet to begin. If you have already registered, Welcome to Pandasia.
+          <hr className="absolute top-1/2 mt-[12px] w-full border border-primary-600"></hr>
+          <span className="absolute top-1/2 mt-40">
+            <CustomConnectButton />
           </span>
-
-          {accountAddr && parseInt(accountAddr, 16) !== 0 ? (
-            <>
-              <Link href={'/pandasia'}>
-                <Button>Enter Pandasia</Button>
-              </Link>
-              <UnregisterButton />
-            </>
-          ) : (
-            <Link href={'/register'}>
-              <Button>Register</Button>
-            </Link>
-          )}
+          <span className="absolute bottom-0 text-xs tracking-widest text-primary-600">
+            MADE WITH FIRE BY GOGOPOOL
+          </span>
         </div>
       )}
     </main>
