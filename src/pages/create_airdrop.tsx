@@ -1,21 +1,9 @@
-import { getProof, getSig, getTreeData } from '@/async_fns/pandasia';
-import { newAirdrop, verify } from '@/async_fns/viem';
-import Button from '@/components/Button/Button';
-import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
-import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
-import SignatureStep from '@/components/Pages/Register/SignatureStep';
-import SuccessStep from '@/components/Pages/Register/SuccessStep';
-import { returnErrString } from '@/config/axios';
+import { getTreeData } from '@/async_fns/pandasia';
+import { newAirdrop } from '@/async_fns/viem';
 import { publicClient, walletClient } from '@/config/viem';
-import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
-import axios, { AxiosError } from 'axios';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
-import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery } from 'react-query';
-import { TransactionReceipt } from 'viem';
 
 export default function CreateAirdrop() {
   const [description, setDescription] = useState('');
@@ -60,7 +48,7 @@ export default function CreateAirdrop() {
     //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
     const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-    const ad = newAirdrop(
+    const ad = await newAirdrop(
       address,
       merkleRoot as HexString,
       onlyRegistered,
@@ -68,7 +56,13 @@ export default function CreateAirdrop() {
       claimAmount,
       expiresAt,
     );
+    console.log('ad', ad);
+    console.log('about to write');
     const txnHash = await walletClient.writeContract(ad);
+    console.log('written');
+    console.log('txnHash', txnHash);
+    const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
+    console.log('txn', txn);
   };
 
   return (
@@ -112,6 +106,23 @@ export default function CreateAirdrop() {
           className="text-black"
           placeholder="erc20 address"
         />
+        <input
+          onChange={(e) => setClaimAmount(BigInt(e.target.value.trim()))}
+          className="text-black"
+          placeholder="claim amount"
+        />
+        <div>{claimAmount.toLocaleString()}</div>
+        <input
+          type="date"
+          onChange={(e) => {
+            const test = new Date(e.target.value);
+            console.log(test.getTime());
+            setExpiresAt(test.getTime() / 1000);
+          }}
+          className="text-black"
+          placeholder="claim amount"
+        />
+        <div>{expiresAt}</div>
 
         <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
       </div>

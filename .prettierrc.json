@@ -5,6 +5,5 @@
   "bracketSpacing": true,
   "trailingComma": "all",
   "endOfLine": "auto",
-  "quoteProps": "consistent",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "quoteProps": "consistent"
 }
