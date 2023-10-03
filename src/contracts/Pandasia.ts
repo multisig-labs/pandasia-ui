@@ -111,21 +111,6 @@ const Pandasia = [
     name: 'airdrops',
     outputs: [
       {
-        internalType: 'bytes32',
-        name: 'root',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'uint256',
-        name: 'balance',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
         internalType: 'address',
         name: 'owner',
         type: 'address',
@@ -136,13 +121,28 @@ const Pandasia = [
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'balance',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'root',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'uint256',
+        name: 'claimAmount',
+        type: 'uint256',
+      },
+      {
         internalType: 'uint32',
         name: 'expires',
         type: 'uint32',
       },
       {
         internalType: 'bool',
-        name: 'union',
+        name: 'onlyRegistered',
         type: 'bool',
       },
     ],
@@ -172,7 +172,7 @@ const Pandasia = [
     inputs: [
       {
         internalType: 'address',
-        name: 'addr',
+        name: 'cChainAddr',
         type: 'address',
       },
       {
@@ -279,7 +279,7 @@ const Pandasia = [
       },
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: 'claimAmount',
         type: 'uint256',
       },
     ],
@@ -325,21 +325,6 @@ const Pandasia = [
       {
         components: [
           {
-            internalType: 'bytes32',
-            name: 'root',
-            type: 'bytes32',
-          },
-          {
-            internalType: 'uint256',
-            name: 'balance',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'amount',
-            type: 'uint256',
-          },
-          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -350,13 +335,28 @@ const Pandasia = [
             type: 'address',
           },
           {
+            internalType: 'uint256',
+            name: 'balance',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bytes32',
+            name: 'root',
+            type: 'bytes32',
+          },
+          {
+            internalType: 'uint256',
+            name: 'claimAmount',
+            type: 'uint256',
+          },
+          {
             internalType: 'uint32',
             name: 'expires',
             type: 'uint32',
           },
           {
             internalType: 'bool',
-            name: 'union',
+            name: 'onlyRegistered',
             type: 'bool',
           },
         ],
@@ -450,6 +450,19 @@ const Pandasia = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'merkleRoot',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'bytes32',
@@ -458,7 +471,7 @@ const Pandasia = [
       },
       {
         internalType: 'bool',
-        name: 'union',
+        name: 'onlyRegistered',
         type: 'bool',
       },
       {
@@ -468,7 +481,7 @@ const Pandasia = [
       },
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: 'claimAmount',
         type: 'uint256',
       },
       {
@@ -624,12 +637,12 @@ const Pandasia = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
+        internalType: 'bytes32',
+        name: 'root',
+        type: 'bytes32',
       },
     ],
-    name: 'setStakingContract',
+    name: 'setMerkleRoot',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -637,12 +650,12 @@ const Pandasia = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'root',
-        type: 'bytes32',
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
     ],
-    name: 'setValidatorRoot',
+    name: 'setStakingContract',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -678,19 +691,6 @@ const Pandasia = [
     name: 'unregisterPChainAddr',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'validatorRoot',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
