@@ -1,4 +1,3 @@
-import Button from '@/components/Button/Button';
 import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import UnregisterButton from '@/components/Button/UnregisterButton';
 import Pandasia from '@/contracts/Pandasia';
