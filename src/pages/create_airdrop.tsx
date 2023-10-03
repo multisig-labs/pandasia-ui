@@ -14,7 +14,7 @@ export default function CreateAirdrop() {
   const [summary, setSummary] = useState('');
   const [logo, setLogo] = useState('');
   const [onlyRegistered, setOnlyRegistered] = useState(false);
-  const [claimAmount, setClaimAmount] = useState<bigint>(BigInt(0));
+  const [claimAmount, setClaimAmount] = useState('');
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
 
@@ -61,19 +61,12 @@ export default function CreateAirdrop() {
         return;
       }
 
-      const register = await registerPChainAdrr(proof, address);
-
-      // After confirming the pChain address is in the tree, we register the pChain address
-      const registerHash = await walletClient.writeContract(register);
-      console.log('register hash', registerHash);
-      const registerTxn = await publicClient.waitForTransactionReceipt({ hash: registerHash });
-
       const ad = await newAirdrop(
         address,
         merkleRoot as HexString,
         onlyRegistered,
         erc20,
-        claimAmount,
+        BigInt(claimAmount),
         expiresAt,
       );
       console.log('ad', ad);
@@ -101,34 +94,36 @@ export default function CreateAirdrop() {
         <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
         <input
           value={companyName}
-          onChange={(e) => setCompanyName(e.target.value.trim())}
+          onChange={(e) => setCompanyName(e.target.value)}
           className="text-black"
           placeholder="Company Name"
         />
         <input
           value={summary}
-          onChange={(e) => setSummary(e.target.value.trim())}
+          onChange={(e) => setSummary(e.target.value)}
           className="text-black"
           placeholder="Summary"
         />
         <input
           value={description}
-          onChange={(e) => setDescription(e.target.value.trim())}
+          onChange={(e) => setDescription(e.target.value)}
           className="text-black"
           placeholder="Description"
         />
         <input
           value={logo}
-          onChange={(e) => setLogo(e.target.value.trim())}
+          onChange={(e) => setLogo(e.target.value)}
           className="text-black"
           placeholder="Logo"
         />
+        {/*
         <input
           value={onlyRegistered}
           onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
           className="text-black"
           placeholder="onlyRegistered"
         />
+        */}
         <input
           value={erc20}
           onChange={(e) => setErc20(e.target.value.trim() as HexString)}
@@ -136,7 +131,7 @@ export default function CreateAirdrop() {
           placeholder="erc20 address"
         />
         <input
-          onChange={(e) => setClaimAmount(BigInt(e.target.value.trim()))}
+          onChange={(e) => setClaimAmount(e.target.value.trim())}
           className="text-black"
           placeholder="claim amount"
         />
