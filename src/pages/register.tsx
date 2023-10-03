@@ -32,9 +32,12 @@ export default function Register() {
         console.warn('sig undefined');
         return;
       }
+      console.log('SIGNATURE', sig);
       //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
+      console.log('sig', sig);
+      console.log('address', address);
       const pAddr = await recoverMessage(sig, address);
 
       // Using the merkle root, pChain address, and signature we can obtain a proof that the pChain address is in the merkle tree

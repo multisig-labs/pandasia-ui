@@ -1,7 +1,10 @@
-import { getTreeData } from '@/async_fns/pandasia';
-import { newAirdrop } from '@/async_fns/viem';
+import { getProof, getTreeData } from '@/async_fns/pandasia';
+import { newAirdrop, registerPChainAdrr } from '@/async_fns/viem';
+import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
+import { returnErrString } from '@/config/axios';
 import { publicClient, walletClient } from '@/config/viem';
 import { HexString } from '@/types/cryptoGenerics';
+import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -25,51 +28,77 @@ export default function CreateAirdrop() {
   }
 
   const createAirdrop = async () => {
-    // make sure we're connected to
-    //      supabase
-    //      contracts
-    //      go backend
+    try {
+      // make sure we're connected to
+      //      supabase
+      //      contracts
+      //      go backend
 
-    // get all user input
+      // get all user input
 
-    // from Go code
-    //    get current merkle root
+      // from Go code
+      //    get current merkle root
 
-    // send to the contracts
-    //    c_id = owner, root, onlyRegistered, erc20, claimAmount, expiresAt, startsAt
-    // send to supabase
-    //    s_id = logo, companyName, description, website, summary
-    //    s_id => c_id
+      // send to the contracts
+      //    c_id = owner, root, onlyRegistered, erc20, claimAmount, expiresAt, startsAt
+      // send to supabase
+      //    s_id = logo, companyName, description, website, summary
+      //    s_id => c_id
 
-    const treeData = await getTreeData();
-    const merkleRoot = treeData[0].Root;
-    console.log('merkel root', merkleRoot);
+      const treeData = await getTreeData();
+      const merkleRoot = treeData[0].Root;
+      console.log('merkel root', merkleRoot);
 
-    //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
-    const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
+      const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const { data: proof } = await getProof(
+        trees[0].Root,
+        'P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww',
+        '24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx',
+      );
+      if (proof === undefined) {
+        console.warn('proof undefined');
+        return;
+      }
 
-    const ad = await newAirdrop(
-      address,
-      merkleRoot as HexString,
-      onlyRegistered,
-      erc20,
-      claimAmount,
-      expiresAt,
-    );
-    console.log('ad', ad);
-    console.log('about to write');
-    const txnHash = await walletClient.writeContract(ad);
-    console.log('written');
-    console.log('txnHash', txnHash);
-    const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
-    console.log('txn', txn);
+      const register = await registerPChainAdrr(proof, address);
+
+      // After confirming the pChain address is in the tree, we register the pChain address
+      const registerHash = await walletClient.writeContract(register);
+      console.log('register hash', registerHash);
+      const registerTxn = await publicClient.waitForTransactionReceipt({ hash: registerHash });
+
+      const ad = await newAirdrop(
+        address,
+        merkleRoot as HexString,
+        onlyRegistered,
+        erc20,
+        claimAmount,
+        expiresAt,
+      );
+      console.log('ad', ad);
+      console.log('about to write');
+
+      const txnHash = await walletClient.writeContract(ad);
+
+      console.log('written');
+      console.log('txnHash', txnHash);
+      const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
+      console.log('txn', txn);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const error = returnErrString(err);
+        console.warn(err);
+      } else {
+        console.warn(err);
+      }
+    }
   };
 
   return (
-    <main className="flex-col">
-      <div>Create airdrop page now bitches</div>
-
-      <div className="flex-col">
+    <LayoutAndNavbar>
+      <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+        <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
         <input
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value.trim())}
@@ -126,7 +155,8 @@ export default function CreateAirdrop() {
 
         <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
       </div>
+
       <button onClick={createAirdrop}>Create Airdrop</button>
-    </main>
+    </LayoutAndNavbar>
   );
 }
