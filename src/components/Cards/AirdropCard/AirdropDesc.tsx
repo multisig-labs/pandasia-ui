@@ -2,7 +2,6 @@ type Props = {
   claimAmt: bigint;
 };
 export default function AirdropDesc({ claimAmt }: Props) {
-  console.log(claimAmt);
   return (
     <div className="flex h-32 w-full flex-col items-start justify-center border-b border-secondary-700 p-6">
       <div className="flex flex-col">
