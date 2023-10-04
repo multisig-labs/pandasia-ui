@@ -22,7 +22,7 @@ export default function LayoutAndNavbar({ children }: Props) {
         <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
         <hr className="mt-3 h-[1px] w-full border-none bg-secondary-700"></hr>
       </div>
-      {children}
+      <section className="flex w-full max-w-7xl px-6">{children}</section>
     </main>
   );
 }
