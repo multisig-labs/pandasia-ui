@@ -1,18 +1,12 @@
 import { getProof, getSig, getTreeData } from '@/async_fns/pandasia';
-import { verify } from '@/async_fns/viem';
-import Button from '@/components/Button/Button';
-import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
 import { returnErrString } from '@/config/axios';
 import { publicClient, walletClient } from '@/config/viem';
 import Pandasia from '@/contracts/Pandasia';
-import axios, { AxiosError } from 'axios';
-import Image from 'next/image';
-import Link from 'next/link';
+import axios from 'axios';
 import { useState } from 'react';
-import { BsArrowLeft } from 'react-icons/bs';
 import { useQuery } from 'react-query';
 import { TransactionReceipt } from 'viem';
 
