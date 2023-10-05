@@ -1,10 +1,10 @@
 import { getProof, getSig, getTreeData } from '@/async_fns/pandasia';
+import { recoverMessage, registerPChainAdrr } from '@/async_fns/viem';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
 import { returnErrString } from '@/config/axios';
 import { publicClient, walletClient } from '@/config/viem';
-import Pandasia from '@/contracts/Pandasia';
 import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -34,14 +34,8 @@ export default function Register() {
       }
       //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      // Recovers the pChain address from the signature
-      const pAddr = await publicClient.readContract({
-        account: address,
-        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-        abi: Pandasia,
-        functionName: 'recoverMessage',
-        args: [parseInt(sig.SigV, 16), sig.SigR, sig.SigS],
-      });
+
+      const pAddr = await recoverMessage(sig, address);
 
       // Using the merkle root, pChain address, and signature we can obtain a proof that the pChain address is in the merkle tree
       const { data: proof } = await getProof(trees[0].Root, pAddr, signature);
@@ -49,13 +43,8 @@ export default function Register() {
         console.warn('proof undefined');
         return;
       }
-      const { request: register } = await publicClient.simulateContract({
-        account: address,
-        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-        abi: Pandasia,
-        functionName: 'registerPChainAddr',
-        args: [parseInt(proof.SigV, 16), proof.SigR, proof.SigS, proof.Proof],
-      });
+
+      const register = await registerPChainAdrr(proof, address);
 
       // After confirming the pChain address is in the tree, we register the pChain address
       const txnHash = await walletClient.writeContract(register);
