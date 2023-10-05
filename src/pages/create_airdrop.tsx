@@ -6,8 +6,9 @@ import { returnErrString } from '@/config/axios';
 import { supabase } from '@/config/supabase';
 import { publicClient, walletClient } from '@/config/viem';
 import { HexString } from '@/types/cryptoGenerics';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TransactionReceipt } from 'viem';
 import { useAccount } from 'wagmi';
@@ -22,6 +23,18 @@ export default function CreateAirdrop() {
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
+  const supabaseClient = useSupabaseClient();
+  const user = useUser();
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    async function loadData() {
+      const { data } = await supabaseClient.from('test').select('*');
+      setData(data);
+    }
+    // Only run query once user is logged in.
+    if (user) loadData();
+  }, [user]);
 
   const { address: account } = useAccount();
 
@@ -111,70 +124,76 @@ export default function CreateAirdrop() {
 
   return (
     <LayoutAndNavbar>
-      <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
-        <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
-        <input
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-          className="text-black"
-          placeholder="Company Name"
-        />
-        <input
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-          className="text-black"
-          placeholder="Summary"
-        />
-        <input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="text-black"
-          placeholder="Description"
-        />
-        <input
-          value={logo}
-          onChange={(e) => setLogo(e.target.value)}
-          className="text-black"
-          placeholder="Logo"
-        />
-        <input
-          value={onlyRegistered}
-          onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
-          className="text-black"
-          placeholder="onlyRegistered"
-        />
-        <input
-          value={erc20}
-          onChange={(e) => setErc20(e.target.value.trim() as HexString)}
-          className="text-black"
-          placeholder="erc20 address"
-        />
-        <input
-          onChange={(e) => setClaimAmount(e.target.value.trim())}
-          className="text-black"
-          placeholder="claim amount"
-        />
-        <div>{claimAmount.toLocaleString()}</div>
-        <input
-          type="date"
-          onChange={(e) => {
-            const test = new Date(e.target.value);
-            console.log(test.getTime());
-            setExpiresAt(test.getTime() / 1000);
-          }}
-          className="text-black"
-          placeholder="claim amount"
-        />
-        <div>{expiresAt}</div>
+      {user ? (
+        <>
+          <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+            <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
+            <input
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="text-black"
+              placeholder="Company Name"
+            />
+            <input
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              className="text-black"
+              placeholder="Summary"
+            />
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="text-black"
+              placeholder="Description"
+            />
+            <input
+              value={logo}
+              onChange={(e) => setLogo(e.target.value)}
+              className="text-black"
+              placeholder="Logo"
+            />
+            <input
+              value={onlyRegistered}
+              onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
+              className="text-black"
+              placeholder="onlyRegistered"
+            />
+            <input
+              value={erc20}
+              onChange={(e) => setErc20(e.target.value.trim() as HexString)}
+              className="text-black"
+              placeholder="erc20 address"
+            />
+            <input
+              onChange={(e) => setClaimAmount(e.target.value.trim())}
+              className="text-black"
+              placeholder="claim amount"
+            />
+            <div>{claimAmount.toLocaleString()}</div>
+            <input
+              type="date"
+              onChange={(e) => {
+                const test = new Date(e.target.value);
+                console.log(test.getTime());
+                setExpiresAt(test.getTime() / 1000);
+              }}
+              className="text-black"
+              placeholder="claim amount"
+            />
+            <div>{expiresAt}</div>
 
-        <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
-      </div>
+            <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
+          </div>
 
-      <button onClick={createAirdrop}>Create Airdrop</button>
-      {transaction ? <div>Success!</div> : <div>Not created</div>}
-      <button className="py-10" onClick={messinAround}>
-        Messing around
-      </button>
+          <button onClick={createAirdrop}>Create Airdrop</button>
+          {transaction ? <div>Success!</div> : <div>Not created</div>}
+          <button className="py-10" onClick={messinAround}>
+            Messing around
+          </button>
+        </>
+      ) : (
+        <div>Log in to supabase</div>
+      )}
     </LayoutAndNavbar>
   );
 }
