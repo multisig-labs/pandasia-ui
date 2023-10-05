@@ -1,7 +1,7 @@
 import { publicClient } from '@/config/viem';
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
-import { Proof, Trees } from '@/types/pandasia';
+import { Proof } from '@/types/pandasia';
 
 export async function verify(proof: Proof) {
   const verify = await publicClient.readContract({
@@ -54,4 +54,15 @@ export async function registerPChainAdrr(proof: Proof, address: HexString) {
   });
 
   return register;
+}
+
+export async function getAirdropIds(address: HexString) {
+  const ids = await publicClient.readContract({
+    account: address,
+    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    abi: Pandasia,
+    functionName: 'getAirdropIds',
+    args: [address],
+  });
+  return ids;
 }

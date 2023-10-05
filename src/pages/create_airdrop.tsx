@@ -1,12 +1,16 @@
-import { getProof, getTreeData } from '@/async_fns/pandasia';
-import { newAirdrop, registerPChainAdrr } from '@/async_fns/viem';
+import { getTreeData } from '@/async_fns/pandasia';
+import { newAirdrop } from '@/async_fns/viem';
+import { useGetAirdropIds, useGetAirdrops } from '@/async_fns/wagmi';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { returnErrString } from '@/config/axios';
+import { supabase } from '@/config/supabase';
 import { publicClient, walletClient } from '@/config/viem';
 import { HexString } from '@/types/cryptoGenerics';
 import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { TransactionReceipt } from 'viem';
+import { useAccount } from 'wagmi';
 
 export default function CreateAirdrop() {
   const [description, setDescription] = useState('');
@@ -17,15 +21,45 @@ export default function CreateAirdrop() {
   const [claimAmount, setClaimAmount] = useState('');
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
+  const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
+
+  const { address: account } = useAccount();
+
+  const { data: airdropIds, isLoading: airdropIdsIsLoading } = useGetAirdropIds(account || '0x0');
+  const { isLoading: airdropsIsLoading, data: airdrops } = useGetAirdrops(BigInt(0), BigInt(100));
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
-  if (treesLoading) {
+
+  if (treesLoading || airdropsIsLoading || airdropIdsIsLoading) {
     return null;
   }
 
-  if (trees === undefined) {
-    return <span>Error retreiving trees</span>;
+  if (
+    trees === undefined ||
+    airdrops === undefined ||
+    airdropIds === undefined ||
+    account === undefined
+  ) {
+    return <span>Error retreiving trees or airdrops</span>;
   }
+
+  const ownerAirdrops = airdrops.filter((airdrop) => {
+    return airdrop.owner == account;
+  });
+
+  console.log('owner airdrops', ownerAirdrops);
+
+  const messinAround = async () => {
+    const { data, error } = await supabase.from('airdrop_to_contract').select();
+    console.log('data', data);
+    console.log('error', error);
+
+    const { data: ddata, error: derror } = await supabase
+      .from('airdrop_to_contract')
+      .insert({ contract_id: 10 });
+    console.log('ddata', ddata);
+    console.log('ddata', derror);
+  };
 
   const createAirdrop = async () => {
     try {
@@ -41,43 +75,30 @@ export default function CreateAirdrop() {
 
       // send to the contracts
       //    c_id = owner, root, onlyRegistered, erc20, claimAmount, expiresAt, startsAt
+
+      // get from the contracts the newest created airdrop from this owner
+
       // send to supabase
       //    s_id = logo, companyName, description, website, summary
       //    s_id => c_id
 
       const treeData = await getTreeData();
       const merkleRoot = treeData[0].Root;
-      console.log('merkel root', merkleRoot);
-
-      //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
-      const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const { data: proof } = await getProof(
-        trees[0].Root,
-        'P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww',
-        '24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx',
-      );
-      if (proof === undefined) {
-        console.warn('proof undefined');
-        return;
-      }
 
       const ad = await newAirdrop(
-        address,
+        account,
         merkleRoot as HexString,
         onlyRegistered,
         erc20,
         BigInt(claimAmount),
         expiresAt,
       );
-      console.log('ad', ad);
-      console.log('about to write');
 
       const txnHash = await walletClient.writeContract(ad);
-
-      console.log('written');
-      console.log('txnHash', txnHash);
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
-      console.log('txn', txn);
+      setTransaction(txn);
+
+      // now I want to make the connection to supabase
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const error = returnErrString(err);
@@ -116,14 +137,12 @@ export default function CreateAirdrop() {
           className="text-black"
           placeholder="Logo"
         />
-        {/*
         <input
           value={onlyRegistered}
           onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
           className="text-black"
           placeholder="onlyRegistered"
         />
-        */}
         <input
           value={erc20}
           onChange={(e) => setErc20(e.target.value.trim() as HexString)}
@@ -152,6 +171,10 @@ export default function CreateAirdrop() {
       </div>
 
       <button onClick={createAirdrop}>Create Airdrop</button>
+      {transaction ? <div>Success!</div> : <div>Not created</div>}
+      <button className="py-10" onClick={messinAround}>
+        Messing around
+      </button>
     </LayoutAndNavbar>
   );
 }

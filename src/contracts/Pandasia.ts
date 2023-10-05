@@ -291,6 +291,62 @@ const Pandasia = [
   {
     inputs: [
       {
+        internalType: 'uint64',
+        name: 'airdropId',
+        type: 'uint64',
+      },
+    ],
+    name: 'getAirdrop',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'erc20',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'balance',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bytes32',
+            name: 'root',
+            type: 'bytes32',
+          },
+          {
+            internalType: 'uint256',
+            name: 'claimAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint32',
+            name: 'expires',
+            type: 'uint32',
+          },
+          {
+            internalType: 'bool',
+            name: 'onlyRegistered',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct Pandasia.Airdrop',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'owner',
         type: 'address',
