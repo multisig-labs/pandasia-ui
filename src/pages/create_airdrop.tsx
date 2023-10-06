@@ -8,6 +8,7 @@ import { publicClient, walletClient } from '@/config/viem';
 import { HexString } from '@/types/cryptoGenerics';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TransactionReceipt } from 'viem';
@@ -152,6 +153,7 @@ export default function CreateAirdrop() {
               className="text-black"
               placeholder="Logo"
             />
+            {/* make this a radio button, or toggle switch thing */}
             <input
               value={onlyRegistered}
               onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
@@ -192,7 +194,7 @@ export default function CreateAirdrop() {
           </button>
         </>
       ) : (
-        <div>Log in to supabase</div>
+        <Link href={'/login'}>Log in to supabase</Link>
       )}
     </LayoutAndNavbar>
   );
