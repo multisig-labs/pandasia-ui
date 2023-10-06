@@ -8,28 +8,37 @@ import { WagmiConfig } from 'wagmi';
 import { colors } from '@/styles/theme/colors';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { chains, wagmiConfig } from '@/config/wagmi';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { useState } from 'react';
+import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
   return (
     <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider
-          theme={darkTheme({
-            accentColor: colors.secondary['300'],
-            accentColorForeground: colors.secondary['800'],
-            borderRadius: 'none',
-          })}
-          chains={chains}
-        >
-          <main className={montserrat.className}>
-            <Component {...pageProps} />
-          </main>
-        </RainbowKitProvider>
-      </WagmiConfig>
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider
+            theme={darkTheme({
+              accentColor: colors.secondary['300'],
+              accentColorForeground: colors.secondary['800'],
+              borderRadius: 'none',
+            })}
+            chains={chains}
+          >
+            <main className={montserrat.className}>
+              <Component {...pageProps} />
+            </main>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </SessionContextProvider>
     </QueryClientProvider>
   );
 }
