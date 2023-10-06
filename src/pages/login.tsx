@@ -1,8 +1,8 @@
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const LoginPage = () => {
   const supabaseClient = useSupabaseClient();
@@ -22,7 +22,20 @@ const LoginPage = () => {
     return (
       <Auth
         redirectTo="http://localhost:3000"
-        appearance={{ theme: ThemeSupa }}
+        appearance={{
+          style: {
+            input: { color: 'white' },
+          },
+          theme: ThemeSupa,
+          variables: {
+            default: {
+              colors: {
+                brand: 'red',
+                brandAccent: 'darkred',
+              },
+            },
+          },
+        }}
         supabaseClient={supabaseClient}
         providers={[]}
         socialLayout="horizontal"
