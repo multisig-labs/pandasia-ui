@@ -1,7 +1,9 @@
 import { useGetAirdrops } from '@/async_fns/wagmi';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
+import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
 import { supabase } from '@/config/supabase';
+import { useC2PAuth } from '@/hooks/useC2PAuth';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -13,6 +15,8 @@ interface SupabaseMap {
 export default function Pandasia() {
   const [hydratedAirdrops, setHydratedAirdrops] = useState<CombinedAirdrop[]>([]);
   const [supabaseMap, setSupabaseMap] = useState<SupabaseMap>({});
+  const [isClient, setIsClient] = useState(false);
+  const { pChainAddr } = useC2PAuth();
 
   // Get contract data data
   const {
@@ -22,14 +26,17 @@ export default function Pandasia() {
     error: contractAirdropsError,
   } = useGetAirdrops(BigInt(0), BigInt(0));
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // Get supabase data
   useEffect(() => {
     getAirdrops();
   }, []);
 
-  // Combine contract and supabase airdrops to one hydrated airdrop
+  // Combine contract and supabase airdrops to one combined airdrop
   useEffect(() => {
-    console.log('MAPPPP', supabaseMap);
     if (Object.keys(supabaseMap).length == 0) {
       return;
     }
@@ -62,13 +69,20 @@ export default function Pandasia() {
     setHydratedAirdrops(tempHydrated);
   }, [supabaseMap, contractAirdrops]);
 
-  if (contractAirdropsIsLoading) {
-    return <div>Loading!</div>;
+  if (contractAirdropsIsLoading && isClient) {
+    return (
+      <LayoutAndNavbar>
+        <div>Loading!</div>;
+      </LayoutAndNavbar>
+    );
   }
 
-  if (contractAirdropsIsError) {
-    console.log(contractAirdropsError);
-    return <div>Error!</div>;
+  if (contractAirdropsIsError && isClient) {
+    return (
+      <LayoutAndNavbar>
+        <div>Error!</div>;
+      </LayoutAndNavbar>
+    );
   }
 
   // function to load airdrops from supabase
@@ -104,30 +118,36 @@ export default function Pandasia() {
     setSupabaseMap(pMap);
   }
 
-  console.log('HYDRARETD AIRDROPS FINALLY', hydratedAirdrops);
-
   return (
-    <LayoutAndNavbar>
-      <div className="flex w-full flex-col items-center">
-        <Image
-          className="pt-11"
-          src={'/claim-airdrop.svg'}
-          alt="Claim Airdrop"
-          width={574}
-          height={103}
-        />
-        <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
-          <span className="text-2xl font-bold tracking-[4px]">CLAIM AIRDROP REWARDS</span>
-          <span className="text-primary-600">
-            These are the airdrops you are eligible to claim.
-          </span>
-        </div>
-        <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
-          {hydratedAirdrops.map((item) => (
-            <AirdropCard key={item.id} cardInfo={item} />
-          ))}
-        </div>
-      </div>
-    </LayoutAndNavbar>
+    <>
+      {isClient && (
+        <LayoutAndNavbar>
+          {!pChainAddr || parseInt(pChainAddr, 16) === 0 ? (
+            <NotAuthorized />
+          ) : (
+            <div className="flex w-full flex-col items-center">
+              <Image
+                className="pt-11"
+                src={'/claim-airdrop.svg'}
+                alt="Claim Airdrop"
+                width={574}
+                height={103}
+              />
+              <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+                <span className="text-2xl font-bold tracking-[4px]">CLAIM AIRDROP REWARDS</span>
+                <span className="text-primary-600">
+                  These are the airdrops you are eligible to claim.
+                </span>
+              </div>
+              <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
+                {hydratedAirdrops.map((item) => (
+                  <AirdropCard key={item.id} cardInfo={item} />
+                ))}
+              </div>
+            </div>
+          )}
+        </LayoutAndNavbar>
+      )}
+    </>
   );
 }
