@@ -26,6 +26,7 @@ export const useGetAirdrops = (offset: bigint, limit: bigint) => {
   return useContractRead({
     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
     abi: Pandasia,
+    //@ts-ignore
     functionName: 'getAirdrops',
     args: [offset, limit],
     watch: true,
