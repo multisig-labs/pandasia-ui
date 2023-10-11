@@ -1,10 +1,10 @@
-import { HydratedAirdrop } from '@/types/pandasia';
+import { CombinedAirdrop } from '@/types/pandasia';
 import AirdropDesc from './AirdropDesc';
 import AirdropFooter from './AirdropFooter';
 import AirdropHeader from './AirdropHeader';
 
 export type Props = {
-  cardInfo: HydratedAirdrop;
+  cardInfo: CombinedAirdrop;
 };
 
 export default function AirdropCard({ cardInfo }: Props) {

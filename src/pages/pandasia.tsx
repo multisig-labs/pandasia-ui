@@ -2,16 +2,16 @@ import { useGetAirdrops } from '@/async_fns/wagmi';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { supabase } from '@/config/supabase';
-import { HydratedAirdrop, SupabaseAirdrop } from '@/types/pandasia';
+import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface SupabaseMap {
-  [id: number]: SupabaseAirdrop;
+  [id: number]: SupabaseReturnType;
 }
 
 export default function Pandasia() {
-  const [hydratedAirdrops, setHydratedAirdrops] = useState<HydratedAirdrop[]>([]);
+  const [hydratedAirdrops, setHydratedAirdrops] = useState<CombinedAirdrop[]>([]);
   const [supabaseMap, setSupabaseMap] = useState<SupabaseMap>({});
 
   // Get contract data data
@@ -29,6 +29,7 @@ export default function Pandasia() {
 
   // Combine contract and supabase airdrops to one hydrated airdrop
   useEffect(() => {
+    console.log('MAPPPP', supabaseMap);
     if (Object.keys(supabaseMap).length == 0) {
       return;
     }
@@ -36,11 +37,11 @@ export default function Pandasia() {
       return;
     }
 
-    let tempHydrated: HydratedAirdrop[] = [];
+    let tempHydrated: CombinedAirdrop[] = [];
 
     contractAirdrops.forEach((airdrop) => {
-      const hydratedAirdrop: HydratedAirdrop = {
-        id: supabaseMap[Number(airdrop.id)].supabaseId,
+      const hydratedAirdrop: CombinedAirdrop = {
+        id: supabaseMap[Number(airdrop.id)].id,
         contractId: airdrop.id,
         owner: airdrop.owner,
         erc20: airdrop.erc20,
@@ -48,11 +49,11 @@ export default function Pandasia() {
         root: airdrop.root,
         expiresAt: airdrop.expires,
         onlyRegistered: airdrop.onlyRegistered,
-        companyName: supabaseMap[Number(airdrop.id)].companyName,
-        summary: supabaseMap[Number(airdrop.id)].summary,
-        description: supabaseMap[Number(airdrop.id)].description,
-        url: supabaseMap[Number(airdrop.id)].url,
-        logo: supabaseMap[Number(airdrop.id)].logo,
+        companyName: supabaseMap[Number(airdrop.id)].airdrop_info.company_name,
+        summary: supabaseMap[Number(airdrop.id)].airdrop_info.summary,
+        description: supabaseMap[Number(airdrop.id)].airdrop_info.description,
+        url: supabaseMap[Number(airdrop.id)].airdrop_info.url,
+        logo: supabaseMap[Number(airdrop.id)].airdrop_info.logo,
       };
 
       tempHydrated.push(hydratedAirdrop);
@@ -85,24 +86,20 @@ export default function Pandasia() {
         )
     `,
     );
+    if (query.error) {
+      console.warn('Error fetching data from supabase', query.error);
+    }
 
     if (query.data == null) {
+      console.warn('No data returned from supabase');
       return;
     }
 
-    const airdrops = query.data;
+    const airdrops: SupabaseReturnType[] = query.data;
     let pMap: SupabaseMap = {};
 
     airdrops.forEach((airdrop) => {
-      const sbAd: SupabaseAirdrop = {
-        supabaseId: airdrop.id,
-        companyName: airdrop.airdrop_info.company_name,
-        summary: airdrop.airdrop_info.summary,
-        logo: airdrop.airdrop_info.logo,
-        description: airdrop.airdrop_info.description,
-        url: airdrop.airdrop_info.url,
-      };
-      pMap[airdrop.contract_id] = sbAd;
+      pMap[airdrop.contract_id] = airdrop;
     });
     setSupabaseMap(pMap);
   }

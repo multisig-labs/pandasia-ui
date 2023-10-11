@@ -22,7 +22,7 @@ export type Proof = {
 
 export type ContractErrors = 'PAddrAlreadyRegistered()';
 
-export type HydratedAirdrop = {
+export type CombinedAirdrop = {
   id: number;
   contractId: bigint;
   owner: HexString;
@@ -46,4 +46,16 @@ export type SupabaseAirdrop = {
   description: string;
   url: string;
   logo: string;
+};
+
+export type SupabaseReturnType = {
+  id: number;
+  contract_id: number;
+  airdrop_info: {
+    company_name: string;
+    summary: string;
+    description: string;
+    url: string;
+    logo: string;
+  }[];
 };

@@ -1,6 +1,6 @@
-import { HydratedAirdrop } from '@/types/pandasia';
+import { CombinedAirdrop } from '@/types/pandasia';
 
-export const ggpDummyContract: HydratedAirdrop = {
+export const ggpDummyContract: CombinedAirdrop = {
   expiresAt: Date.now(),
   // tokenAmt: 4_000_000n,
   claimAmount: 50_000n,
