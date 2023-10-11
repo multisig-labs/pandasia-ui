@@ -46,21 +46,25 @@ export default function Pandasia() {
 
     let tempHydrated: CombinedAirdrop[] = [];
 
-    contractAirdrops.forEach((airdrop) => {
+    contractAirdrops.forEach((contractAirdrop) => {
+      if (!supabaseMap[Number(contractAirdrop.id)]) {
+        return;
+      }
+
       const hydratedAirdrop: CombinedAirdrop = {
-        id: supabaseMap[Number(airdrop.id)].id,
-        contractId: airdrop.id,
-        owner: airdrop.owner,
-        erc20: airdrop.erc20,
-        claimAmount: airdrop.claimAmount,
-        root: airdrop.root,
-        expiresAt: airdrop.expires,
-        onlyRegistered: airdrop.onlyRegistered,
-        companyName: supabaseMap[Number(airdrop.id)].airdrop_info.company_name,
-        summary: supabaseMap[Number(airdrop.id)].airdrop_info.summary,
-        description: supabaseMap[Number(airdrop.id)].airdrop_info.description,
-        url: supabaseMap[Number(airdrop.id)].airdrop_info.url,
-        logo: supabaseMap[Number(airdrop.id)].airdrop_info.logo,
+        id: supabaseMap[Number(contractAirdrop.id)].id,
+        contractId: contractAirdrop.id,
+        owner: contractAirdrop.owner,
+        erc20: contractAirdrop.erc20,
+        claimAmount: contractAirdrop.claimAmount,
+        root: contractAirdrop.root,
+        expiresAt: contractAirdrop.expires,
+        onlyRegistered: contractAirdrop.onlyRegistered,
+        companyName: supabaseMap[Number(contractAirdrop.id)].airdrop_info.company_name,
+        summary: supabaseMap[Number(contractAirdrop.id)].airdrop_info.summary,
+        description: supabaseMap[Number(contractAirdrop.id)].airdrop_info.description,
+        url: supabaseMap[Number(contractAirdrop.id)].airdrop_info.url,
+        logo: supabaseMap[Number(contractAirdrop.id)].airdrop_info.logo,
       };
 
       tempHydrated.push(hydratedAirdrop);
