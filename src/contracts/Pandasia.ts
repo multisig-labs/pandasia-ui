@@ -111,6 +111,11 @@ const Pandasia = [
     name: 'airdrops',
     outputs: [
       {
+        internalType: 'uint64',
+        name: 'id',
+        type: 'uint64',
+      },
+      {
         internalType: 'address',
         name: 'owner',
         type: 'address',
@@ -301,6 +306,11 @@ const Pandasia = [
       {
         components: [
           {
+            internalType: 'uint64',
+            name: 'id',
+            type: 'uint64',
+          },
+          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -381,6 +391,11 @@ const Pandasia = [
       {
         components: [
           {
+            internalType: 'uint64',
+            name: 'id',
+            type: 'uint64',
+          },
+          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -421,7 +436,7 @@ const Pandasia = [
         type: 'tuple[]',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
