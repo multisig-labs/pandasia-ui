@@ -49,7 +49,7 @@ export default function CreateAirdrop() {
       const treeData = await getTreeData();
       const merkleRoot = treeData[0].Root;
 
-      const ad = await newAirdrop(
+      const preparedAirdropCall = await newAirdrop(
         account,
         merkleRoot as HexString,
         onlyRegistered,
@@ -58,12 +58,26 @@ export default function CreateAirdrop() {
         expiresAt,
       );
 
-      const txnHash = await walletClient.writeContract(ad);
+      const txnHash = await walletClient.writeContract(preparedAirdropCall);
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
       setTransaction(txn);
 
       const adIds = await getAirdropIds(account);
       const contractId = adIds[adIds.length - 1];
+
+      const { data: airdropExistsMaybe, error: airdropExistsError } = await supabaseClient
+        .from('airdrop_to_contract')
+        .select(`id, contract_id`)
+        .eq(`contract_id`, contractId);
+
+      if (airdropExistsError) {
+        throw 'error checking for airdrop';
+      }
+
+      if (airdropExistsMaybe.length != 0) {
+        // we don't watnt to create airdrop info or the other thing right?
+        throw 'Supabase contract_id already exists. Not creating supabase info';
+      }
 
       const { data: airdropInfo, error: airdropInfoError } = await supabaseClient
         .from('airdrop_info')
@@ -77,7 +91,6 @@ export default function CreateAirdrop() {
         .select();
 
       if (!airdropInfo) {
-        console.log('unable to make airdrop info');
         throw 'unable to make airdorp info';
       }
 
@@ -87,8 +100,6 @@ export default function CreateAirdrop() {
         .select();
 
       setSb(airdropInfo[0].id);
-      console.log('record Created', airdropToContractData);
-      console.log('error', airdropToContractError);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const error = returnErrString(err);
