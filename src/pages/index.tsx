@@ -1,22 +1,13 @@
 import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import UnregisterButton from '@/components/Button/UnregisterButton';
-import Pandasia from '@/contracts/Pandasia';
-import { HexString } from '@/types/cryptoGenerics';
+import { useC2PAuth } from '@/hooks/useC2PAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractRead } from 'wagmi';
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
-  const { address: account } = useAccount();
-  const { data: accountAddr } = useContractRead({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
-    abi: Pandasia,
-    functionName: 'c2p',
-    args: [account as HexString],
-    watch: true,
-  });
+  const { authAddr } = useC2PAuth();
 
   useEffect(() => {
     setIsClient(true);
@@ -35,7 +26,13 @@ export default function Home() {
           />
           <div className="absolute top-1/2 z-10 mt-[-12px] border-4 border-primary-600 bg-secondary-900 p-1">
             <div className="border border-primary-600 p-1">
-              {accountAddr && parseInt(accountAddr, 16) !== 0 ? (
+              {!authAddr || parseInt(authAddr, 16) === 0 ? (
+                <Link href={'/register'}>
+                  <button className="hover-underline-animation tracking-[4px] text-primary-500">
+                    REGISTER
+                  </button>
+                </Link>
+              ) : (
                 <>
                   <Link href={'/pandasia'}>
                     <button className="hover-underline-animation tracking-[4px] text-primary-600">
@@ -44,12 +41,6 @@ export default function Home() {
                   </Link>
                   <UnregisterButton />
                 </>
-              ) : (
-                <Link href={'/register'}>
-                  <button className="hover-underline-animation tracking-[4px] text-primary-500">
-                    REGISTER
-                  </button>
-                </Link>
               )}
             </div>
           </div>
