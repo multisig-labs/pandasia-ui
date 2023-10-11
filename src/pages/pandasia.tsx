@@ -16,7 +16,7 @@ export default function Pandasia() {
   const [hydratedAirdrops, setHydratedAirdrops] = useState<CombinedAirdrop[]>([]);
   const [supabaseMap, setSupabaseMap] = useState<SupabaseMap>({});
   const [isClient, setIsClient] = useState(false);
-  const { authAddr } = useC2PAuth();
+  const { pChainAddr } = useC2PAuth();
 
   // Get contract data data
   const {
@@ -122,7 +122,7 @@ export default function Pandasia() {
     <>
       {isClient && (
         <LayoutAndNavbar>
-          {!authAddr || parseInt(authAddr, 16) === 0 ? (
+          {!pChainAddr || parseInt(pChainAddr, 16) === 0 ? (
             <NotAuthorized />
           ) : (
             <div className="flex w-full flex-col items-center">

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
-  const { authAddr } = useC2PAuth();
+  const { pChainAddr } = useC2PAuth();
 
   useEffect(() => {
     setIsClient(true);
@@ -26,7 +26,7 @@ export default function Home() {
           />
           <div className="absolute top-1/2 z-10 mt-[-12px] border-4 border-primary-600 bg-secondary-900 p-1">
             <div className="border border-primary-600 p-1">
-              {!authAddr || parseInt(authAddr, 16) === 0 ? (
+              {!pChainAddr || parseInt(pChainAddr, 16) === 0 ? (
                 <Link href={'/register'}>
                   <button className="hover-underline-animation tracking-[4px] text-primary-500">
                     REGISTER
