@@ -37,7 +37,6 @@ export default function Pandasia() {
 
   // Combine contract and supabase airdrops to one combined airdrop
   useEffect(() => {
-    console.log('MAPPPP', supabaseMap);
     if (Object.keys(supabaseMap).length == 0) {
       return;
     }
@@ -48,8 +47,6 @@ export default function Pandasia() {
     let tempHydrated: CombinedAirdrop[] = [];
 
     contractAirdrops.forEach((airdrop) => {
-      console.log({ airdrop });
-      console.log({ supabaseMap });
       const hydratedAirdrop: CombinedAirdrop = {
         id: supabaseMap[Number(airdrop.id)].id,
         contractId: airdrop.id,
@@ -81,7 +78,6 @@ export default function Pandasia() {
   }
 
   if (contractAirdropsIsError && isClient) {
-    console.log(contractAirdropsError);
     return (
       <LayoutAndNavbar>
         <div>Error!</div>;
