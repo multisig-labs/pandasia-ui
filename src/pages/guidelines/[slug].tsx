@@ -1,10 +1,11 @@
 import GuidelinesCard from '@/components/Cards/GuidelinesCard/GuidelinesCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import { ggpDummyContract, ggpDummySupa } from '@/utils/dummyData';
+import { ggpDummyContract } from '@/utils/dummyData';
 import { format } from 'date-fns';
 import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
+// @ts-ignore
 export default function Guidelines(props) {
   const { someData } = props;
   console.log(someData);
@@ -49,7 +50,7 @@ export default function Guidelines(props) {
 
         <div className="col-span-3 flex flex-col items-end pl-4">
           <div className="flex w-full max-w-[560px] flex-col">
-            <GuidelinesCard cardContractInfo={ggpDummyContract} cardSupabaseInfo={ggpDummySupa} />
+            <GuidelinesCard cardInfo={ggpDummyContract} />
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               SUMMARY
             </span>
@@ -92,6 +93,7 @@ export const getStaticPaths = () => {
   };
 };
 
+// @ts-ignore
 export const getStaticProps = ({ params }) => {
   return {
     props: {

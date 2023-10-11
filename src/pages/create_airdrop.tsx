@@ -1,6 +1,6 @@
 import { getTreeData } from '@/async_fns/pandasia';
 import { getAirdropIds, newAirdrop } from '@/async_fns/viem';
-import { useGetAirdropIds, useGetAirdrops } from '@/async_fns/wagmi';
+import { useGetAirdropIds } from '@/async_fns/wagmi';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { returnErrString } from '@/config/axios';
 import { publicClient, walletClient } from '@/config/viem';
@@ -32,27 +32,17 @@ export default function CreateAirdrop() {
   const { address: account } = useAccount();
 
   const { data: airdropIds, isLoading: airdropIdsIsLoading } = useGetAirdropIds(account || '0x0');
-  const { isLoading: airdropsIsLoading, data: airdrops } = useGetAirdrops(BigInt(0), BigInt(100));
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
 
   if (!user) {
     return <Link href={'/login'}>Log in to supabase</Link>;
   }
-  if (treesLoading || airdropsIsLoading || airdropIdsIsLoading) {
+  if (treesLoading || airdropIdsIsLoading) {
     return null;
   }
-  if (
-    trees === undefined ||
-    airdrops === undefined ||
-    airdropIds === undefined ||
-    account === undefined
-  ) {
+  if (trees === undefined || airdropIds === undefined || account === undefined) {
     return <span>Error retreiving trees or airdrops</span>;
   }
-
-  const ownerAirdrops = airdrops.filter((airdrop) => {
-    return airdrop.owner == account;
-  });
 
   const createAirdrop = async () => {
     try {
@@ -146,6 +136,7 @@ export default function CreateAirdrop() {
           />
           {/* make this a radio button, or toggle switch thing */}
           <input
+            //@ts-ignore
             value={onlyRegistered}
             onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
             className="text-black"
