@@ -1,5 +1,5 @@
+import { WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem';
 import { forky } from './chains';
-import { createPublicClient, createWalletClient, custom, http } from 'viem';
 
 const customTransport = http('http://localhost:9650');
 export const publicClient = createPublicClient({
@@ -7,10 +7,11 @@ export const publicClient = createPublicClient({
   transport: customTransport,
 });
 
-export let walletClient;
+export let walletClient: WalletClient;
 if (typeof window !== 'undefined') {
   walletClient = createWalletClient({
     chain: forky,
+    //@ts-ignore
     transport: custom(window.ethereum),
   });
 }

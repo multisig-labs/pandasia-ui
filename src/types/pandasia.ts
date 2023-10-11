@@ -1,4 +1,3 @@
-import { Log } from 'viem';
 import { HexString } from './cryptoGenerics';
 
 export type Tree = {
@@ -22,3 +21,29 @@ export type Proof = {
 };
 
 export type ContractErrors = 'PAddrAlreadyRegistered()';
+
+export type HydratedAirdrop = {
+  id: number;
+  contractId: bigint;
+  owner: HexString;
+  erc20: HexString;
+  claimAmount: bigint;
+  root: HexString;
+  expiresAt: number;
+  onlyRegistered: boolean;
+
+  companyName: string;
+  summary: string;
+  description: string;
+  url: string;
+  logo: string;
+};
+
+export type SupabaseAirdrop = {
+  supabaseId: number;
+  companyName: string;
+  summary: string;
+  description: string;
+  url: string;
+  logo: string;
+};

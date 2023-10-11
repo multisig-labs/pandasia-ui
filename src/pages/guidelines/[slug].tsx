@@ -5,6 +5,7 @@ import { ggpDummyContract, ggpDummySupa } from '@/utils/dummyData';
 import { format } from 'date-fns';
 import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
+// @ts-ignore
 export default function Guidelines(props) {
   const { someData } = props;
   console.log(someData);
@@ -92,6 +93,7 @@ export const getStaticPaths = () => {
   };
 };
 
+// @ts-ignore
 export const getStaticProps = ({ params }) => {
   return {
     props: {
