@@ -145,14 +145,6 @@ export default function CreateAirdrop() {
             className="text-black"
             placeholder="Logo"
           />
-          {/* make this a radio button, or toggle switch thing */}
-          <input
-            //@ts-ignore
-            value={onlyRegistered}
-            onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
-            className="text-black"
-            placeholder="onlyRegistered"
-          />
           <input
             value={erc20}
             onChange={(e) => setErc20(e.target.value.trim() as HexString)}
@@ -175,9 +167,16 @@ export default function CreateAirdrop() {
             className="text-black"
             placeholder="claim amount"
           />
-          <div>{expiresAt}</div>
-
-          <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
+          <div className="flex gap-4 pt-2">
+            <input
+              type="checkbox"
+              onChange={() => setOnlyRegistered(!onlyRegistered)}
+              checked={onlyRegistered}
+              className="text-black"
+              placeholder="onlyRegistered"
+            />
+            <span>Only allow registered users? {onlyRegistered ? 'true' : 'false'}</span>
+          </div>
         </div>
 
         <button className="border p-10 m-10 bg-slate-700" onClick={createAirdrop}>

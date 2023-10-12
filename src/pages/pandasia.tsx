@@ -113,7 +113,9 @@ export default function Pandasia() {
       return;
     }
 
+    //@ts-ignore supabase thinks airdrop_info is an array but it's just an object
     const airdrops: SupabaseReturnType[] = query.data;
+
     let pMap: SupabaseMap = {};
 
     airdrops.forEach((airdrop) => {

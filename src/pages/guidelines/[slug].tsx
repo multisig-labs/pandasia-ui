@@ -3,10 +3,16 @@ import AirdropInfo from '@/components/Info/AirdropInfo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { ggpDummyContract } from '@/utils/dummyData';
 import { format } from 'date-fns';
+import { GetStaticProps } from 'next';
 import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
-// @ts-ignore
-export default function Guidelines(props) {
+type Props = {
+  props: {
+    someData: number;
+  };
+};
+
+export default function Guidelines({ props }: Props) {
   const { someData } = props;
   console.log(someData);
   return (
@@ -93,11 +99,10 @@ export const getStaticPaths = () => {
   };
 };
 
-// @ts-ignore
-export const getStaticProps = ({ params }) => {
+export const getStaticProps: GetStaticProps = ({ params }) => {
   return {
     props: {
-      someData: params.slug,
+      someData: params?.slug,
     },
   };
 };

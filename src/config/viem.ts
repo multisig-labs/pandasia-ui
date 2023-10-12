@@ -11,7 +11,7 @@ export let walletClient: WalletClient;
 if (typeof window !== 'undefined') {
   walletClient = createWalletClient({
     chain: forky,
-    //@ts-ignore
+    //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
     transport: custom(window.ethereum),
   });
 }

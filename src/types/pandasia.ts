@@ -57,5 +57,5 @@ export type SupabaseReturnType = {
     description: string;
     url: string;
     logo: string;
-  }[];
+  };
 };
