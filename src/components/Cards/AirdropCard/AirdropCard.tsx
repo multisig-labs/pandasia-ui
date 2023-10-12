@@ -26,6 +26,8 @@ export default function AirdropCard({ cardInfo }: Props) {
     logo,
   } = cardInfo;
 
+  console.log({ cardInfo });
+
   return (
     <section className="flex min-h-[260px] max-w-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
       <AirdropHeader companyName={companyName} airdropDate={expiresAt * 1000} />

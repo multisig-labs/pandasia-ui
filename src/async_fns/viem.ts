@@ -19,14 +19,15 @@ export async function newAirdrop(
   onlyRegistered: boolean,
   erc20: HexString,
   claimAmount: bigint,
-  expiresAt: number,
+  startsAt: bigint,
+  expiresAt: bigint,
 ) {
   const { request: newAirdrop } = await publicClient.simulateContract({
     account: address,
     address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
     abi: Pandasia,
     functionName: 'newAirdrop',
-    args: [proof, onlyRegistered, erc20, claimAmount, expiresAt],
+    args: [proof, onlyRegistered, erc20, claimAmount, startsAt, expiresAt],
   });
 
   return newAirdrop;
