@@ -6,9 +6,10 @@ import { supabase } from '@/config/supabase';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
+import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
 export default function Guidelines(props: { someData: number }) {
   const { someData } = props;
@@ -104,7 +105,14 @@ export default function Guidelines(props: { someData: number }) {
         <div className="col-span-2 border-r border-secondary-700">
           <div className="flex max-w-[370px] flex-col pr-4">
             <div className="flex h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
-              <FaBitcoin size={58} />
+              <Image
+                src={
+                  'https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x69260B9483F9871ca57f81A90D91E2F96c2Cd11d/logo.png'
+                }
+                width={58}
+                height={58}
+                alt="logo"
+              />
             </div>
             <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">GOGOPOOL</span>
             <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
