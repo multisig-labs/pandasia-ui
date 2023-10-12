@@ -1,8 +1,8 @@
 import { useGetAirdrop } from '@/async_fns/wagmi';
 import GuidelinesCard from '@/components/Cards/GuidelinesCard/GuidelinesCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
+import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import Logo from '@/components/RandomStuff/Logo';
 import { supabase } from '@/config/supabase';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import { format } from 'date-fns';

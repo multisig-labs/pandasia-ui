@@ -1,4 +1,4 @@
-import Logo from '@/components/RandomStuff/Logo';
+import Logo from '@/components/Logo';
 import { HexString } from '@/types/cryptoGenerics';
 import { format } from 'date-fns';
 
