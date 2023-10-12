@@ -1,14 +1,101 @@
+import { useGetAirdrop } from '@/async_fns/wagmi';
 import GuidelinesCard from '@/components/Cards/GuidelinesCard/GuidelinesCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import { ggpDummyContract } from '@/utils/dummyData';
+import { supabase } from '@/config/supabase';
+import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
 // @ts-ignore
 export default function Guidelines(props) {
   const { someData } = props;
-  console.log(someData);
+  const [supabaseAirdrop, setSupabaseAirdrop] = useState<SupabaseReturnType>();
+  const [combinedAirdrop, setCombinedAirdrop] = useState<CombinedAirdrop>();
+  const [contractId, setContractId] = useState<number>();
+
+  // okay great now I got some data. I want to use this to get the airdrop info and combine it for just that one airdrop.
+  const {
+    data: airdrop,
+    error: airdropError,
+    isLoading: airdropLoading,
+    isError: airdropIsError,
+  } = useGetAirdrop(BigInt(contractId || 0));
+
+  useEffect(() => {
+    getSupabaseAirdrop(someData);
+  }, [someData]);
+
+  useEffect(() => {
+    if (!airdrop) {
+      console.warn('no airdrop');
+      return;
+    }
+    if (!supabaseAirdrop) {
+      console.warn('no supabasea airdrop');
+      return;
+    }
+    const ca: CombinedAirdrop = {
+      id: supabaseAirdrop.id,
+      contractId: airdrop.id,
+      owner: airdrop.owner,
+      erc20: airdrop.erc20,
+      claimAmount: airdrop.claimAmount,
+      root: airdrop.root,
+      expiresAt: airdrop.expires,
+      onlyRegistered: airdrop.onlyRegistered,
+      companyName: supabaseAirdrop.airdrop_info.company_name,
+      summary: supabaseAirdrop.airdrop_info.summary,
+      description: supabaseAirdrop.airdrop_info.description,
+      url: supabaseAirdrop.airdrop_info.url,
+      logo: supabaseAirdrop.airdrop_info.logo,
+    };
+    setCombinedAirdrop(ca);
+  }, [airdrop, supabaseAirdrop]);
+
+  async function getSupabaseAirdrop(id: number) {
+    const query = await supabase
+      .from('airdrop_to_contract')
+      .select(
+        `
+        id, 
+        contract_id,
+        airdrop_info (
+          company_name,
+          summary,
+          description,
+          url,
+          logo
+        )
+    `,
+      )
+      .eq(`id`, id);
+
+    console.log('trying to match id', id);
+
+    if (!query.data) {
+      console.warn('no data');
+      return;
+    }
+
+    console.log(query.data);
+
+    if (!query.data[0]) {
+      console.warn('no data in array');
+      return;
+    }
+
+    const airdrop: SupabaseReturnType = query.data[0];
+    setSupabaseAirdrop(airdrop);
+    setContractId(airdrop.contract_id);
+  }
+
+  console.log('combined airdrop', combinedAirdrop);
+  if (!combinedAirdrop) {
+    return <div>Loading</div>;
+  }
+
   return (
     <LayoutAndNavbar>
       <div className="my-12 grid w-full grid-cols-5">
@@ -50,7 +137,7 @@ export default function Guidelines(props) {
 
         <div className="col-span-3 flex flex-col items-end pl-4">
           <div className="flex w-full max-w-[560px] flex-col">
-            <GuidelinesCard cardInfo={ggpDummyContract} />
+            <GuidelinesCard cardInfo={combinedAirdrop} />
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               SUMMARY
             </span>
@@ -65,13 +152,13 @@ export default function Guidelines(props) {
             </span>
             <AirdropInfo
               title="Project website"
-              info="https://gogopool.com"
+              info={combinedAirdrop.url}
               color="text-primary-600"
             />
             <AirdropInfo title="Number of Claims" info="645" />
             <AirdropInfo
-              title="Airdrop Address"
-              info="0x632Ac5A28e73C1cf1174ba134824346974e2cC37"
+              title="ERC20 Address"
+              info={combinedAirdrop.erc20}
               color="text-primary-600"
               isHash
             />
