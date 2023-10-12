@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 type Props = {
-  expiresAt: number;
+  expiresAt: bigint;
 };
 export default function GuidelinesHeader({ expiresAt }: Props) {
   return (
@@ -9,8 +9,8 @@ export default function GuidelinesHeader({ expiresAt }: Props) {
       <div className="flex items-center gap-2">
         <div className="flex flex-col">
           <span className="text-xs font-semibold">
-            <span className="text-secondary-500">TIME LEFT TO CLAIM:&nbsp;</span>
-            <span>{format(new Date(expiresAt), 'MM/dd/yyyy')}</span>
+            <span className="text-secondary-500">AIRDROP ENDS:&nbsp;</span>
+            <span>{format(new Date(Number(expiresAt) * 1000), 'MM/dd/yyyy')}</span>
           </span>
         </div>
       </div>

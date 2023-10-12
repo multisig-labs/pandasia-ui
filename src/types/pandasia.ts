@@ -29,7 +29,8 @@ export type CombinedAirdrop = {
   erc20: HexString;
   claimAmount: bigint;
   root: HexString;
-  expiresAt: number;
+  startsAt: bigint;
+  expiresAt: bigint;
   onlyRegistered: boolean;
 
   companyName: string;
