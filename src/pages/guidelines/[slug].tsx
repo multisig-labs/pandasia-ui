@@ -4,15 +4,10 @@ import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { ggpDummyContract } from '@/utils/dummyData';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { FaBitcoin, FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
-type Props = {
-  props: {
-    someData: number;
-  };
-};
-
-export default function Guidelines({ props }: Props) {
+export default function Guidelines(props: { someData: number }) {
   const { someData } = props;
   console.log(someData);
   return (
@@ -27,11 +22,13 @@ export default function Guidelines({ props }: Props) {
             <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
               SUBNETS MADE EASY
             </span>
+            {/* Maybe do this later, can't dynamically add tokens to a wallet
             <div className="flex py-8">
               <button className="basis-[224px] border border-primary-600 bg-secondary-900 p-2 py-3 text-xs font-semibold tracking-[4px] text-primary-600">
                 ADD GGP TO WALLET
               </button>
             </div>
+            */}
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
             <span className="flex pb-12 pt-4">
               GoGoPool is a permissionless staking protocol designed to create widespread adoption
@@ -42,14 +39,22 @@ export default function Guidelines({ props }: Props) {
             <span className="text-md flex pb-2 font-semibold tracking-[4px]">SOCIALS</span>
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
             <div className="flex gap-4 py-8 text-secondary-700">
-              <button className="flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]">
+              <Link
+                className="hover-glow-secondary flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]"
+                href="https://twitter.com/gogopool_"
+                target="_blank"
+              >
                 <FaXTwitter size={20} />
                 FOLLOW
-              </button>
-              <button className="flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]">
+              </Link>
+              <Link
+                className="hover-glow-secondary flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]"
+                href="https://twitter.com/gogopool_"
+                target="_blank"
+              >
                 <FaDiscord size={20} />
                 ENGAGE
-              </button>
+              </Link>
             </div>
           </div>
         </div>
