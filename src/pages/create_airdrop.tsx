@@ -21,6 +21,7 @@ export default function CreateAirdrop() {
   const [url, setUrl] = useState('');
   const [onlyRegistered, setOnlyRegistered] = useState(false);
   const [claimAmount, setClaimAmount] = useState('');
+  const [startsAt, setStartsAt] = useState(0);
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
@@ -55,7 +56,8 @@ export default function CreateAirdrop() {
         onlyRegistered,
         erc20,
         BigInt(claimAmount),
-        expiresAt,
+        BigInt(startsAt),
+        BigInt(expiresAt),
       );
 
       const txnHash = await walletClient.writeContract(preparedAirdropCall);
@@ -113,7 +115,7 @@ export default function CreateAirdrop() {
   return (
     <LayoutAndNavbar>
       <div className="flex flex-col text-center">
-        <div className="flex flex-col w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+        <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
           <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
           <input
             value={companyName}
@@ -145,14 +147,6 @@ export default function CreateAirdrop() {
             className="text-black"
             placeholder="Logo"
           />
-          {/* make this a radio button, or toggle switch thing */}
-          <input
-            //@ts-ignore
-            value={onlyRegistered}
-            onChange={(e) => (e.target.value === '' ? setOnlyRegistered(false) : true)}
-            className="text-black"
-            placeholder="onlyRegistered"
-          />
           <input
             value={erc20}
             onChange={(e) => setErc20(e.target.value.trim() as HexString)}
@@ -164,20 +158,36 @@ export default function CreateAirdrop() {
             className="text-black"
             placeholder="claim amount"
           />
-          <div>{claimAmount.toLocaleString()}</div>
+          <label>Starts At</label>
           <input
             type="date"
             onChange={(e) => {
               const test = new Date(e.target.value);
-              console.log(test.getTime());
+              setStartsAt(test.getTime() / 1000);
+            }}
+            className="text-black"
+            placeholder="starts at"
+          />
+          <label>Expires At</label>
+          <input
+            type="date"
+            onChange={(e) => {
+              const test = new Date(e.target.value);
               setExpiresAt(test.getTime() / 1000);
             }}
             className="text-black"
-            placeholder="claim amount"
+            placeholder="expires at"
           />
-          <div>{expiresAt}</div>
-
-          <button onClick={() => setOnlyRegistered(!onlyRegistered)}>setonlyresgieres</button>
+          <div className="flex gap-4 pt-2">
+            <input
+              type="checkbox"
+              onChange={() => setOnlyRegistered(!onlyRegistered)}
+              checked={onlyRegistered}
+              className="text-black"
+              placeholder="onlyRegistered"
+            />
+            <span>Only allow registered users? {onlyRegistered ? 'true' : 'false'}</span>
+          </div>
         </div>
 
         <button className="border p-10 m-10 bg-slate-700" onClick={createAirdrop}>

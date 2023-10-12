@@ -16,6 +16,11 @@ const Pandasia = [
   },
   {
     inputs: [],
+    name: 'AirdropNotStarted',
+    type: 'error',
+  },
+  {
+    inputs: [],
     name: 'AirdropOutOfFunds',
     type: 'error',
   },
@@ -141,9 +146,14 @@ const Pandasia = [
         type: 'uint256',
       },
       {
-        internalType: 'uint32',
-        name: 'expires',
-        type: 'uint32',
+        internalType: 'uint64',
+        name: 'startsAt',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint64',
+        name: 'expiresAt',
+        type: 'uint64',
       },
       {
         internalType: 'bool',
@@ -336,9 +346,14 @@ const Pandasia = [
             type: 'uint256',
           },
           {
-            internalType: 'uint32',
-            name: 'expires',
-            type: 'uint32',
+            internalType: 'uint64',
+            name: 'startsAt',
+            type: 'uint64',
+          },
+          {
+            internalType: 'uint64',
+            name: 'expiresAt',
+            type: 'uint64',
           },
           {
             internalType: 'bool',
@@ -421,9 +436,14 @@ const Pandasia = [
             type: 'uint256',
           },
           {
-            internalType: 'uint32',
-            name: 'expires',
-            type: 'uint32',
+            internalType: 'uint64',
+            name: 'startsAt',
+            type: 'uint64',
+          },
+          {
+            internalType: 'uint64',
+            name: 'expiresAt',
+            type: 'uint64',
           },
           {
             internalType: 'bool',
@@ -556,9 +576,14 @@ const Pandasia = [
         type: 'uint256',
       },
       {
-        internalType: 'uint32',
-        name: 'expires',
-        type: 'uint32',
+        internalType: 'uint64',
+        name: 'startsAt',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint64',
+        name: 'expiresAt',
+        type: 'uint64',
       },
     ],
     name: 'newAirdrop',

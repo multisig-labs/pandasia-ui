@@ -13,10 +13,12 @@ interface SupabaseMap {
 }
 
 export default function Pandasia() {
-  const [hydratedAirdrops, setHydratedAirdrops] = useState<CombinedAirdrop[]>([]);
+  const [combinedAirdrops, setCombinedAirdrops] = useState<CombinedAirdrop[]>([]);
   const [supabaseMap, setSupabaseMap] = useState<SupabaseMap>({});
   const [isClient, setIsClient] = useState(false);
   const { pChainAddr } = useC2PAuth();
+
+  console.log({ supabaseMap });
 
   // Get contract data data
   const {
@@ -70,7 +72,7 @@ export default function Pandasia() {
       tempHydrated.push(hydratedAirdrop);
     });
 
-    setHydratedAirdrops(tempHydrated);
+    setCombinedAirdrops(tempHydrated);
   }, [supabaseMap, contractAirdrops]);
 
   if (contractAirdropsIsLoading && isClient) {
@@ -113,7 +115,9 @@ export default function Pandasia() {
       return;
     }
 
+    //@ts-ignore supabase thinks airdrop_info is an array but it's just an object
     const airdrops: SupabaseReturnType[] = query.data;
+
     let pMap: SupabaseMap = {};
 
     airdrops.forEach((airdrop) => {
@@ -144,7 +148,7 @@ export default function Pandasia() {
                 </span>
               </div>
               <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
-                {hydratedAirdrops.map((item) => (
+                {combinedAirdrops.map((item) => (
                   <AirdropCard key={item.id} cardInfo={item} />
                 ))}
               </div>

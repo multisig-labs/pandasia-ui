@@ -4,7 +4,7 @@ import { walletClient, publicClient } from '@/config/viem';
 export default function UnregisterButton() {
   async function unregister() {
     try {
-      //@ts-ignore
+      //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
       const [address] = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
       const { request } = await publicClient.simulateContract({
