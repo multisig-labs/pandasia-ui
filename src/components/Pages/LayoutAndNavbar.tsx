@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 import NavBar from '../NavBar/NavBar';
 
@@ -11,7 +12,9 @@ export default function LayoutAndNavbar({ children }: Props) {
     <main className="hs-bg relative flex min-h-screen flex-col items-center bg-secondary-800">
       <div className="absolute left-8 top-4 hidden 2xl:flex">
         <div className="flex h-full flex-col items-center justify-center">
-          <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={102} height={142} priority />
+          <Link href={'/'}>
+            <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={102} height={142} priority />
+          </Link>
           <span className="text-xs text-primary-500">BY GOGOPOOL</span>
         </div>
       </div>

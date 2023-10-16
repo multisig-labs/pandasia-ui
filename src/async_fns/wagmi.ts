@@ -1,6 +1,6 @@
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
-import { useContractRead } from 'wagmi';
+import { useContractRead, usePrepareContractWrite } from 'wagmi';
 
 export const useGetAirdropIds = (address: HexString) => {
   return useContractRead({
@@ -31,4 +31,14 @@ export const useGetAirdrops = (offset: bigint, limit: bigint) => {
     args: [offset, limit],
     watch: true,
   });
+};
+
+export const useClaimAirdrop = (id: bigint, proof: HexString[]) => {
+  return usePrepareContractWrite({
+    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    abi: Pandasia,
+    functionName: 'claimAirdrop',
+    args: [id, proof],
+  });
+  // console.log('CONRIG ERERRO', configError);
 };
