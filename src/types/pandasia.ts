@@ -32,6 +32,7 @@ export type CombinedAirdrop = {
   startsAt: bigint;
   expiresAt: bigint;
   onlyRegistered: boolean;
+  balance: bigint;
 
   companyName: string;
   summary: string;

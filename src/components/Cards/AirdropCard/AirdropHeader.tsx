@@ -13,6 +13,7 @@ type Props = {
   companyName: string;
   erc20Address: HexString;
   root: HexString;
+  logo: string;
 };
 
 export default function AirdropHeader({
@@ -21,6 +22,7 @@ export default function AirdropHeader({
   companyName,
   erc20Address,
   root,
+  logo,
 }: Props) {
   const { pChainAddr } = useC2PAuth();
   const [proof, setProof] = useState<HexString[]>([]);
@@ -56,7 +58,7 @@ export default function AirdropHeader({
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
       <div className="flex items-center gap-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
-          <Logo erc20Address={erc20Address} />
+          <Logo erc20Address={erc20Address} logo={logo} />
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-semibold">{companyName.toUpperCase()}</span>

@@ -20,6 +20,7 @@ export default function AirdropCard({ cardInfo }: Props) {
     startsAt,
     expiresAt,
     onlyRegistered,
+    balance,
     companyName,
     summary,
     description,
@@ -35,9 +36,10 @@ export default function AirdropCard({ cardInfo }: Props) {
         companyName={companyName}
         expiresAt={expiresAt}
         erc20Address={erc20}
+        logo={logo}
       />
       <AirdropDesc claimAmt={claimAmount} />
-      <AirdropFooter supabaseId={id} startsAt={startsAt} tokenAmt={BigInt(120)} />
+      <AirdropFooter supabaseId={id} startsAt={startsAt} balance={balance} />
     </section>
   );
 }

@@ -1,3 +1,5 @@
+import { formatEther } from 'viem';
+
 type Props = {
   claimAmt: bigint;
 };
@@ -9,7 +11,7 @@ export default function AirdropDesc({ claimAmt }: Props) {
           AIRDROPPED AMOUNT:
         </span>
         <span className="text-3xl tracking-[4px] text-primary-600">
-          {claimAmt.toLocaleString()} GGP
+          {formatEther(claimAmt)} GGP
         </span>
       </div>
     </div>

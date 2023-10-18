@@ -63,6 +63,7 @@ export default function Pandasia() {
         startsAt: contractAirdrop.startsAt,
         expiresAt: contractAirdrop.expiresAt,
         onlyRegistered: contractAirdrop.onlyRegistered,
+        balance: contractAirdrop.balance,
         companyName: supabaseMap[Number(contractAirdrop.id)].airdrop_info.company_name,
         summary: supabaseMap[Number(contractAirdrop.id)].airdrop_info.summary,
         description: supabaseMap[Number(contractAirdrop.id)].airdrop_info.description,
