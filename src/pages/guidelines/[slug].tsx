@@ -48,6 +48,7 @@ export default function Guidelines(props: { supabaseId: number }) {
       startsAt: airdrop.startsAt,
       expiresAt: airdrop.expiresAt,
       onlyRegistered: airdrop.onlyRegistered,
+      balance: airdrop.balance,
       companyName: supabaseAirdrop.airdrop_info.company_name,
       summary: supabaseAirdrop.airdrop_info.summary,
       description: supabaseAirdrop.airdrop_info.description,
@@ -75,14 +76,10 @@ export default function Guidelines(props: { supabaseId: number }) {
       )
       .eq(`id`, id);
 
-    console.log('trying to match id', id);
-
     if (!query.data) {
       console.warn('no data');
       return;
     }
-
-    console.log(query.data);
 
     if (!query.data[0]) {
       console.warn('no data in array');
@@ -95,7 +92,6 @@ export default function Guidelines(props: { supabaseId: number }) {
     setContractId(airdrop.contract_id);
   }
 
-  console.log('combined airdrop', combinedAirdrop);
   if (!combinedAirdrop) {
     return <div>Loading</div>;
   }
@@ -106,7 +102,7 @@ export default function Guidelines(props: { supabaseId: number }) {
         <div className="col-span-2 border-r border-secondary-700">
           <div className="flex max-w-[370px] flex-col pr-4">
             <div className="flex h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
-              <Logo erc20Address={combinedAirdrop.erc20} />
+              <Logo logo={combinedAirdrop.logo} erc20Address={combinedAirdrop.erc20} />
             </div>
             <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">GOGOPOOL</span>
             <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">

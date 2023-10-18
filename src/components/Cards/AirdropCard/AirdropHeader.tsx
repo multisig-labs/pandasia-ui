@@ -31,10 +31,6 @@ export default function AirdropHeader({
     fetchProof();
   }, []);
 
-  console.log('proof', proof);
-  console.log('contractid', contractId);
-  console.log('pchainadddr', pChainAddr);
-
   async function fetchProof() {
     const { data: proofy } = await getProof(root, pChainAddr || '', '');
     if (proof === undefined) {
@@ -47,12 +43,8 @@ export default function AirdropHeader({
   const { config, error, isError } = useClaimAirdrop(contractId, proof);
   const { write: claim } = useContractWrite({ ...config });
 
-  // if (error) {
-  //   return <div>{`${error.message}`}</div>;
-  // }
-
-  console.log('error', error);
-  console.log('iserror', isError);
+  const regex = /Error: (.*)/;
+  const errorMaybe = error?.message.match(regex);
 
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
@@ -70,9 +62,11 @@ export default function AirdropHeader({
       </div>
 
       <div>
+        {errorMaybe && <div>{errorMaybe[1]}</div>}
         <button
           onClick={claim}
           className="border border-white px-4 py-2 text-xs font-semibold tracking-widest"
+          disabled={errorMaybe ? true : false}
         >
           CLAIM
         </button>

@@ -18,8 +18,6 @@ export default function Pandasia() {
   const [isClient, setIsClient] = useState(false);
   const { pChainAddr } = useC2PAuth();
 
-  console.log({ supabaseMap });
-
   // Get contract data data
   const {
     data: contractAirdrops,

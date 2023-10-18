@@ -53,10 +53,8 @@ export default function CreateAirdrop() {
       let merkleRoot;
 
       if (!customMerkleRoot || customMerkleRoot != '0x0') {
-        console.log('whoa we got a custom merkle root', customMerkleRoot);
         merkleRoot = customMerkleRoot;
       } else {
-        console.log('no custom merkleroot');
         merkleRoot = treeData[0].Root;
       }
 
@@ -164,11 +162,7 @@ export default function CreateAirdrop() {
             placeholder="erc20 address"
           />
           <input
-            onChange={(e) => {
-              console.log(e.target.value);
-              console.log(e.target.value.trim());
-              setClaimAmount(e.target.value.trim());
-            }}
+            onChange={(e) => setClaimAmount(e.target.value.trim())}
             className="text-black"
             placeholder="claim amount"
           />

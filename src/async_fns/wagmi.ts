@@ -40,5 +40,4 @@ export const useClaimAirdrop = (id: bigint, proof: HexString[]) => {
     functionName: 'claimAirdrop',
     args: [id, proof],
   });
-  // console.log('CONRIG ERERRO', configError);
 };
