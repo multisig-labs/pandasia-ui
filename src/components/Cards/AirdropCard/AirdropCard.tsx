@@ -20,6 +20,7 @@ export default function AirdropCard({ cardInfo }: Props) {
     startsAt,
     expiresAt,
     onlyRegistered,
+    balance,
     companyName,
     summary,
     description,
@@ -27,13 +28,18 @@ export default function AirdropCard({ cardInfo }: Props) {
     logo,
   } = cardInfo;
 
-  console.log({ cardInfo });
-
   return (
     <section className="flex min-h-[260px] max-w-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
-      <AirdropHeader companyName={companyName} expiresAt={expiresAt} erc20Address={erc20} />
+      <AirdropHeader
+        root={root}
+        contractId={contractId}
+        companyName={companyName}
+        expiresAt={expiresAt}
+        erc20Address={erc20}
+        logo={logo}
+      />
       <AirdropDesc claimAmt={claimAmount} />
-      <AirdropFooter supabaseId={id} startsAt={startsAt} tokenAmt={BigInt(120)} />
+      <AirdropFooter supabaseId={id} startsAt={startsAt} balance={balance} />
     </section>
   );
 }

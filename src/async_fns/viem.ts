@@ -1,4 +1,4 @@
-import { publicClient, walletClient } from '@/config/viem';
+import { publicClient } from '@/config/viem';
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
 import { Proof } from '@/types/pandasia';

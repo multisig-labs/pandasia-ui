@@ -1,7 +1,8 @@
+import { HexString } from '@/types/cryptoGenerics';
 import { Proof, Trees } from '@/types/pandasia';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-export async function getProof(rootHash: string, pChain: string, signature: string) {
+export async function getProof(rootHash: string, pChain: string | HexString, signature: string) {
   const res = await axios.get<Proof>(
     `http://localhost:8000/proof/${rootHash}?addr=${pChain}&sig=${signature}`,
   );

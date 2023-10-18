@@ -28,7 +28,7 @@ export default function GuidelinesCard({ cardInfo }: Props) {
   return (
     <div className="flex w-full justify-end">
       <section className="flex min-h-[260px] basis-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
-        <GuidelinesHeader expiresAt={expiresAt} />
+        <GuidelinesHeader contractId={contractId} root={root} expiresAt={expiresAt} />
         <GuidelinesDesc claimAmt={claimAmount} />
         <GuidelinesFooter startsAt={Number(startsAt) * 1000} tokenAmt={BigInt(12121)} />
       </section>

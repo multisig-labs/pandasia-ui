@@ -1,9 +1,13 @@
+import ClaimButton from '@/components/Button/ClaimButton';
+import { HexString } from '@/types/cryptoGenerics';
 import { format } from 'date-fns';
 
 type Props = {
   expiresAt: bigint;
+  contractId: bigint;
+  root: HexString;
 };
-export default function GuidelinesHeader({ expiresAt }: Props) {
+export default function GuidelinesHeader({ expiresAt, root, contractId }: Props) {
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
       <div className="flex items-center gap-2">
@@ -15,11 +19,7 @@ export default function GuidelinesHeader({ expiresAt }: Props) {
         </div>
       </div>
 
-      <div>
-        <button className="border border-primary-600 bg-secondary-900 px-4 py-2 text-xs font-semibold tracking-[4px] text-primary-600">
-          CLAIM
-        </button>
-      </div>
+      <ClaimButton root={root} contractId={contractId} />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { TransactionReceipt } from 'viem';
+import { TransactionReceipt, parseEther } from 'viem';
 import { useAccount } from 'wagmi';
 
 export default function CreateAirdrop() {
@@ -24,6 +24,7 @@ export default function CreateAirdrop() {
   const [startsAt, setStartsAt] = useState(0);
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
+  const [customMerkleRoot, setCustomMerkleRoot] = useState<HexString>('0x0');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
   const supabaseClient = useSupabaseClient();
   const [sb, setSb] = useState();
@@ -48,14 +49,21 @@ export default function CreateAirdrop() {
   const createAirdrop = async () => {
     try {
       const treeData = await getTreeData();
-      const merkleRoot = treeData[0].Root;
+
+      let merkleRoot;
+
+      if (!customMerkleRoot || customMerkleRoot != '0x0') {
+        merkleRoot = customMerkleRoot;
+      } else {
+        merkleRoot = treeData[0].Root;
+      }
 
       const preparedAirdropCall = await newAirdrop(
         account,
         merkleRoot as HexString,
         onlyRegistered,
-        erc20,
-        BigInt(claimAmount),
+        erc20 as HexString,
+        parseEther(claimAmount),
         BigInt(startsAt),
         BigInt(expiresAt),
       );
@@ -157,6 +165,12 @@ export default function CreateAirdrop() {
             onChange={(e) => setClaimAmount(e.target.value.trim())}
             className="text-black"
             placeholder="claim amount"
+          />
+          <input
+            value={customMerkleRoot}
+            onChange={(e) => setCustomMerkleRoot(e.target.value.trim() as HexString)}
+            className="text-black"
+            placeholder="custom merkle root?"
           />
           <label>Starts At</label>
           <input

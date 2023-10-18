@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'private-user-images.githubusercontent.com',
+        port: '',
+      },
     ],
   },
 };
