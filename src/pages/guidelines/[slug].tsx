@@ -11,8 +11,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
-export default function Guidelines(props: { someData: number }) {
-  const { someData } = props;
+export default function Guidelines(props: { supabaseId: number }) {
+  const { supabaseId } = props;
   const [supabaseAirdrop, setSupabaseAirdrop] = useState<SupabaseReturnType>();
   const [combinedAirdrop, setCombinedAirdrop] = useState<CombinedAirdrop>();
   const [contractId, setContractId] = useState<number>();
@@ -26,8 +26,8 @@ export default function Guidelines(props: { someData: number }) {
   } = useGetAirdrop(BigInt(contractId || 0));
 
   useEffect(() => {
-    getSupabaseAirdrop(someData);
-  }, [someData]);
+    getSupabaseAirdrop(supabaseId);
+  }, [supabaseId]);
 
   useEffect(() => {
     if (!airdrop) {
@@ -45,7 +45,8 @@ export default function Guidelines(props: { someData: number }) {
       erc20: airdrop.erc20,
       claimAmount: airdrop.claimAmount,
       root: airdrop.root,
-      expiresAt: airdrop.expires,
+      startsAt: airdrop.startsAt,
+      expiresAt: airdrop.expiresAt,
       onlyRegistered: airdrop.onlyRegistered,
       companyName: supabaseAirdrop.airdrop_info.company_name,
       summary: supabaseAirdrop.airdrop_info.summary,
@@ -196,7 +197,7 @@ export const getStaticPaths = () => {
 export const getStaticProps: GetStaticProps = ({ params }) => {
   return {
     props: {
-      someData: params?.slug,
+      supabaseId: params?.slug,
     },
   };
 };

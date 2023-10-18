@@ -16,6 +16,7 @@ export default function GuidelinesCard({ cardInfo }: Props) {
     erc20,
     claimAmount,
     root,
+    startsAt,
     expiresAt,
     onlyRegistered,
     companyName,
@@ -29,7 +30,7 @@ export default function GuidelinesCard({ cardInfo }: Props) {
       <section className="flex min-h-[260px] basis-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
         <GuidelinesHeader expiresAt={expiresAt} />
         <GuidelinesDesc claimAmt={claimAmount} />
-        <GuidelinesFooter airdropDate={expiresAt * 1000} tokenAmt={BigInt(12121)} />
+        <GuidelinesFooter startsAt={Number(startsAt) * 1000} tokenAmt={BigInt(12121)} />
       </section>
     </div>
   );
