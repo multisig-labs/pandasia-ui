@@ -1,4 +1,5 @@
 import { useGetAirdrop } from '@/async_fns/wagmi';
+import { AddTokenToWallet, AddTokenToWalletLoading } from '@/components/Button/AddTokenToWallet';
 import GuidelinesCard from '@/components/Cards/GuidelinesCard/GuidelinesCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
@@ -18,12 +19,7 @@ export default function Guidelines(props: { supabaseId: number }) {
   const [contractId, setContractId] = useState<number>();
 
   // okay great now I got some data. I want to use this to get the airdrop info and combine it for just that one airdrop.
-  const {
-    data: airdrop,
-    error: airdropError,
-    isLoading: airdropLoading,
-    isError: airdropIsError,
-  } = useGetAirdrop(BigInt(contractId || 0));
+  const { data: airdrop } = useGetAirdrop(BigInt(contractId || 0));
 
   useEffect(() => {
     getSupabaseAirdrop(supabaseId);
@@ -92,6 +88,7 @@ export default function Guidelines(props: { supabaseId: number }) {
     setContractId(airdrop.contract_id);
   }
 
+  // TODO Make this loading page better, a transition? a skeleton?
   if (!combinedAirdrop) {
     return <div>Loading</div>;
   }
@@ -104,17 +101,17 @@ export default function Guidelines(props: { supabaseId: number }) {
             <div className="flex h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
               <Logo logo={combinedAirdrop.logo} erc20Address={combinedAirdrop.erc20} />
             </div>
-            <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">GOGOPOOL</span>
-            <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
-              SUBNETS MADE EASY
+            <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
+              {combinedAirdrop.companyName}
             </span>
-            {/* Maybe do this later, can't dynamically add tokens to a wallet
-            <div className="flex py-8">
-              <button className="basis-[224px] border border-primary-600 bg-secondary-900 p-2 py-3 text-xs font-semibold tracking-[4px] text-primary-600">
-                ADD GGP TO WALLET
-              </button>
-            </div>
-            */}
+            <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
+              {combinedAirdrop.summary}
+            </span>
+            {combinedAirdrop?.erc20 ? (
+              <AddTokenToWallet erc20={combinedAirdrop.erc20} />
+            ) : (
+              <AddTokenToWalletLoading />
+            )}
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
             <span className="flex pb-12 pt-4">
               GoGoPool is a permissionless staking protocol designed to create widespread adoption
