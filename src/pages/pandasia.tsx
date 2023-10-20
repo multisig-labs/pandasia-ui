@@ -62,11 +62,12 @@ export default function Pandasia() {
         expiresAt: contractAirdrop.expiresAt,
         onlyRegistered: contractAirdrop.onlyRegistered,
         balance: contractAirdrop.balance,
-        companyName: supabaseMap[Number(contractAirdrop.id)].airdrop_info.company_name,
-        summary: supabaseMap[Number(contractAirdrop.id)].airdrop_info.summary,
-        description: supabaseMap[Number(contractAirdrop.id)].airdrop_info.description,
-        url: supabaseMap[Number(contractAirdrop.id)].airdrop_info.url,
-        logo: supabaseMap[Number(contractAirdrop.id)].airdrop_info.logo,
+        companyName: supabaseMap[Number(contractAirdrop.id)].company_name,
+        summary: supabaseMap[Number(contractAirdrop.id)].summary,
+        description: supabaseMap[Number(contractAirdrop.id)].description,
+        url: supabaseMap[Number(contractAirdrop.id)].url,
+        logo: supabaseMap[Number(contractAirdrop.id)].logo,
+        claimCount: supabaseMap[Number(contractAirdrop.id)].claim_count.claims,
       };
 
       tempHydrated.push(hydratedAirdrop);
@@ -93,21 +94,20 @@ export default function Pandasia() {
 
   // function to load airdrops from supabase
   async function getAirdrops() {
-    const query = await supabase.from('airdrop_to_contract').select(
+    const query = await supabase.from('airdrop_info').select(
       `
-        id, 
-        contract_id,
-        airdrop_info (
-          company_name,
-          summary,
-          description,
-          url,
-          logo
+        *,
+        claim_count(
+          claims
+        ),
+        airdrop_to_contract(
+          contract_id
         )
     `,
     );
     if (query.error) {
       console.warn('Error fetching data from supabase', query.error);
+      return;
     }
 
     if (query.data == null) {
@@ -121,7 +121,7 @@ export default function Pandasia() {
     let pMap: SupabaseMap = {};
 
     airdrops.forEach((airdrop) => {
-      pMap[airdrop.contract_id] = airdrop;
+      pMap[airdrop.airdrop_to_contract.contract_id] = airdrop;
     });
     setSupabaseMap(pMap);
   }
@@ -149,7 +149,7 @@ export default function Pandasia() {
               </div>
               <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
                 {combinedAirdrops.map((item) => (
-                  <AirdropCard key={item.id} cardInfo={item} />
+                  <AirdropCard claimCount={item.claimCount} key={item.id} cardInfo={item} />
                 ))}
               </div>
             </div>

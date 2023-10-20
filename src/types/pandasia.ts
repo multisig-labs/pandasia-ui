@@ -39,6 +39,7 @@ export type CombinedAirdrop = {
   description: string;
   url: string;
   logo: string;
+  claimCount: number;
 };
 
 export type SupabaseAirdrop = {
@@ -52,12 +53,15 @@ export type SupabaseAirdrop = {
 
 export type SupabaseReturnType = {
   id: number;
-  contract_id: number;
-  airdrop_info: {
-    company_name: string;
-    summary: string;
-    description: string;
-    url: string;
-    logo: string;
+  company_name: string;
+  summary: string;
+  description: string;
+  url: string;
+  logo: string;
+  airdrop_to_contract: {
+    contract_id: number;
+  };
+  claim_count: {
+    claims: number;
   };
 };

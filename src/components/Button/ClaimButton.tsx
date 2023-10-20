@@ -1,16 +1,25 @@
-import { getProof } from '@/async_fns/pandasia';
+import { getProof, updateClickCount } from '@/async_fns/pandasia';
 import { useClaimAirdrop } from '@/async_fns/wagmi';
 import { useC2PAuth } from '@/hooks/useC2PAuth';
 import { HexString } from '@/types/cryptoGenerics';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useContractWrite } from 'wagmi';
 
 type Props = {
   root: HexString;
   contractId: bigint;
+  supabaseId: number;
+  claimCount: number;
+  setClaimCount?: Dispatch<SetStateAction<number>>;
 };
 
-export default function ClaimButton({ root, contractId }: Props) {
+export default function ClaimButton({
+  root,
+  contractId,
+  supabaseId,
+  claimCount,
+  setClaimCount,
+}: Props) {
   const { pChainAddr } = useC2PAuth();
   const [proof, setProof] = useState<HexString[]>([]);
 
@@ -21,14 +30,33 @@ export default function ClaimButton({ root, contractId }: Props) {
   async function fetchProof() {
     const { data: proofy } = await getProof(root, pChainAddr || '', '');
     if (proof === undefined) {
-      console.warn('proof undefined');
+      console.warn('Proof undefined');
       return;
     }
     setProof(proofy.Proof);
   }
 
-  const { config, error, isError } = useClaimAirdrop(contractId, proof);
+  async function recordClick() {
+    try {
+      const { data } = await updateClickCount(supabaseId, claimCount);
+      setClaimCount && setClaimCount(data.newCount);
+    } catch (e) {
+      console.warn('Update click call failed');
+    }
+  }
+
+  const { config, error } = useClaimAirdrop(contractId, proof);
   const { write: claim } = useContractWrite({ ...config });
+
+  function handleClaim() {
+    if (claim) {
+      claim();
+    } else {
+      console.warn('claim is undefined, not claiming');
+      return;
+    }
+    recordClick();
+  }
 
   const regex = /Error: (.*)/;
   const errorMaybe = error?.message.match(regex);
@@ -36,7 +64,7 @@ export default function ClaimButton({ root, contractId }: Props) {
     <div>
       {errorMaybe && <div>{errorMaybe[1]}</div>}
       <button
-        onClick={claim}
+        onClick={() => handleClaim()}
         className="border border-white px-4 py-2 text-xs font-semibold tracking-widest"
         disabled={errorMaybe ? true : false}
       >

@@ -1,3 +1,4 @@
+import ERC20 from '@/contracts/ERC20';
 import Pandasia from '@/contracts/Pandasia';
 import { HexString } from '@/types/cryptoGenerics';
 import { useContractRead, usePrepareContractWrite } from 'wagmi';
@@ -39,5 +40,13 @@ export const useClaimAirdrop = (id: bigint, proof: HexString[]) => {
     abi: Pandasia,
     functionName: 'claimAirdrop',
     args: [id, proof],
+  });
+};
+
+export const useGetTokenName = (tokenAddress: HexString) => {
+  return useContractRead({
+    address: tokenAddress,
+    abi: ERC20,
+    functionName: 'name',
   });
 };
