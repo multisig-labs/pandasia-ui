@@ -9,7 +9,6 @@ type Props = {
 export function AddTokenToWallet({ erc20 }: Props) {
   const {
     data: tokenName,
-    error: tokenNameError,
     isLoading: tokenNameIsLoading,
     isError: tokenNameIsError,
   } = useGetTokenName(erc20);
