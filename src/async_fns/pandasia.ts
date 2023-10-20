@@ -9,6 +9,11 @@ export async function getProof(rootHash: string, pChain: string | HexString, sig
   return res;
 }
 
+export async function updateClickCount(supabaseId: number, claimCount: number) {
+  const res = await axios.post(`/api/click_count`, { id: supabaseId, claimCount: claimCount });
+  return res;
+}
+
 export async function getSig(signature: string) {
   const res = await axios.get<Proof>(`http://localhost:8000/signature/${signature}`);
   return res;

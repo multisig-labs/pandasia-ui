@@ -17,6 +17,7 @@ export default function Guidelines(props: { supabaseId: number }) {
   const [supabaseAirdrop, setSupabaseAirdrop] = useState<SupabaseReturnType>();
   const [combinedAirdrop, setCombinedAirdrop] = useState<CombinedAirdrop>();
   const [contractId, setContractId] = useState<number>();
+  const [claimCount, setClaimCount] = useState<number>(0);
 
   // okay great now I got some data. I want to use this to get the airdrop info and combine it for just that one airdrop.
   const { data: airdrop } = useGetAirdrop(BigInt(contractId || 0));
@@ -45,47 +46,46 @@ export default function Guidelines(props: { supabaseId: number }) {
       expiresAt: airdrop.expiresAt,
       onlyRegistered: airdrop.onlyRegistered,
       balance: airdrop.balance,
-      companyName: supabaseAirdrop.airdrop_info.company_name,
-      summary: supabaseAirdrop.airdrop_info.summary,
-      description: supabaseAirdrop.airdrop_info.description,
-      url: supabaseAirdrop.airdrop_info.url,
-      logo: supabaseAirdrop.airdrop_info.logo,
+      companyName: supabaseAirdrop.company_name,
+      summary: supabaseAirdrop.summary,
+      description: supabaseAirdrop.description,
+      url: supabaseAirdrop.url,
+      logo: supabaseAirdrop.logo,
+      //@ts-ignore renamed the field from count to claims but ts somehow doesn't know
+      claimCount: supabaseAirdrop.claim_count.claims,
     };
     setCombinedAirdrop(ca);
   }, [airdrop, supabaseAirdrop]);
 
   async function getSupabaseAirdrop(id: number) {
     const query = await supabase
-      .from('airdrop_to_contract')
+      .from('airdrop_info')
       .select(
         `
-        id, 
-        contract_id,
-        airdrop_info (
-          company_name,
-          summary,
-          description,
-          url,
-          logo
+        *,
+        claim_count(
+          claims
+        ),
+        airdrop_to_contract(
+          contract_id
         )
-    `,
+        `,
       )
-      .eq(`id`, id);
+      .eq(`id`, 23)
+      .limit(1)
+      .single();
 
     if (!query.data) {
       console.warn('no data');
       return;
     }
 
-    if (!query.data[0]) {
-      console.warn('no data in array');
-      return;
-    }
-
     //@ts-ignore
-    const airdrop: SupabaseReturnType = query.data[0];
+    const airdrop: SupabaseReturnType = query.data;
     setSupabaseAirdrop(airdrop);
-    setContractId(airdrop.contract_id);
+    //@ts-ignore renamed the field from count to claims but ts somehow doesn't know
+    setClaimCount(airdrop.claim_count.claims);
+    setContractId(airdrop.airdrop_to_contract.contract_id);
   }
 
   // TODO Make this loading page better, a transition? a skeleton?
@@ -113,12 +113,7 @@ export default function Guidelines(props: { supabaseId: number }) {
               <AddTokenToWalletLoading />
             )}
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
-            <span className="flex pb-12 pt-4">
-              GoGoPool is a permissionless staking protocol designed to create widespread adoption
-              for Subnets. Through its unique GGP token and liquid staking features, node operators
-              can earn staking rewards in 3 ways, and can easily launch new validators for only 1000
-              AVAX.
-            </span>
+            <span className="flex pb-12 pt-4">{combinedAirdrop.description}</span>
             <span className="text-md flex pb-2 font-semibold tracking-[4px]">SOCIALS</span>
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
             <div className="flex gap-4 py-8 text-secondary-700">
@@ -144,16 +139,15 @@ export default function Guidelines(props: { supabaseId: number }) {
 
         <div className="col-span-3 flex flex-col items-end pl-4">
           <div className="flex w-full max-w-[560px] flex-col">
-            <GuidelinesCard cardInfo={combinedAirdrop} />
+            <GuidelinesCard
+              cardInfo={combinedAirdrop}
+              claimCount={claimCount}
+              setClaimCount={setClaimCount}
+            />
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               SUMMARY
             </span>
-            <span className="flex pt-2">
-              GoGoPool is a permissionless staking protocol designed to create widespread adoption
-              for Subnets. Through its unique GGP token and liquid staking features, node operators
-              can earn staking rewards in 3 ways, and can easily launch new validators for only 1000
-              AVAX.
-            </span>
+            <span className="flex pt-2">{combinedAirdrop.summary}</span>
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               AIRDROP INFO
             </span>
@@ -162,7 +156,7 @@ export default function Guidelines(props: { supabaseId: number }) {
               info={combinedAirdrop.url}
               color="text-primary-600"
             />
-            <AirdropInfo title="Number of Claims" info="645" />
+            <AirdropInfo title="Number of Claims" info={claimCount.toString()} />
             <AirdropInfo
               title="ERC20 Address"
               info={combinedAirdrop.erc20}

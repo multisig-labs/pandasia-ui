@@ -1,7 +1,8 @@
 type Props = {
   claimAmt: bigint;
+  tokenName: string;
 };
-export default function GuidelinesDesc({ claimAmt }: Props) {
+export default function GuidelinesDesc({ claimAmt, tokenName }: Props) {
   return (
     <div className="flex h-32 w-full flex-col items-start justify-center border-b border-secondary-700 p-6">
       <div className="flex flex-col">
@@ -11,7 +12,7 @@ export default function GuidelinesDesc({ claimAmt }: Props) {
         <span className="text-3xl tracking-[4px] text-primary-600">
           {claimAmt.toLocaleString()}
         </span>
-        <span className="text-xs tracking-wider">GGP TOKENS</span>
+        <span className="text-xs tracking-wider">{tokenName}</span>
       </div>
     </div>
   );

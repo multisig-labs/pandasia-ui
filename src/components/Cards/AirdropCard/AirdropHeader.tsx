@@ -10,6 +10,8 @@ type Props = {
   erc20Address: HexString;
   root: HexString;
   logo: string;
+  supabaseId: number;
+  claimCount: number;
 };
 
 export default function AirdropHeader({
@@ -19,6 +21,8 @@ export default function AirdropHeader({
   erc20Address,
   root,
   logo,
+  supabaseId,
+  claimCount,
 }: Props) {
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
@@ -34,7 +38,12 @@ export default function AirdropHeader({
           </span>
         </div>
       </div>
-      <ClaimButton root={root} contractId={contractId} />
+      <ClaimButton
+        claimCount={claimCount}
+        root={root}
+        contractId={contractId}
+        supabaseId={supabaseId}
+      />
     </div>
   );
 }
