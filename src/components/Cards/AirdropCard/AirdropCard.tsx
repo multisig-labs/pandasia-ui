@@ -53,6 +53,7 @@ export default function AirdropCard({
         logo={logo}
         claimCount={claimCount}
         setClaimCount={setClaimCount}
+        setError={setError}
       />
       <AirdropDesc error={error} claimAmt={claimAmount} />
       <AirdropFooter

@@ -11,6 +11,7 @@ type Props = {
   supabaseId: number;
   claimCount: number;
   setClaimCount?: Dispatch<SetStateAction<number>>;
+  setError: Dispatch<SetStateAction<string>>;
 };
 
 export default function ClaimButton({
@@ -19,6 +20,7 @@ export default function ClaimButton({
   supabaseId,
   claimCount,
   setClaimCount,
+  setError,
 }: Props) {
   const { pChainAddr } = useC2PAuth();
   const [proof, setProof] = useState<HexString[]>([]);
@@ -60,9 +62,13 @@ export default function ClaimButton({
 
   const regex = /Error: (.*)/;
   const errorMaybe = error?.message.match(regex);
+  if (errorMaybe) {
+    console.log('SETTING ERROR');
+    setError(errorMaybe[1]);
+  }
+
   return (
     <div>
-      {errorMaybe && <div>{errorMaybe[1]}</div>}
       <button
         onClick={() => handleClaim()}
         className="border border-white px-4 py-2 text-xs font-semibold tracking-widest"

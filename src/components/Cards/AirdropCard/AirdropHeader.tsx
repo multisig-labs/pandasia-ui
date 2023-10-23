@@ -14,6 +14,7 @@ type Props = {
   supabaseId: number;
   claimCount: number;
   setClaimCount?: Dispatch<SetStateAction<number>>;
+  setError: Dispatch<SetStateAction<string>>;
 };
 
 export default function AirdropHeader({
@@ -26,6 +27,7 @@ export default function AirdropHeader({
   supabaseId,
   claimCount,
   setClaimCount,
+  setError,
 }: Props) {
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
@@ -47,6 +49,7 @@ export default function AirdropHeader({
         root={root}
         contractId={contractId}
         supabaseId={supabaseId}
+        setError={setError}
       />
     </div>
   );

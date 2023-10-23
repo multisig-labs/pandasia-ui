@@ -149,7 +149,12 @@ export default function Pandasia() {
               </div>
               <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
                 {combinedAirdrops.map((item) => (
-                  <AirdropCard claimCount={item.claimCount} key={item.id} cardInfo={item} />
+                  <AirdropCard
+                    claimCount={item.claimCount}
+                    key={item.id}
+                    cardInfo={item}
+                    showGuidelines={true}
+                  />
                 ))}
               </div>
             </div>
