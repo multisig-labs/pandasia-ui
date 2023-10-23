@@ -71,7 +71,7 @@ export default function Guidelines(props: { supabaseId: number }) {
         )
         `,
       )
-      .eq(`id`, 23)
+      .eq(`id`, id)
       .limit(1)
       .single();
 
@@ -98,8 +98,8 @@ export default function Guidelines(props: { supabaseId: number }) {
       <div className="my-12 grid w-full grid-cols-5">
         <div className="col-span-2 border-r border-secondary-700">
           <div className="flex max-w-[370px] flex-col pr-4">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
-              <Logo logo={combinedAirdrop.logo} erc20Address={combinedAirdrop.erc20} />
+            <div className="flex overflow-hidden h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
+              <Logo size={75} logo={combinedAirdrop.logo} erc20Address={combinedAirdrop.erc20} />
             </div>
             <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
               {combinedAirdrop.companyName}

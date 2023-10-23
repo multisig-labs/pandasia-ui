@@ -109,6 +109,11 @@ export default function CreateAirdrop() {
         .insert({ id: airdropInfo[0].id, contract_id: Number(contractId.toString()) })
         .select();
 
+      const { data: claimCountData, error: claimCountError } = await supabaseClient
+        .from('claim_count')
+        .insert({ id: airdropInfo[0].id, claims: 0 })
+        .select();
+
       setSb(airdropInfo[0].id);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -125,47 +130,55 @@ export default function CreateAirdrop() {
       <div className="flex flex-col text-center">
         <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
           <span className="text-2xl font-bold tracking-[4px]">CREATE AIRDROP</span>
+          <label>Company Name</label>
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             className="text-black"
             placeholder="Company Name"
           />
-          <input
+          <label>Summary</label>
+          <textarea
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             className="text-black"
             placeholder="Summary"
           />
-          <input
+          <label>Description</label>
+          <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="text-black"
             placeholder="Description"
           />
+          <label>Url</label>
           <input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             className="text-black"
             placeholder="Url"
           />
+          <label>Logo URL</label>
           <input
             value={logo}
             onChange={(e) => setLogo(e.target.value)}
             className="text-black"
             placeholder="Logo"
           />
+          <label>Erc20 Address</label>
           <input
             value={erc20}
             onChange={(e) => setErc20(e.target.value.trim() as HexString)}
             className="text-black"
             placeholder="erc20 address"
           />
+          <label>Claim Amount</label>
           <input
             onChange={(e) => setClaimAmount(e.target.value.trim())}
             className="text-black"
             placeholder="claim amount"
           />
+          <label>Custom Merkle Root</label>
           <input
             value={customMerkleRoot}
             onChange={(e) => setCustomMerkleRoot(e.target.value.trim() as HexString)}
@@ -174,7 +187,7 @@ export default function CreateAirdrop() {
           />
           <label>Starts At</label>
           <input
-            type="date"
+            type="datetime-local"
             onChange={(e) => {
               const test = new Date(e.target.value);
               setStartsAt(test.getTime() / 1000);
@@ -184,7 +197,7 @@ export default function CreateAirdrop() {
           />
           <label>Expires At</label>
           <input
-            type="date"
+            type="datetime-local"
             onChange={(e) => {
               const test = new Date(e.target.value);
               setExpiresAt(test.getTime() / 1000);

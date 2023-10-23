@@ -23,26 +23,34 @@ export default function about() {
                 PANDASIA
               </span>
               <span className="flex pt-2 text-lg">
-                Pandasia (Πανδαισία) is Greek, meaning "banquet for everyone". This echos the design
-                philosophy of the site, we wanted a place for people to come from all over the
-                Avalanche ecosystem and have a place to provide rewards to the people most
-                integrated in Avalanche through airdrops.
+                Welcome to the symposium for Avalanche's most dedicated users. Pandasia is inspired
+                by one of the Charities: Pandaisia (Πανδαισία), the goddess of the banquet. This
+                echos our design philosophy, we wanted a place for people to come from all over the
+                Avalanche ecosystem and have a place to provide rewards to those most integrated in
+                Avalanche through airdrops.
               </span>
               <span className="flex pt-2 text-lg">
                 More technically, we wanted to have a verifiable way for validators of subnets to be
                 rewarded for their commitment to the space. In order to provide this we came up with
                 a way to tie a C-chain address to a P-chain address that is attached to a validator
                 node. In doing so, we can provide airdrops directly to your C-chain wallet address.
-                Welcome to the symposium for Avalanche's most dedicated users.
               </span>
               <span className="flex pt-8 font-semibold text-2xl tracking-[4px] text-primary-600">
                 WHO WE ARE
               </span>
-              <span className="flex pt-2 text-lg">
-                We are the GoGoPool team. Our goal is to provide a permissionless staking protocol
-                designed to create widespread adoption for Subnets. This website is an extension of
-                that desire. You can check out our main site or you can visit our socials by using
-                the links on the Navbar at the top of the page.
+              <span className="pt-2 text-lg">
+                We are Multisig Labs. Our goal is to provide infrastructure and technology that
+                encourages widespread adoption of Subnets. Pandasia is an extension of that desire.
+                You can check out our flagship app{' '}
+                <a
+                  href="https://app.gogopool.com"
+                  className="text-primary-600 hover:underline"
+                  target="_blank"
+                >
+                  GoGoPool
+                </a>{' '}
+                or you can visit our socials by using the links on the navbar at the top of the
+                page.
               </span>
             </div>
           </div>
