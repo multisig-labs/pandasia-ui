@@ -2,6 +2,7 @@ import ClaimButton from '@/components/Button/ClaimButton';
 import Logo from '@/components/Logo';
 import { HexString } from '@/types/cryptoGenerics';
 import { format } from 'date-fns';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   contractId: bigint;
@@ -12,6 +13,7 @@ type Props = {
   logo: string;
   supabaseId: number;
   claimCount: number;
+  setClaimCount?: Dispatch<SetStateAction<number>>;
 };
 
 export default function AirdropHeader({
@@ -23,6 +25,7 @@ export default function AirdropHeader({
   logo,
   supabaseId,
   claimCount,
+  setClaimCount,
 }: Props) {
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-secondary-700 p-6">
@@ -40,6 +43,7 @@ export default function AirdropHeader({
       </div>
       <ClaimButton
         claimCount={claimCount}
+        setClaimCount={setClaimCount}
         root={root}
         contractId={contractId}
         supabaseId={supabaseId}

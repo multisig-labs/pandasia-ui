@@ -1,6 +1,6 @@
 import { useGetAirdrop } from '@/async_fns/wagmi';
 import { AddTokenToWallet, AddTokenToWalletLoading } from '@/components/Button/AddTokenToWallet';
-import GuidelinesCard from '@/components/Cards/GuidelinesCard/GuidelinesCard';
+import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
@@ -117,10 +117,11 @@ export default function Guidelines(props: { supabaseId: number }) {
 
         <div className="col-span-3 flex flex-col items-end pl-4">
           <div className="flex w-full max-w-[560px] flex-col">
-            <GuidelinesCard
+            <AirdropCard
               cardInfo={combinedAirdrop}
               claimCount={claimCount}
               setClaimCount={setClaimCount}
+              showGuidelines={false}
             />
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               SUMMARY
