@@ -1,9 +1,10 @@
 import { copyText, shortenNodeId } from '@/utils/utils';
+import { ReactNode } from 'react';
 import { RiFileCopy2Line } from 'react-icons/ri';
 
 type Props = {
   title: string;
-  info: string;
+  info: ReactNode | string;
   color?: string;
   isHash?: boolean;
 };
@@ -14,8 +15,8 @@ export default function AirdropInfo({ title, info, color, isHash }: Props) {
       <span>{title}</span>
       {isHash ? (
         <div className={`flex gap-2 ${color}`}>
-          <span>{shortenNodeId(info)}</span>
-          <span className="cursor-pointer" onClick={() => copyText(info)}>
+          <span>{shortenNodeId(info as string)}</span>
+          <span className="cursor-pointer" onClick={() => copyText(info as string)}>
             <RiFileCopy2Line size={22} />
           </span>
         </div>
