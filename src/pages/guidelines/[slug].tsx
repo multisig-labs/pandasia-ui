@@ -8,9 +8,7 @@ import { supabase } from '@/config/supabase';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
 export default function Guidelines(props: { supabaseId: number }) {
   const { supabaseId } = props;
@@ -104,7 +102,7 @@ export default function Guidelines(props: { supabaseId: number }) {
             <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
               {combinedAirdrop.companyName}
             </span>
-            <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
+            <span className="text-md flex font-semibold tracking-[4px] text-secondary-700 break-all">
               {combinedAirdrop.summary}
             </span>
             {combinedAirdrop?.erc20 ? (
@@ -113,27 +111,7 @@ export default function Guidelines(props: { supabaseId: number }) {
               <AddTokenToWalletLoading />
             )}
             <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
-            <span className="flex pb-12 pt-4">{combinedAirdrop.description}</span>
-            <span className="text-md flex pb-2 font-semibold tracking-[4px]">SOCIALS</span>
-            <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
-            <div className="flex gap-4 py-8 text-secondary-700">
-              <Link
-                className="hover-glow-secondary flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]"
-                href="https://twitter.com/gogopool_"
-                target="_blank"
-              >
-                <FaXTwitter size={20} />
-                FOLLOW
-              </Link>
-              <Link
-                className="hover-glow-secondary flex basis-[170px] items-center justify-center gap-2 border border-secondary-700 bg-secondary-900 p-2 text-xs font-semibold tracking-[4px]"
-                href="https://twitter.com/gogopool_"
-                target="_blank"
-              >
-                <FaDiscord size={20} />
-                ENGAGE
-              </Link>
-            </div>
+            <span className="flex pb-12 pt-4 break-all">{combinedAirdrop.description}</span>
           </div>
         </div>
 
@@ -147,13 +125,17 @@ export default function Guidelines(props: { supabaseId: number }) {
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               SUMMARY
             </span>
-            <span className="flex pt-2">{combinedAirdrop.summary}</span>
+            <span className="flex pt-2 break-all">{combinedAirdrop.summary}</span>
             <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
               AIRDROP INFO
             </span>
             <AirdropInfo
               title="Project website"
-              info={combinedAirdrop.url}
+              info={
+                <a target="_blank" className="hover:underline" href={combinedAirdrop.url}>
+                  {combinedAirdrop.url}
+                </a>
+              }
               color="text-primary-600"
             />
             <AirdropInfo title="Number of Claims" info={claimCount.toString()} />
