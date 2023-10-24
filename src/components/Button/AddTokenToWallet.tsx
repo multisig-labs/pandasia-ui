@@ -1,4 +1,4 @@
-import { useGetTokenName } from '@/async_fns/wagmi';
+import { useGetTokenName } from '@/async_fns/wagmiHooks';
 import { HexString } from '@/types/cryptoGenerics';
 import addToken from '@/utils/addToken';
 

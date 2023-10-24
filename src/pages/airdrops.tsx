@@ -1,10 +1,10 @@
-import { useGetAirdrops } from '@/async_fns/wagmi';
+import { useGetAirdrops } from '@/async_fns/wagmiHooks';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
-import { supabase } from '@/config/supabase';
+import { supabase } from '@/config/supabaseConfig';
 import { useC2PAuth } from '@/hooks/useC2PAuth';
-import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
+import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 

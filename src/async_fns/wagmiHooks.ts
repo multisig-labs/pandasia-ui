@@ -1,5 +1,5 @@
 import ERC20 from '@/contracts/ERC20';
-import Pandasia from '@/contracts/Pandasia';
+import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
 import { useContractRead, usePrepareContractWrite } from 'wagmi';
 

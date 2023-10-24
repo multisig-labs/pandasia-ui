@@ -1,5 +1,5 @@
-import { getProof, updateClickCount } from '@/async_fns/pandasia';
-import { useClaimAirdrop } from '@/async_fns/wagmi';
+import { getProof, updateClickCount } from '@/async_fns/backendCalls';
+import { useClaimAirdrop } from '@/async_fns/wagmiHooks';
 import { useC2PAuth } from '@/hooks/useC2PAuth';
 import { HexString } from '@/types/cryptoGenerics';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -68,14 +68,12 @@ export default function ClaimButton({
   }
 
   return (
-    <div>
-      <button
-        onClick={() => handleClaim()}
-        className="border border-white px-4 py-2 text-xs font-semibold tracking-widest"
-        disabled={errorMaybe ? true : false}
-      >
-        CLAIM
-      </button>
-    </div>
+    <button
+      onClick={() => handleClaim()}
+      className="border cursor-pointer border-white px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-500 font-semibold tracking-widest"
+      disabled={errorMaybe ? true : false}
+    >
+      CLAIM
+    </button>
   );
 }

@@ -1,5 +1,5 @@
 import { WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem';
-import { forky } from './chains';
+import { forky } from './chainsConfig';
 
 const customTransport = http('http://localhost:9650');
 export const publicClient = createPublicClient({

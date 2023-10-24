@@ -1,9 +1,9 @@
-import { getTreeData } from '@/async_fns/pandasia';
-import { getAirdropIds, newAirdrop } from '@/async_fns/viem';
-import { useGetAirdropIds } from '@/async_fns/wagmi';
+import { getTreeData } from '@/async_fns/backendCalls';
+import { getAirdropIds, newAirdrop } from '@/async_fns/viemAsync';
+import { useGetAirdropIds } from '@/async_fns/wagmiHooks';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import { returnErrString } from '@/config/axios';
-import { publicClient, walletClient } from '@/config/viem';
+import { returnErrString } from '@/config/axiosConfig';
+import { publicClient, walletClient } from '@/config/viemConfig';
 import { HexString } from '@/types/cryptoGenerics';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';

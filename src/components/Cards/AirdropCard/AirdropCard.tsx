@@ -1,4 +1,4 @@
-import { CombinedAirdrop } from '@/types/pandasia';
+import { CombinedAirdrop } from '@/types/pandasiaTypes';
 import { Dispatch, SetStateAction, useState } from 'react';
 import AirdropDesc from './AirdropDesc';
 import AirdropFooter from './AirdropFooter';

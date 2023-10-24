@@ -1,5 +1,5 @@
 import { HexString } from '@/types/cryptoGenerics';
-import { Proof, Trees } from '@/types/pandasia';
+import { Proof, Trees } from '@/types/pandasiaTypes';
 import axios from 'axios';
 
 export async function getProof(rootHash: string, pChain: string | HexString, signature: string) {

@@ -1,10 +1,10 @@
-import { getProof, getSig, getTreeData } from '@/async_fns/pandasia';
-import { recoverMessage, registerPChainAdrr } from '@/async_fns/viem';
+import { getProof, getSig, getTreeData } from '@/async_fns/backendCalls';
+import { recoverMessage, registerPChainAdrr } from '@/async_fns/viemAsync';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
-import { returnErrString } from '@/config/axios';
-import { publicClient, walletClient } from '@/config/viem';
+import { returnErrString } from '@/config/axiosConfig';
+import { publicClient, walletClient } from '@/config/viemConfig';
 import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';

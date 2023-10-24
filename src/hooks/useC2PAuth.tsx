@@ -1,4 +1,4 @@
-import Pandasia from '@/contracts/Pandasia';
+import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
 import { useAccount, useContractRead } from 'wagmi';
 

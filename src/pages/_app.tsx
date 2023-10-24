@@ -7,7 +7,7 @@ import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiConfig } from 'wagmi';
 import { colors } from '@/styles/theme/colors';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { chains, wagmiConfig } from '@/config/wagmi';
+import { chains, wagmiConfig } from '@/config/wagmiConfig';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';

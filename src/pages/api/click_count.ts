@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { supabase } from '@/config/supabase';
+import { supabase } from '@/config/supabaseConfig';
 // import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 

@@ -27,7 +27,7 @@ export default function SuccessStep({ transaction }: Props) {
         </div>
 
         <div className="flex justify-center pb-5 pt-2">
-          <Link href={'/pandasia'}>
+          <Link href={'/airdrops'}>
             <button className="bg-black p-4 text-xs font-semibold tracking-[2px] text-white">
               GO TO CLAIMS PAGE
             </button>

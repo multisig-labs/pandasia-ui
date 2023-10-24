@@ -1,7 +1,7 @@
-import { publicClient } from '@/config/viem';
-import Pandasia from '@/contracts/Pandasia';
+import { publicClient } from '@/config/viemConfig';
+import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
-import { Proof } from '@/types/pandasia';
+import { Proof } from '@/types/pandasiaTypes';
 
 export async function verify(proof: Proof) {
   const verify = await publicClient.readContract({

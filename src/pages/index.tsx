@@ -34,7 +34,7 @@ export default function Home() {
                 </Link>
               ) : (
                 <>
-                  <Link href={'/pandasia'}>
+                  <Link href={'/airdrops'}>
                     <button className="hover-underline-animation tracking-[4px] text-primary-600">
                       ENTER PANDASIA
                     </button>

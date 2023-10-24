@@ -1,5 +1,5 @@
-import Pandasia from '@/contracts/Pandasia';
-import { walletClient, publicClient } from '@/config/viem';
+import Pandasia from '@/contracts/PandasiaContract';
+import { walletClient, publicClient } from '@/config/viemConfig';
 
 export default function UnregisterButton() {
   async function unregister() {

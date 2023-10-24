@@ -1,11 +1,11 @@
-import { useGetAirdrop } from '@/async_fns/wagmi';
+import { useGetAirdrop } from '@/async_fns/wagmiHooks';
 import { AddTokenToWallet, AddTokenToWalletLoading } from '@/components/Button/AddTokenToWallet';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import { supabase } from '@/config/supabase';
-import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasia';
+import { supabase } from '@/config/supabaseConfig';
+import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
 import { useEffect, useState } from 'react';
