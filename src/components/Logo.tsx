@@ -14,19 +14,17 @@ export default function Logo({ erc20Address, logo, size }: Props) {
     `https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/${erc20Address}/logo.png`,
   );
 
-  const randomish = Math.floor(Math.random() * 100 + 100);
-
   const reggy = /http/;
   const hasHttp = reggy.test(logo);
 
   async function logoFetch() {
     if (hasHttp) {
       try {
-        const res = await axios.get(logo);
+        await axios.get(logo);
         setLogoUrl(logo);
       } catch {
         try {
-          const res = await axios.get(
+          await axios.get(
             `https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/${erc20Address}/logo.png`,
           );
           setLogoUrl(
@@ -38,7 +36,7 @@ export default function Logo({ erc20Address, logo, size }: Props) {
       }
     } else {
       try {
-        const res = await axios.get(
+        await axios.get(
           `https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/${erc20Address}/logo.png`,
         );
         setLogoUrl(
