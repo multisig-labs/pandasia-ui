@@ -1,7 +1,7 @@
 import ERC20 from '@/contracts/ERC20';
 import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
-import { useContractRead, usePrepareContractWrite } from 'wagmi';
+import { useAccount, useContractRead, usePrepareContractWrite } from 'wagmi';
 
 export const useGetAirdropIds = (address: HexString) => {
   return useContractRead({
@@ -50,3 +50,15 @@ export const useGetTokenName = (tokenAddress: HexString) => {
     functionName: 'name',
   });
 };
+
+export function useC2PAuth() {
+  const { address: account } = useAccount();
+  const { data: pChainAddr } = useContractRead({
+    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    abi: Pandasia,
+    functionName: 'c2p',
+    args: [account as HexString],
+    watch: true,
+  });
+  return { account, pChainAddr };
+}

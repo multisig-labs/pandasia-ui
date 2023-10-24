@@ -1,6 +1,6 @@
 import { getProof, updateClickCount } from '@/async_fns/backendCalls';
 import { useClaimAirdrop } from '@/async_fns/wagmiHooks';
-import { useC2PAuth } from '@/hooks/useC2PAuth';
+import { useC2PAuth } from '@/async_fns/wagmiHooks';
 import { HexString } from '@/types/cryptoGenerics';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useContractWrite } from 'wagmi';

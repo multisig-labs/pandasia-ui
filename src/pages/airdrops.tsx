@@ -3,7 +3,7 @@ import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
 import { supabase } from '@/config/supabaseConfig';
-import { useC2PAuth } from '@/hooks/useC2PAuth';
+import { useC2PAuth } from '@/async_fns/wagmiHooks';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';

@@ -1,6 +1,6 @@
 import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import UnregisterButton from '@/components/Button/UnregisterButton';
-import { useC2PAuth } from '@/hooks/useC2PAuth';
+import { useC2PAuth } from '@/async_fns/wagmiHooks';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
