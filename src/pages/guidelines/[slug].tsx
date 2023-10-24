@@ -5,7 +5,6 @@ import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import GuidelinesLoadingPage from '@/components/Pages/Loading/GuidelinesLoadingPage';
-import LoadingPage from '@/components/Pages/Loading/LoadingPage';
 import { supabase } from '@/config/supabaseConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import { format } from 'date-fns';
