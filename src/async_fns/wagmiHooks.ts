@@ -1,11 +1,12 @@
 import ERC20 from '@/contracts/ERC20';
 import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
+import { PANDASIA_ADDR } from '@/utils/consts';
 import { useAccount, useContractRead, usePrepareContractWrite } from 'wagmi';
 
 export const useGetAirdropIds = (address: HexString) => {
   return useContractRead({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    address: PANDASIA_ADDR,
     abi: Pandasia,
     functionName: 'getAirdropIds',
     args: [address],
@@ -15,7 +16,7 @@ export const useGetAirdropIds = (address: HexString) => {
 
 export const useGetAirdrop = (id: bigint) => {
   return useContractRead({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    address: PANDASIA_ADDR,
     abi: Pandasia,
     functionName: 'getAirdrop',
     args: [id],
@@ -25,7 +26,7 @@ export const useGetAirdrop = (id: bigint) => {
 
 export const useGetAirdrops = (offset: bigint, limit: bigint) => {
   return useContractRead({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    address: PANDASIA_ADDR,
     abi: Pandasia,
     //@ts-ignore - not sure why typescript can't find this... it is present in the contract, and this hook works
     functionName: 'getAirdrops',
@@ -36,7 +37,7 @@ export const useGetAirdrops = (offset: bigint, limit: bigint) => {
 
 export const useClaimAirdrop = (id: bigint, proof: HexString[]) => {
   return usePrepareContractWrite({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    address: PANDASIA_ADDR,
     abi: Pandasia,
     functionName: 'claimAirdrop',
     args: [id, proof],
@@ -54,7 +55,7 @@ export const useGetTokenName = (tokenAddress: HexString) => {
 export function useC2PAuth() {
   const { address: account } = useAccount();
   const { data: pChainAddr } = useContractRead({
-    address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+    address: PANDASIA_ADDR,
     abi: Pandasia,
     functionName: 'c2p',
     args: [account as HexString],
