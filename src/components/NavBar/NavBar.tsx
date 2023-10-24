@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <div className="flex basis-[1280px] items-center justify-between">
       <div className="flex gap-12">
-        <NavBarLink name="CLAIMS" link="/pandasia" />
+        <NavBarLink name="CLAIMS" link="/airdrops" />
         <NavBarLink name="ABOUT" link="/about" />
         <NavBarLink name="GOGOPOOL" link="https://app.gogopool.com" blank />
       </div>

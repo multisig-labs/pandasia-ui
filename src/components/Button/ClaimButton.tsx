@@ -63,14 +63,13 @@ export default function ClaimButton({
   const regex = /Error: (.*)/;
   const errorMaybe = error?.message.match(regex);
   if (errorMaybe) {
-    console.log('SETTING ERROR');
     setError(errorMaybe[1]);
   }
 
   return (
     <button
       onClick={() => handleClaim()}
-      className="border cursor-pointer border-white px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-500 font-semibold tracking-widest"
+      className="border disabled:cursor-not-allowed disabled:border-secondary-600 disabled:text-secondary-600 cursor-pointer border-white px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-500 font-semibold tracking-widest"
       disabled={errorMaybe ? true : false}
     >
       CLAIM

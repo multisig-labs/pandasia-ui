@@ -24,18 +24,13 @@ export default function AirdropCard({
   const {
     id,
     contractId,
-    owner,
     erc20,
     claimAmount,
     root,
     startsAt,
     expiresAt,
-    onlyRegistered,
     balance,
     companyName,
-    summary,
-    description,
-    url,
     logo,
   } = cardInfo;
 

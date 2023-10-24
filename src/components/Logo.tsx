@@ -33,7 +33,7 @@ export default function Logo({ erc20Address, logo, size }: Props) {
             `https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/${erc20Address}/logo.png`,
           );
         } catch {
-          setLogoUrl(`https://picsum.photos/${randomish}`);
+          setLogoUrl(`/logo-placeholder.svg`);
         }
       }
     } else {
@@ -45,7 +45,7 @@ export default function Logo({ erc20Address, logo, size }: Props) {
           `https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/${erc20Address}/logo.png`,
         );
       } catch {
-        setLogoUrl(`https://picsum.photos/${randomish}`);
+        setLogoUrl(`/logo-placeholder.svg`);
       }
     }
   }

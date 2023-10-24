@@ -4,10 +4,13 @@ import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
+import GuidelinesLoadingPage from '@/components/Pages/Loading/GuidelinesLoadingPage';
+import LoadingPage from '@/components/Pages/Loading/LoadingPage';
 import { supabase } from '@/config/supabaseConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Guidelines(props: { supabaseId: number }) {
@@ -88,8 +91,15 @@ export default function Guidelines(props: { supabaseId: number }) {
 
   // TODO Make this loading page better, a transition? a skeleton?
   if (!combinedAirdrop) {
-    return <div>Loading</div>;
+    return (
+      <LayoutAndNavbar>
+        <GuidelinesLoadingPage />
+      </LayoutAndNavbar>
+    );
   }
+
+  const reggy = /http/;
+  const hasHttp = reggy.test(combinedAirdrop.url);
 
   return (
     <LayoutAndNavbar>
@@ -133,9 +143,13 @@ export default function Guidelines(props: { supabaseId: number }) {
             <AirdropInfo
               title="Project website"
               info={
-                <a target="_blank" className="hover:underline" href={combinedAirdrop.url}>
+                <Link
+                  target="_blank"
+                  className="hover:underline"
+                  href={hasHttp ? combinedAirdrop.url : '/not-found'}
+                >
                   {combinedAirdrop.url}
-                </a>
+                </Link>
               }
               color="text-primary-600"
             />

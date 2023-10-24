@@ -15,7 +15,7 @@ export default function HalfScreenLogo() {
 
       <div className="flex h-full flex-col items-center justify-center">
         <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={180} height={180} priority />
-        <span className="text-primary-500">BY GOGOPOOL</span>
+        <span className="text-primary-500">BY MULTISIGLABS</span>
         <div className="pt-2">
           <CustomConnectButton />
         </div>
