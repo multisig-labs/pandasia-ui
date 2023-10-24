@@ -15,7 +15,7 @@ export default function LayoutAndNavbar({ children }: Props) {
           <Link href={'/'}>
             <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={102} height={142} priority />
           </Link>
-          <span className="text-xs text-primary-500">BY GOGOPOOL</span>
+          <span className="text-xs text-primary-500">BY MULTISIGLABS</span>
         </div>
       </div>
       <section className="flex w-full max-w-7xl p-6 pb-4">

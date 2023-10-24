@@ -49,7 +49,7 @@ export default function Home() {
             <CustomConnectButton />
           </span>
           <span className="absolute bottom-0 text-xs tracking-widest text-primary-600">
-            MADE WITH FIRE BY GOGOPOOL
+            MADE WITH FIRE BY MULTISIGLABS
           </span>
         </div>
       )}
