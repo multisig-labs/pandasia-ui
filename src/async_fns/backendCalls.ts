@@ -22,10 +22,8 @@ export async function getSig(signature: string) {
 }
 
 export async function getTreeData() {
-  console.log('process.env.NEXT_PUBLIC_PANDASIA_SERVER', process.env.NEXT_PUBLIC_PANDASIA_SERVER);
-
   const { data: trees } = await axios.get<Trees>(
-    `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_PANDASIA_SERVER}/trees`,
+    `${process.env.NEXT_PUBLIC_PANDASIA_SERVER}/trees`,
   );
   return trees;
 }
