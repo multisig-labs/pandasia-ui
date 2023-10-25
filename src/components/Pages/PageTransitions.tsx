@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 export function FadeTransition({ children }: { children: ReactNode }) {

@@ -11,7 +11,6 @@ import { chains, wagmiConfig } from '@/config/wagmiConfig';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
-import { AnimatePresence } from 'framer-motion';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -35,9 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
             chains={chains}
           >
             <main className={montserrat.className}>
-              <AnimatePresence mode="wait">
-                <Component {...pageProps} />
-              </AnimatePresence>
+              <Component {...pageProps} />
             </main>
           </RainbowKitProvider>
         </WagmiConfig>
