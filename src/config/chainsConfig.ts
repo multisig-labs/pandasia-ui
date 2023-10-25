@@ -35,3 +35,25 @@ export const forky = {
   },
   testnet: true,
 };
+
+export const avalanche = {
+  id: 43114,
+  name: 'Avalanche',
+  network: 'avalanche',
+  iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/5805.png',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Avalanche',
+    symbol: 'AVAX',
+  },
+  rpcUrls: {
+    default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
+    public: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
+  },
+  blockExplorers: {
+    default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+  },
+  testnet: false,
+};

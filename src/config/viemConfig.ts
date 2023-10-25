@@ -1,9 +1,9 @@
 import { WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem';
-import { forky } from './chainsConfig';
+import { avalanche } from './chainsConfig';
 
-const customTransport = http('http://localhost:9650');
+const customTransport = http('https://api.avax.network/ext/bc/C/rpc');
 export const publicClient = createPublicClient({
-  chain: forky,
+  chain: avalanche,
   transport: customTransport,
 });
 
@@ -12,8 +12,8 @@ if (typeof window !== 'undefined') {
   //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
   if (typeof window.ethereum !== 'undefined') {
     walletClient = createWalletClient({
-      chain: forky,
-      //@ts-ignore -- same as above ignore
+      chain: avalanche,
+      //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
       transport: custom(window.ethereum),
     });
   }
