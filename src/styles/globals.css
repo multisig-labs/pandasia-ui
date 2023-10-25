@@ -69,6 +69,47 @@ body {
    background-repeat: repeat-x;
 }
 
+.slide-in {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+  transform-origin: top;
+}
+
+.slide-out {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+  transform-origin: top;
+}
+
+.slide-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+}
+.slide-right {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 70%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+}
+
 /* Tailwind Combined Classes */
 .hover-glow {
   @apply cursor-pointer text-primary-600 transition-colors duration-300 hover:border-primary-300 hover:text-primary-300;

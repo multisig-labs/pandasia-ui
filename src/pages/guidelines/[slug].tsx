@@ -5,6 +5,7 @@ import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import GuidelinesLoadingPage from '@/components/Pages/Loading/GuidelinesLoadingPage';
+import { AccordianTransition, FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import { format } from 'date-fns';
@@ -89,84 +90,83 @@ export default function Guidelines(props: { supabaseId: number }) {
   }
 
   // TODO Make this loading page better, a transition? a skeleton?
-  if (!combinedAirdrop) {
-    return (
-      <LayoutAndNavbar>
-        <GuidelinesLoadingPage />
-      </LayoutAndNavbar>
-    );
-  }
-
   const reggy = /http/;
-  const hasHttp = reggy.test(combinedAirdrop.url);
 
   return (
-    <LayoutAndNavbar>
-      <div className="my-12 grid w-full grid-cols-5">
-        <div className="col-span-2 border-r border-secondary-700">
-          <div className="flex max-w-[370px] flex-col pr-4">
-            <div className="flex overflow-hidden h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
-              <Logo size={75} logo={combinedAirdrop.logo} erc20Address={combinedAirdrop.erc20} />
+    <AccordianTransition>
+      <LayoutAndNavbar>
+        {!combinedAirdrop ? null : (
+          <div className="my-12 grid w-full grid-cols-5">
+            <div className="col-span-2 border-r border-secondary-700">
+              <div className="flex max-w-[370px] flex-col pr-4">
+                <div className="flex overflow-hidden h-24 w-24 items-center justify-center rounded-full border border-secondary-700 bg-secondary-900">
+                  <Logo
+                    size={75}
+                    logo={combinedAirdrop.logo}
+                    erc20Address={combinedAirdrop.erc20}
+                  />
+                </div>
+                <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
+                  {combinedAirdrop.companyName}
+                </span>
+                <span className="text-md flex font-semibold tracking-[4px] text-secondary-700 break-all">
+                  {combinedAirdrop.summary}
+                </span>
+                {combinedAirdrop?.erc20 ? (
+                  <AddTokenToWallet erc20={combinedAirdrop.erc20} />
+                ) : (
+                  <AddTokenToWalletLoading />
+                )}
+                <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
+                <span className="flex pb-12 pt-4 break-all">{combinedAirdrop.description}</span>
+              </div>
             </div>
-            <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
-              {combinedAirdrop.companyName}
-            </span>
-            <span className="text-md flex font-semibold tracking-[4px] text-secondary-700 break-all">
-              {combinedAirdrop.summary}
-            </span>
-            {combinedAirdrop?.erc20 ? (
-              <AddTokenToWallet erc20={combinedAirdrop.erc20} />
-            ) : (
-              <AddTokenToWalletLoading />
-            )}
-            <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
-            <span className="flex pb-12 pt-4 break-all">{combinedAirdrop.description}</span>
-          </div>
-        </div>
 
-        <div className="col-span-3 flex flex-col items-end pl-4">
-          <div className="flex w-full max-w-[560px] flex-col">
-            <AirdropCard
-              cardInfo={combinedAirdrop}
-              claimCount={claimCount}
-              setClaimCount={setClaimCount}
-              showGuidelines={false}
-            />
-            <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
-              SUMMARY
-            </span>
-            <span className="flex pt-2 break-all">{combinedAirdrop.summary}</span>
-            <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
-              AIRDROP INFO
-            </span>
-            <AirdropInfo
-              title="Project website"
-              info={
-                <Link
-                  target="_blank"
-                  className="hover:underline"
-                  href={hasHttp ? combinedAirdrop.url : '/not-found'}
-                >
-                  {combinedAirdrop.url}
-                </Link>
-              }
-              color="text-primary-600"
-            />
-            <AirdropInfo title="Number of Claims" info={claimCount.toString()} />
-            <AirdropInfo
-              title="ERC20 Address"
-              info={combinedAirdrop.erc20}
-              color="text-primary-600"
-              isHash
-            />
-            <AirdropInfo
-              title="Airdrop Start Date"
-              info={format(new Date(Date.now()), 'MM/dd/yyyy')}
-            />
+            <div className="col-span-3 flex flex-col items-end pl-4">
+              <div className="flex w-full max-w-[560px] flex-col">
+                <AirdropCard
+                  cardInfo={combinedAirdrop}
+                  claimCount={claimCount}
+                  setClaimCount={setClaimCount}
+                  showGuidelines={false}
+                />
+                <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
+                  SUMMARY
+                </span>
+                <span className="flex pt-2 break-all">{combinedAirdrop.summary}</span>
+                <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
+                  AIRDROP INFO
+                </span>
+                <AirdropInfo
+                  title="Project website"
+                  info={
+                    <Link
+                      target="_blank"
+                      className="hover:underline"
+                      href={reggy.test(combinedAirdrop.url) ? combinedAirdrop.url : '/not-found'}
+                    >
+                      {combinedAirdrop.url}
+                    </Link>
+                  }
+                  color="text-primary-600"
+                />
+                <AirdropInfo title="Number of Claims" info={claimCount.toString()} />
+                <AirdropInfo
+                  title="ERC20 Address"
+                  info={combinedAirdrop.erc20}
+                  color="text-primary-600"
+                  isHash
+                />
+                <AirdropInfo
+                  title="Airdrop Start Date"
+                  info={format(new Date(Date.now()), 'MM/dd/yyyy')}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </LayoutAndNavbar>
+        )}
+      </LayoutAndNavbar>
+    </AccordianTransition>
   );
 }
 
