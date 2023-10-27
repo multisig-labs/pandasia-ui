@@ -48,7 +48,9 @@ export default function Home() {
             ENTER PANDASIA
           </button>
         </Link>
+        {/*
         <UnregisterButton />
+        */}
       </>
     );
   };
