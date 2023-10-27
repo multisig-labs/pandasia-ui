@@ -47,7 +47,7 @@ body {
 }
 
 .welcome-bg {
-  background: url('/welcome-page-bg.svg') no-repeat center center fixed;
+  background-color: #101118;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -120,7 +120,7 @@ body {
 
 @keyframes fade-in {
   0% {
-    opacity: 0;
+    opacity: 0.3;
   }
   100% {
     opacity: 1;

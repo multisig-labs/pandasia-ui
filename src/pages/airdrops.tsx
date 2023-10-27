@@ -7,7 +7,7 @@ import { useC2PAuth } from '@/async_fns/wagmiHooks';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { AccordianTransition, FadeTransition } from '@/components/Pages/PageTransitions';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
 
 interface SupabaseMap {
   [id: number]: SupabaseReturnType;
@@ -128,7 +128,7 @@ export default function Pandasia() {
   }
 
   return (
-    <AccordianTransition>
+    <FadeTransition>
       {isClient && (
         <LayoutAndNavbar>
           {!pChainAddr || parseInt(pChainAddr, 16) === 0 ? (
@@ -162,6 +162,6 @@ export default function Pandasia() {
           )}
         </LayoutAndNavbar>
       )}
-    </AccordianTransition>
+    </FadeTransition>
   );
 }

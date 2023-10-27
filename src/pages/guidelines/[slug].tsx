@@ -4,7 +4,6 @@ import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import GuidelinesLoadingPage from '@/components/Pages/Loading/GuidelinesLoadingPage';
 import { AccordianTransition, FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
@@ -93,7 +92,7 @@ export default function Guidelines(props: { supabaseId: number }) {
   const reggy = /http/;
 
   return (
-    <AccordianTransition>
+    <FadeTransition>
       <LayoutAndNavbar>
         {!combinedAirdrop ? null : (
           <div className="my-12 grid w-full grid-cols-5">
@@ -166,7 +165,7 @@ export default function Guidelines(props: { supabaseId: number }) {
           </div>
         )}
       </LayoutAndNavbar>
-    </AccordianTransition>
+    </FadeTransition>
   );
 }
 
