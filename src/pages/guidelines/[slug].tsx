@@ -4,7 +4,7 @@ import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import AirdropInfo from '@/components/Info/AirdropInfo';
 import Logo from '@/components/Logo';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
-import { AccordianTransition, FadeTransition } from '@/components/Pages/PageTransitions';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import { format } from 'date-fns';
