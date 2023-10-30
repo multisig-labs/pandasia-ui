@@ -47,7 +47,7 @@ body {
 }
 
 .welcome-bg {
-  background: url('/welcome-page-bg.svg') no-repeat center center fixed;
+  background-color: #101118;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -69,6 +69,39 @@ body {
    background-repeat: repeat-x;
 }
 
+.fade-in {
+  animation-name: fade-in;
+  animation-iteration-count: 1;
+  animation-duration: 1s;
+}
+
+.slide-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+  animation-name: curtain-left;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 3s;
+}
+.slide-right {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 70%;
+  height: 100vh;
+  background-color: #101118;
+  background-image: url('/pandasia-bg-pattern-small.png');
+  animation: curtain-right;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 3s;
+}
+
 /* Tailwind Combined Classes */
 .hover-glow {
   @apply cursor-pointer text-primary-600 transition-colors duration-300 hover:border-primary-300 hover:text-primary-300;
@@ -79,13 +112,22 @@ body {
 }
 
 .skeleton {
-  animation-name: fade;
+  animation-name: loading;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-duration: 2s;
 }
 
-@keyframes fade {
+@keyframes fade-in {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
   0% {
     opacity: 1;
   }
@@ -97,3 +139,34 @@ body {
   }
 }
 
+@keyframes curtain-left {
+  0% {
+   left: 0%;
+   opacity: 0.8;
+  }
+  99% {
+    left: -70%;
+    opacity: 0;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes curtain-right {
+  0% {
+    left: 30%;
+    opacity: 0.8;
+  }
+  99% {
+    left: 100%;
+    opacity: 0;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    display: none;
+  }
+}

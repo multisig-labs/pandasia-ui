@@ -1,6 +1,7 @@
 import { getProof, getSig, getTreeData } from '@/async_fns/backendCalls';
 import { recoverMessage, registerPChainAdrr } from '@/async_fns/viemAsync';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
 import { returnErrString } from '@/config/axiosConfig';
@@ -70,18 +71,20 @@ export default function Register() {
       hex    0x424328bf10cdaeeda6bb05a78cff90a0bea12c02
   */
   return (
-    <main className="flex">
-      <HalfScreenLogo />
-      {transaction ? (
-        <SuccessStep transaction={transaction} />
-      ) : (
-        <SignatureStep
-          signature={signature}
-          setSignature={setSignature}
-          submitSignature={submitSignature}
-          sigError={sigError}
-        />
-      )}
-    </main>
+    <FadeTransition>
+      <main className="flex">
+        <HalfScreenLogo />
+        {transaction ? (
+          <SuccessStep transaction={transaction} />
+        ) : (
+          <SignatureStep
+            signature={signature}
+            setSignature={setSignature}
+            submitSignature={submitSignature}
+            sigError={sigError}
+          />
+        )}
+      </main>
+    </FadeTransition>
   );
 }

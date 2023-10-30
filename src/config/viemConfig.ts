@@ -9,9 +9,12 @@ export const publicClient = createPublicClient({
 
 export let walletClient: WalletClient;
 if (typeof window !== 'undefined') {
-  walletClient = createWalletClient({
-    chain: forky,
-    //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
-    transport: custom(window.ethereum),
-  });
+  //@ts-ignore -- the ethereum property is not on the default window object, added by wallet extensions.
+  if (typeof window.ethereum !== 'undefined') {
+    walletClient = createWalletClient({
+      chain: forky,
+      //@ts-ignore -- same as above ignore
+      transport: custom(window.ethereum),
+    });
+  }
 }
