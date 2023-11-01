@@ -1,5 +1,6 @@
+import { publicClient, walletClient } from '@/config/viemConfig';
 import Pandasia from '@/contracts/PandasiaContract';
-import { walletClient, publicClient } from '@/config/viemConfig';
+import { HexString } from '@/types/cryptoGenerics';
 
 export default function UnregisterButton() {
   async function unregister() {
@@ -9,7 +10,7 @@ export default function UnregisterButton() {
 
       const { request } = await publicClient.simulateContract({
         account: address,
-        address: '0xfD6e7c1b6A8862C9ee2dC338bd11A3FC3c616E34',
+        address: process.env.PANDASIA_ADDR as HexString,
         abi: Pandasia,
         functionName: 'unregisterPChainAddr',
       });
