@@ -65,11 +65,6 @@ export default function Register() {
     }
   };
 
-  /*
-      Test signature 24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx
-      P-addr P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww
-      hex    0x424328bf10cdaeeda6bb05a78cff90a0bea12c02
-  */
   return (
     <FadeTransition>
       <main className="flex">

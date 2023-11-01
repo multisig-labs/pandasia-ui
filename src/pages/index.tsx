@@ -26,8 +26,6 @@ export default function Home() {
     setIsClient(true);
   }, []);
 
-  console.log({ address, isConnected });
-
   const displayButton = () => {
     if (!address) {
       return <CustomConnectButton />;
