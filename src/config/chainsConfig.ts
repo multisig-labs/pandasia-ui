@@ -48,8 +48,12 @@ export const avalanche = {
     symbol: 'AVAX',
   },
   rpcUrls: {
-    default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
-    public: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
+    default: {
+      http: ['https://nd-058-850-167.p2pify.com/4e4706b8fc3a3bb4a5559c84671a1cf4/ext/bc/C/rpc'],
+    },
+    public: {
+      http: ['https://nd-058-850-167.p2pify.com/4e4706b8fc3a3bb4a5559c84671a1cf4/ext/bc/C/rpc'],
+    },
   },
   blockExplorers: {
     default: { name: 'SnowTrace', url: 'https://snowtrace.io' },

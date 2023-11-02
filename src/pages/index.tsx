@@ -1,21 +1,19 @@
+import { useC2PAuth, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
 import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
-import UnregisterButton from '@/components/Button/UnregisterButton';
-import { useC2PAuth } from '@/async_fns/wagmiHooks';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
+import pandasiaBg from '@/styles/lottie/pandasia-background.json';
+import Lottie from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FadeTransition } from '@/components/Pages/PageTransitions';
-import Lottie from 'lottie-react';
-import pandasiaBg from '@/styles/lottie/pandasia-background.json';
-import { getAccount } from 'wagmi/actions';
 import { useAccount } from 'wagmi';
-import { useRouter } from 'next/router';
 
 export default function Home() {
   const { address } = useAccount();
-  const { isConnected } = getAccount();
   const { pChainAddr } = useC2PAuth();
-  const router = useRouter();
+  const { isOperator } = useIsMinipoolOperator();
+
+  console.log({ isOperator });
 
   const [s1, setS1] = useState(false);
   const [s2, setS2] = useState(false);
@@ -26,32 +24,30 @@ export default function Home() {
     setIsClient(true);
   }, []);
 
-  console.log({ address, isConnected });
-
   const displayButton = () => {
     if (!address) {
       return <CustomConnectButton />;
     }
-    if (!pChainAddr || parseInt(pChainAddr, 16) === 0) {
+    if ((pChainAddr && parseInt(pChainAddr, 16) != 0) || isOperator) {
       return (
-        <Link href={'/register'}>
-          <button className="hover-underline-animation tracking-[4px] text-primary-500">
-            REGISTER
-          </button>
-        </Link>
+        <>
+          <Link href={'/airdrops'}>
+            <button className="hover-underline-animation tracking-[4px] text-primary-600">
+              ENTER PANDASIA
+            </button>
+          </Link>
+          {/*
+        <UnregisterButton />
+        */}
+        </>
       );
     }
     return (
-      <>
-        <Link href={'/airdrops'}>
-          <button className="hover-underline-animation tracking-[4px] text-primary-600">
-            ENTER PANDASIA
-          </button>
-        </Link>
-        {/*
-        <UnregisterButton />
-        */}
-      </>
+      <Link href={'/register'}>
+        <button className="hover-underline-animation tracking-[4px] text-primary-500">
+          REGISTER
+        </button>
+      </Link>
     );
   };
 

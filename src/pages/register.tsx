@@ -1,5 +1,6 @@
 import { getProof, getSig, getTreeData } from '@/async_fns/backendCalls';
 import { recoverMessage, registerPChainAdrr } from '@/async_fns/viemAsync';
+import { useGetMerkleRoot } from '@/async_fns/wagmiHooks';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
@@ -17,12 +18,29 @@ export default function Register() {
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
-  if (treesLoading) {
+  const { data: merkleRoot, isLoading: isMerkleRootLoading } = useGetMerkleRoot();
+
+  if (treesLoading || isMerkleRootLoading) {
     return null;
   }
 
   if (trees === undefined) {
     return <span>Error retreiving trees</span>;
+  }
+
+  if (merkleRoot === undefined) {
+    return <span>Error retreiving merkleRoot</span>;
+  }
+
+  let serverContainsRoot = false;
+  trees.forEach((tree) => {
+    if (tree.Root == merkleRoot) {
+      serverContainsRoot = true;
+    }
+  });
+
+  if (!serverContainsRoot) {
+    return <span>Backend does not contain contract root</span>;
   }
 
   const submitSignature = async () => {
@@ -39,7 +57,7 @@ export default function Register() {
       const pAddr = await recoverMessage(sig, address);
 
       // Using the merkle root, pChain address, and signature we can obtain a proof that the pChain address is in the merkle tree
-      const { data: proof } = await getProof(trees[0].Root, pAddr, signature);
+      const { data: proof } = await getProof(merkleRoot, pAddr, signature);
       if (proof === undefined) {
         console.warn('proof undefined');
         return;
@@ -65,11 +83,6 @@ export default function Register() {
     }
   };
 
-  /*
-      Test signature 24eWufzWvm38teEhNQmtE9N5BD12CWUawv1YtbYkuxeS5gGCN6CoZBgU4V4WDrLa5anYyTLGZT8nqiEsqX7hm1k3jofswfx
-      P-addr P-avax1gfpj30csekhwmf4mqkncelus5zl2ztqzvv7aww
-      hex    0x424328bf10cdaeeda6bb05a78cff90a0bea12c02
-  */
   return (
     <FadeTransition>
       <main className="flex">
