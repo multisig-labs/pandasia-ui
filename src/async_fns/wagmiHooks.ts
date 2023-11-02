@@ -63,6 +63,18 @@ export function useC2PAuth() {
   return { account, pChainAddr };
 }
 
+export function useIsMinipoolOperator() {
+  const { address: account } = useAccount();
+  const { data: isOperator } = useContractRead({
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'isMinipoolOperator',
+    args: [account as HexString],
+    watch: true,
+  });
+  return { isOperator };
+}
+
 export function useGetMerkleRoot() {
   return useContractRead({
     address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,

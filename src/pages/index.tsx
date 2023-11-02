@@ -1,21 +1,19 @@
 import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
-import UnregisterButton from '@/components/Button/UnregisterButton';
-import { useC2PAuth } from '@/async_fns/wagmiHooks';
+import { useC2PAuth, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import Lottie from 'lottie-react';
 import pandasiaBg from '@/styles/lottie/pandasia-background.json';
-import { getAccount } from 'wagmi/actions';
 import { useAccount } from 'wagmi';
-import { useRouter } from 'next/router';
 
 export default function Home() {
   const { address } = useAccount();
-  const { isConnected } = getAccount();
   const { pChainAddr } = useC2PAuth();
-  const router = useRouter();
+  const { isOperator } = useIsMinipoolOperator();
+
+  console.log({ isOperator });
 
   const [s1, setS1] = useState(false);
   const [s2, setS2] = useState(false);
@@ -30,7 +28,7 @@ export default function Home() {
     if (!address) {
       return <CustomConnectButton />;
     }
-    if (!pChainAddr || parseInt(pChainAddr, 16) === 0) {
+    if (!pChainAddr || parseInt(pChainAddr, 16) === 0 || !isOperator) {
       return (
         <Link href={'/register'}>
           <button className="hover-underline-animation tracking-[4px] text-primary-500">

@@ -1,4 +1,4 @@
-import { useGetAirdrops } from '@/async_fns/wagmiHooks';
+import { useGetAirdrops, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
@@ -18,6 +18,7 @@ export default function Pandasia() {
   const [supabaseMap, setSupabaseMap] = useState<SupabaseMap>({});
   const [isClient, setIsClient] = useState(false);
   const { pChainAddr } = useC2PAuth();
+  const { isOperator } = useIsMinipoolOperator();
 
   // Get contract data data
   const {
@@ -131,7 +132,7 @@ export default function Pandasia() {
     <FadeTransition>
       {isClient && (
         <LayoutAndNavbar>
-          {!pChainAddr || parseInt(pChainAddr, 16) === 0 ? (
+          {!pChainAddr || parseInt(pChainAddr, 16) === 0 || !isOperator ? (
             <NotAuthorized />
           ) : (
             <div className="flex w-full flex-col items-center">
