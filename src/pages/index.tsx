@@ -1,11 +1,11 @@
-import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import { useC2PAuth, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
+import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
+import pandasiaBg from '@/styles/lottie/pandasia-background.json';
+import Lottie from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FadeTransition } from '@/components/Pages/PageTransitions';
-import Lottie from 'lottie-react';
-import pandasiaBg from '@/styles/lottie/pandasia-background.json';
 import { useAccount } from 'wagmi';
 
 export default function Home() {
@@ -28,26 +28,26 @@ export default function Home() {
     if (!address) {
       return <CustomConnectButton />;
     }
-    if (!pChainAddr || parseInt(pChainAddr, 16) === 0 || !isOperator) {
+    if ((pChainAddr && parseInt(pChainAddr, 16) != 0) || isOperator) {
       return (
-        <Link href={'/register'}>
-          <button className="hover-underline-animation tracking-[4px] text-primary-500">
-            REGISTER
-          </button>
-        </Link>
+        <>
+          <Link href={'/airdrops'}>
+            <button className="hover-underline-animation tracking-[4px] text-primary-600">
+              ENTER PANDASIA
+            </button>
+          </Link>
+          {/*
+        <UnregisterButton />
+        */}
+        </>
       );
     }
     return (
-      <>
-        <Link href={'/airdrops'}>
-          <button className="hover-underline-animation tracking-[4px] text-primary-600">
-            ENTER PANDASIA
-          </button>
-        </Link>
-        {/*
-        <UnregisterButton />
-        */}
-      </>
+      <Link href={'/register'}>
+        <button className="hover-underline-animation tracking-[4px] text-primary-500">
+          REGISTER
+        </button>
+      </Link>
     );
   };
 
