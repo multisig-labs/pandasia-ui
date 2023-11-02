@@ -62,3 +62,12 @@ export function useC2PAuth() {
   });
   return { account, pChainAddr };
 }
+
+export function useGetMerkleRoot() {
+  return useContractRead({
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'merkleRoot',
+    watch: true,
+  });
+}
