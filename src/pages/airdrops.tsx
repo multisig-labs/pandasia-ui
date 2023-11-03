@@ -1,13 +1,12 @@
-import { useGetAirdrops, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
+import { useC2PAuth, useGetAirdrops, useIsMinipoolOperator } from '@/async_fns/wagmiHooks';
 import AirdropCard from '@/components/Cards/AirdropCard/AirdropCard';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
+import { FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
-import { useC2PAuth } from '@/async_fns/wagmiHooks';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { FadeTransition } from '@/components/Pages/PageTransitions';
 
 interface SupabaseMap {
   [id: number]: SupabaseReturnType;
@@ -132,9 +131,7 @@ export default function Pandasia() {
     <FadeTransition>
       {isClient && (
         <LayoutAndNavbar>
-          {!pChainAddr || parseInt(pChainAddr, 16) === 0 || !isOperator ? (
-            <NotAuthorized />
-          ) : (
+          {(pChainAddr && parseInt(pChainAddr, 16) !== 0) || isOperator ? (
             <div className="flex w-full flex-col items-center">
               <Image
                 className="pt-11"
@@ -160,6 +157,8 @@ export default function Pandasia() {
                 ))}
               </div>
             </div>
+          ) : (
+            <NotAuthorized />
           )}
         </LayoutAndNavbar>
       )}
