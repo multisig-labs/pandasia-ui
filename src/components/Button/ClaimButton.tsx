@@ -1,6 +1,5 @@
 import { getProof, updateClickCount } from '@/async_fns/backendCalls';
-import { useClaimAirdrop } from '@/async_fns/wagmiHooks';
-import { useC2PAuth } from '@/async_fns/wagmiHooks';
+import { useC2PAuth, useClaimAirdrop } from '@/async_fns/wagmiHooks';
 import { HexString } from '@/types/cryptoGenerics';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useContractWrite } from 'wagmi';
@@ -40,12 +39,12 @@ export default function ClaimButton({
   }, [setError, error]);
 
   async function fetchProof() {
-    const { data: proofy } = await getProof(root, pChainAddr || '', '');
-    if (proof === undefined) {
+    const { data: fetchedProof } = await getProof(root, pChainAddr || '', '');
+    if (fetchedProof === undefined) {
       console.warn('Proof undefined');
       return;
     }
-    setProof(proofy.Proof);
+    setProof(fetchedProof.Proof);
   }
 
   async function recordClick() {
