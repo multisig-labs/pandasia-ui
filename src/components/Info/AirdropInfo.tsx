@@ -12,7 +12,7 @@ type Props = {
 export default function AirdropInfo({ title, info, color, isHash }: Props) {
   return (
     <div className="dotted-bottom-border flex justify-between py-2">
-      <span>{title}</span>
+      <span className="basis-60">{title}</span>
       {isHash ? (
         <div className={`flex gap-2 ${color}`}>
           <span>{shortenNodeId(info as string)}</span>
@@ -21,7 +21,7 @@ export default function AirdropInfo({ title, info, color, isHash }: Props) {
           </span>
         </div>
       ) : (
-        <span className={`${color}`}>{info}</span>
+        <span className={`${color} break-all`}>{info}</span>
       )}
     </div>
   );
