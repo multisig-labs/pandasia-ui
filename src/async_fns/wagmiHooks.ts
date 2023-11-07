@@ -43,6 +43,16 @@ export const useClaimAirdrop = (id: bigint, proof: HexString[]) => {
   });
 };
 
+export const useCanClaimAirdrop = (id: bigint, proof: HexString[]) => {
+  const { address: account } = useAccount();
+  return useContractRead({
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'canClaimAirdrop',
+    args: [account as HexString, id, proof],
+  });
+};
+
 export const useGetTokenName = (tokenAddress: HexString) => {
   return useContractRead({
     address: tokenAddress,
