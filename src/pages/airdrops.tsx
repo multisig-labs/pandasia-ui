@@ -8,7 +8,7 @@ import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-interface SupabaseMap {
+export interface SupabaseMap {
   [id: number]: SupabaseReturnType;
 }
 
