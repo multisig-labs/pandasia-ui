@@ -84,7 +84,7 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         .select();
 
       if (!airdropInfo) {
-        throw 'unable to make airdorp info';
+        throw 'unable to make airdrop info';
       }
 
       setSb(airdropInfo[0].id);

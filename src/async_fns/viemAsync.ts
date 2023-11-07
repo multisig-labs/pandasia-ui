@@ -33,6 +33,17 @@ export async function newAirdrop(
   return newAirdrop;
 }
 
+export async function withdrawFunds(airdropId: bigint, withdrawAmt: bigint) {
+  const { request: withdraw } = await publicClient.simulateContract({
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'withdrawFunding',
+    args: [airdropId, withdrawAmt],
+  });
+
+  return withdraw;
+}
+
 export async function recoverMessage(sig: Proof, address: HexString) {
   // Recovers the pChain address from the signature
   const pAddr = await publicClient.readContract({
