@@ -35,6 +35,8 @@ export default function ClaimButton({
     const errorMaybe = error?.message.match(regex);
     if (errorMaybe) {
       setError(errorMaybe[1]);
+    } else {
+      setError('');
     }
   }, [setError, error]);
 
