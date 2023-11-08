@@ -4,9 +4,9 @@ import { returnErrString } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import { HexString } from '@/types/cryptoGenerics';
 import { SupabaseClient } from '@supabase/auth-helpers-react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { TransactionReceipt, parseEther } from 'viem';
+import { BaseError, TransactionReceipt, parseEther } from 'viem';
 
 type Props = {
   account: HexString;
@@ -28,6 +28,8 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
   const [erc20, setErc20] = useState<HexString>('0x0');
   const [customMerkleRoot, setCustomMerkleRoot] = useState<HexString>('0x0');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
+  const [viemError, setViemError] = useState<BaseError | null>(null);
+  const [axiosError, setAxiosError] = useState<AxiosError | null>(null);
 
   const createAirdrop = async () => {
     try {
@@ -87,13 +89,30 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         throw 'unable to make airdrop info';
       }
 
+      const { data: airdropToContractData } = await supabaseClient
+        .from('airdrop_to_contract')
+        .insert({ id: airdropInfo[0].id, contract_id: Number(contractId.toString()) })
+        .select();
+
+      const { data: claimCountData } = await supabaseClient
+        .from('claim_count')
+        .insert({ id: airdropInfo[0].id, claims: 0 })
+        .select();
+
+      console.log({ airdropToContractData });
+      console.log({ claimCountData });
+
       setSb(airdropInfo[0].id);
+      setAxiosError(null);
+      setViemError(null);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const error = returnErrString(err);
-        console.warn(error);
-      } else {
         console.warn(err);
+        setAxiosError(err);
+      }
+      if (err instanceof BaseError) {
+        console.warn(err);
+        setViemError(err);
       }
     }
   };
@@ -143,7 +162,7 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         className="p-2 bg-secondary-700 text-white"
         placeholder="erc20 address"
       />
-      <label>Claim Amount</label>
+      <label>Claim Amount (in Ether)</label>
       <input
         onChange={(e) => setClaimAmount(e.target.value.trim())}
         className="p-2 bg-secondary-700 text-white"
@@ -195,6 +214,8 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         <div>Not yet sent to contract</div>
       )}
       {sb ? <div>Supabased! {`${sb}`}</div> : <div>Not yet created in supabase</div>}
+      {axiosError && <div className="text-purple-500">{axiosError.message}</div>}
+      {viemError && <div className="text-orange-500">{viemError.message}</div>}
     </div>
   );
 }

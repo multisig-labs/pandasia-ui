@@ -1,7 +1,6 @@
 import { getTreeData } from '@/async_fns/backendCalls';
 import { useGetAirdropIds, useGetAirdrops } from '@/async_fns/wagmiHooks';
 import CreateAirdrop from '@/components/Pages/AlterAirdrop/CreateAirdrop';
-import WithdrawFunds from '@/components/Pages/AlterAirdrop/WithdrawFunds';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
@@ -11,6 +10,7 @@ import { useAccount } from 'wagmi';
 import { SupabaseMap } from './airdrops';
 import { CombinedAirdrop } from '@/types/pandasiaTypes';
 import { supabase } from '@/config/supabaseConfig';
+import AddOrWithdrawFunds from '@/components/Pages/AlterAirdrop/AddOrWithdrawFunds';
 
 export default function AlterAirdrop() {
   const supabaseClient = useSupabaseClient();
@@ -107,6 +107,7 @@ export default function AlterAirdrop() {
 
     let pMap: SupabaseMap = {};
 
+    console.log(airdrops);
     airdrops.forEach((airdrop) => {
       pMap[airdrop.airdrop_to_contract.contract_id] = airdrop;
     });
@@ -125,7 +126,7 @@ export default function AlterAirdrop() {
     <LayoutAndNavbar>
       <div className="flex gap-4 justify-between w-full text-center">
         <CreateAirdrop account={account} supabaseClient={supabaseClient} sb={sb} setSb={setSb} />
-        <WithdrawFunds combinedAirdrops={combinedAirdrops} />
+        <AddOrWithdrawFunds combinedAirdrops={combinedAirdrops} />
       </div>
     </LayoutAndNavbar>
   );
