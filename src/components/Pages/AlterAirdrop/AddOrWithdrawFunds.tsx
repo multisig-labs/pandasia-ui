@@ -115,19 +115,12 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
         className="p-2 bg-secondary-700 text-white"
         placeholder="Airdrop Id"
       />
-      <label>Add Amount</label>
+      <label>Amount to Add/Withdraw/Increase</label>
       <input
         value={addAmt}
         onChange={(e) => setAddAmt(e.target.value)}
         className="p-2 bg-secondary-700 text-white"
         placeholder="Add Amount"
-      />
-      <label>Withdraw Amount</label>
-      <input
-        value={withdrawAmt}
-        onChange={(e) => setWithdrawAmt(e.target.value)}
-        className="p-2 bg-secondary-700 text-white"
-        placeholder="Withdraw Amount"
       />
       <div className="flex w-full justify-between">
         <button className="border my-4 w-60 p-4 bg-blue-900" onClick={add}>
