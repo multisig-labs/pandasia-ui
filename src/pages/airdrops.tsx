@@ -4,6 +4,7 @@ import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
+import { walletClient } from '@/config/viemConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';

@@ -50,7 +50,7 @@ export default function AirdropCard({
         setClaimCount={setClaimCount}
         setError={setError}
       />
-      <AirdropDesc error={error} claimAmt={claimAmount} />
+      <AirdropDesc erc20={erc20} error={error} claimAmt={claimAmount} />
       <AirdropFooter
         supabaseId={id}
         startsAt={startsAt}

@@ -1,6 +1,11 @@
 const Pandasia = [
   {
     inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
+    inputs: [],
     name: 'AddressAlreadyClaimed',
     type: 'error',
   },
@@ -26,6 +31,11 @@ const Pandasia = [
   },
   {
     inputs: [],
+    name: 'AirdropStillActive',
+    type: 'error',
+  },
+  {
+    inputs: [],
     name: 'InvalidAddress',
     type: 'error',
   },
@@ -36,7 +46,44 @@ const Pandasia = [
   },
   {
     inputs: [],
+    name: 'InvalidInitialization',
+    type: 'error',
+  },
+  {
+    inputs: [],
     name: 'InvalidWithdrawRequest',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NotInitializing',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NotOwner',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnableInvalidOwner',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'OwnableUnauthorizedAccount',
     type: 'error',
   },
   {
@@ -48,6 +95,24 @@ const Pandasia = [
     inputs: [],
     name: 'PAddrNotInValidatorMerkleTree',
     type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'ZeroAmount',
+    type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint64',
+        name: 'version',
+        type: 'uint64',
+      },
+    ],
+    name: 'Initialized',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -294,7 +359,7 @@ const Pandasia = [
       },
       {
         internalType: 'uint256',
-        name: 'claimAmount',
+        name: 'fundAmount',
         type: 'uint256',
       },
     ],
@@ -500,6 +565,13 @@ const Pandasia = [
       },
     ],
     stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

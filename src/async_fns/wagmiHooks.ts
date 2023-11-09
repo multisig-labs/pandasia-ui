@@ -61,6 +61,23 @@ export const useGetTokenName = (tokenAddress: HexString) => {
   });
 };
 
+export const useGetTokenSymbol = (tokenAddress: HexString) => {
+  return useContractRead({
+    address: tokenAddress,
+    abi: ERC20,
+    functionName: 'symbol',
+  });
+};
+
+export const useGetTokenBalance = (tokenAddress: HexString, address: HexString) => {
+  return useContractRead({
+    address: tokenAddress,
+    abi: ERC20,
+    functionName: 'balanceOf',
+    args: [address],
+  });
+};
+
 export function useC2PAuth() {
   const { address: account } = useAccount();
   const { data: pChainAddr } = useContractRead({

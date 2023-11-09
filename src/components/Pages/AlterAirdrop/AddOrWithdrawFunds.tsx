@@ -1,23 +1,31 @@
-import { fundAirdrop, withdrawFunds } from '@/async_fns/viemAsync';
+import { fundAirdrop, increaseAllowance, withdrawFunds } from '@/async_fns/viemAsync';
+import { useGetTokenBalance } from '@/async_fns/wagmiHooks';
 import { publicClient, walletClient } from '@/config/viemConfig';
+import { HexString } from '@/types/cryptoGenerics';
 import { CombinedAirdrop } from '@/types/pandasiaTypes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BaseError, TransactionReceipt } from 'viem';
+import { useAccount } from 'wagmi';
 
 type Props = {
   combinedAirdrops: CombinedAirdrop[];
 };
 
 export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
-  const [airdropId, setAirdropId] = useState('');
+  const [contractId, setContractId] = useState('');
   const [withdrawAmt, setWithdrawAmt] = useState('');
   const [addAmt, setAddAmt] = useState('');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
   const [viemError, setViemError] = useState<BaseError | null>(null);
+  const { address: account } = useAccount();
 
   const withdraw = async () => {
     try {
-      const preparedWithdraw = await withdrawFunds(BigInt(airdropId), BigInt(withdrawAmt));
+      const preparedWithdraw = await withdrawFunds(
+        BigInt(contractId),
+        BigInt(withdrawAmt),
+        account as HexString,
+      );
       const txnHash = await walletClient.writeContract(preparedWithdraw);
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
       setTransaction(txn);
@@ -32,11 +40,39 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
 
   const add = async () => {
     try {
-      const preparedFund = await fundAirdrop(BigInt(airdropId), BigInt(addAmt));
+      const preparedFund = await fundAirdrop(
+        BigInt(contractId),
+        BigInt(addAmt),
+        account as HexString,
+      );
       const txnHash = await walletClient.writeContract(preparedFund);
+      console.log({ walletClient });
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
       setTransaction(txn);
       setViemError(null);
+    } catch (err) {
+      if (err instanceof BaseError) {
+        console.warn(err);
+        setViemError(err);
+      }
+    }
+  };
+
+  const increase = async () => {
+    try {
+      let foundAirdrop = combinedAirdrops.find((obj) => obj.contractId === BigInt(contractId));
+      console.log({ foundObj: foundAirdrop });
+      if (foundAirdrop) {
+        const preparedIncrease = await increaseAllowance(
+          foundAirdrop.erc20,
+          BigInt(addAmt),
+          account as HexString,
+        );
+        const txnHash = await walletClient.writeContract(preparedIncrease);
+        const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
+        setTransaction(txn);
+        setViemError(null);
+      }
     } catch (err) {
       if (err instanceof BaseError) {
         console.warn(err);
@@ -74,8 +110,8 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
       </table>
       <label>Airdrop Id</label>
       <input
-        value={airdropId}
-        onChange={(e) => setAirdropId(e.target.value)}
+        value={contractId}
+        onChange={(e) => setContractId(e.target.value)}
         className="p-2 bg-secondary-700 text-white"
         placeholder="Airdrop Id"
       />
@@ -97,6 +133,11 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
         <button className="border my-4 w-60 p-4 bg-blue-900" onClick={add}>
           Add Funds
         </button>
+        <button className="border my-4 w-60 p-4 bg-blue-900" onClick={increase}>
+          Increase Allowance
+        </button>
+      </div>
+      <div className="flex w-full justify-between">
         <button className="border my-4 w-60 p-4 bg-orange-900" onClick={withdraw}>
           Withdraw Funds
         </button>
