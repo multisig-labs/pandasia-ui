@@ -1,10 +1,5 @@
-## Getting Started
-
-To run the development server:
-
-`yarn dev`
-
 ## Pandasia UI
+
 This is the UI for the Pandasia backend, the backend is in three parts:
 
 1. A Go server that stores validator's P-Chain addresses as leafs in a merkle tree. The full trees 
@@ -51,3 +46,10 @@ Only [tailwind](https://v2.tailwindcss.com/docs) for styling, no React CSS libra
 
 #### __Lottie__ 
 [Lottie](https://lottiereact.com/) is an animation library, takes json. 
+
+## Getting Started
+
+To run the development server:
+
+`yarn dev`
+

@@ -13,8 +13,6 @@ export default function Home() {
   const { pChainAddr } = useC2PAuth();
   const { isOperator } = useIsMinipoolOperator();
 
-  console.log({ isOperator });
-
   const [s1, setS1] = useState(false);
   const [s2, setS2] = useState(false);
   const [s3, setS3] = useState(false);
