@@ -1,38 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+To run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+`yarn dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pandasia UI
+This is the UI for the Pandasia backend: This is in two parts:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. A Go server that stores validator's P-Chain addresses in a merkle tree.  
+2. A pandasia.sol contract deployed to the Avalanche Network that contains the merkle root(s) of 
+the trees stored on a sqlite database that our Go server has access to. 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+more information can be found at the [pandasia repository](https://github.com/multisig-labs/pandasia).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Quick Summary:  
+Pandasia is an attempt to give airdrops to validators by connecting their P-Chain address 
+(used to deploy validator nodes) to their C-Chain address. Allowing us to verify they have validated
+on the Avax network, and can deposit airdrop rewards to their wallet. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Important Libraries Used
 
-## Learn More
+__Next JS__
+Project built using NextJS, we use `src/` folder format instead of next 13's `app/` router method. 
+Easier to make Supabase work and server side rendering is kinda confusing since we use the `window.ethereum` 
+object client side because of how connected wallet clients inject `window.ethereum` onto the window object. 
 
-To learn more about Next.js, take a look at the following resources:
+__Supabase__
+Our backend connection for airdrop info. Supabase is a postgreSQL wrapper, includes some nice auth
+client automatically. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+__Wagmi and Rainbowkit__  
+Rainbowkit is the wallet connection black box of the website, it makes it easy to connect your wallet 
+and gives a nice UI, at the expense of dark magic making it happen. Wagmi is the React hook libary that 
+Rainbowkit uses, so it must be included as a dependency. Wagmi uses Tanstack Query under the hood. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+__Viem__  
+Viem is a way to make direct calls to the blockchain, it uses native `bigint` from ES2020, which is 
+nice. It also allows for finer grained control of calls. I think of it as axios for blockchain. 
 
-## Deploy on Vercel
+__Axios__
+Axios is a nice way to make HTTP requests, it adds headers and some nicities around the javascript 
+fetch api.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+__Tailwind__ 
+Only tailwind for styling, no React CSS library solutions. 
