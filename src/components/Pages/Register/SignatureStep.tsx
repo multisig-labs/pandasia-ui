@@ -1,5 +1,3 @@
-import Button from '@/components/Button/Button';
-import { CustomConnectButton } from '@/components/Button/CustomConnectButton';
 import Image from 'next/image';
 
 type Props = {
