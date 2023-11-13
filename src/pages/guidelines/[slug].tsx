@@ -88,7 +88,6 @@ export default function Guidelines(props: { supabaseId: number }) {
     setContractId(airdrop.airdrop_to_contract.contract_id);
   }
 
-  // TODO Make this loading page better, a transition? a skeleton?
   const reggy = /http/;
 
   return (
