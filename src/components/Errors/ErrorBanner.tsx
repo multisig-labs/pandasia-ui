@@ -22,7 +22,10 @@ export default function ErrorBanner({ error }: Props) {
   }
   if (error == 'AddressAlreadyClaimed()') {
     return (
-      <Image width={148} height={31} src="/all-claimed-banner.svg" alt="all claimed banner"></Image>
+      <Image width={160} height={31} src="/all-claimed-banner.svg" alt="all claimed banner"></Image>
     );
+  }
+  if (error == 'AirdropExpired()') {
+    return <Image width={160} height={31} src="/expired-banner.svg" alt="expired banner"></Image>;
   }
 }

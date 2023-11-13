@@ -1,4 +1,5 @@
 import { publicClient } from '@/config/viemConfig';
+import ERC20 from '@/contracts/ERC20';
 import Pandasia from '@/contracts/PandasiaContract';
 import { HexString } from '@/types/cryptoGenerics';
 import { Proof } from '@/types/pandasiaTypes';
@@ -31,6 +32,42 @@ export async function newAirdrop(
   });
 
   return newAirdrop;
+}
+
+export async function withdrawFunds(airdropId: bigint, withdrawAmt: bigint, account: HexString) {
+  const { request: withdraw } = await publicClient.simulateContract({
+    account: account,
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'withdrawFunding',
+    args: [airdropId, withdrawAmt],
+  });
+
+  return withdraw;
+}
+
+export async function fundAirdrop(airdropId: bigint, claimAmt: bigint, account: HexString) {
+  const { request: fund } = await publicClient.simulateContract({
+    account: account,
+    address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
+    abi: Pandasia,
+    functionName: 'fundAirdrop',
+    args: [airdropId, claimAmt],
+  });
+
+  return fund;
+}
+
+export async function increaseAllowance(erc20Addr: HexString, addAmt: bigint, account: HexString) {
+  const { request: fund } = await publicClient.simulateContract({
+    account: account,
+    address: erc20Addr,
+    abi: ERC20,
+    functionName: 'increaseAllowance',
+    args: [process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString, addAmt],
+  });
+
+  return fund;
 }
 
 export async function recoverMessage(sig: Proof, address: HexString) {
