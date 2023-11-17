@@ -18,10 +18,14 @@ export default function Register() {
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
-  const { data: merkleRoot, isLoading: isMerkleRootLoading } = useGetMerkleRoot();
+  const { data: merkleRoot, isLoading: merkleRootLoading } = useGetMerkleRoot();
 
-  if (treesLoading || isMerkleRootLoading) {
-    return null;
+  if (treesLoading) {
+    return <span>Loading trees</span>;
+  }
+
+  if (merkleRootLoading) {
+    return <span>Loading merkle root</span>;
   }
 
   if (trees === undefined) {
