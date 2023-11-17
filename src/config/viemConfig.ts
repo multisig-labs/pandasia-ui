@@ -4,16 +4,16 @@ import { avalanche, forky } from './chainsConfig';
 const customTransport = http(process.env.NEXT_PUBLIC_RPC);
 
 // -- Production --
-// export const publicClient = createPublicClient({
-//   chain: avalanche,
-//   transport: customTransport,
-// });
-
-// -- Local Testing --
 export const publicClient = createPublicClient({
-  chain: forky,
+  chain: avalanche,
   transport: customTransport,
 });
+
+// -- Local Testing --
+// export const publicClient = createPublicClient({
+//   chain: forky,
+//   transport: customTransport,
+// });
 
 export let walletClient: WalletClient;
 if (typeof window !== 'undefined') {

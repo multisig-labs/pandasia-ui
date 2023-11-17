@@ -4,10 +4,10 @@ import { publicProvider } from 'wagmi/providers/public';
 import { avalanche, forky } from './chainsConfig';
 
 // -- Production --
-// export const { chains, publicClient } = configureChains([avalanche], [publicProvider()]);
+export const { chains, publicClient } = configureChains([avalanche], [publicProvider()]);
 
 // -- Local Testing --
-export const { chains, publicClient } = configureChains([forky], [publicProvider()]);
+// export const { chains, publicClient } = configureChains([forky], [publicProvider()]);
 
 export const { connectors } = getDefaultWallets({
   appName: 'Pandasia',
