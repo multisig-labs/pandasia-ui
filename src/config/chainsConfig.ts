@@ -49,10 +49,14 @@ export const avalanche = {
   },
   rpcUrls: {
     default: {
-      http: ['https://nd-058-850-167.p2pify.com/4e4706b8fc3a3bb4a5559c84671a1cf4/ext/bc/C/rpc'],
+      http: [
+        'https://avalanche-mainnet.core.chainstack.com/ext/bc/C/rpc/03f8f5500afdf5ec22202f4bb231a72b',
+      ],
     },
     public: {
-      http: ['https://nd-058-850-167.p2pify.com/4e4706b8fc3a3bb4a5559c84671a1cf4/ext/bc/C/rpc'],
+      http: [
+        'https://avalanche-mainnet.core.chainstack.com/ext/bc/C/rpc/03f8f5500afdf5ec22202f4bb231a72b',
+      ],
     },
   },
   blockExplorers: {

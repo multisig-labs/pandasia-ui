@@ -37,7 +37,7 @@ const LoginPage = () => {
       <p>user:</p>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <p>client-side data fetching with RLS</p>
-      <Link href={'/create_airdrop'}>Go to airdrop page</Link>
+      <Link href={'/alter_airdrop'}>Go to airdrop page</Link>
     </>
   );
 };
