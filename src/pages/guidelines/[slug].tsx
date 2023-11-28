@@ -171,7 +171,7 @@ export default function Guidelines(props: { supabaseId: number }) {
 export const getStaticPaths = () => {
   return {
     paths: [],
-    fallback: false,
+    fallback: true,
   };
 };
 
