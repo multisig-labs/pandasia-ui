@@ -9,7 +9,7 @@ type Props = {
   expiresAt: bigint;
   companyName: string;
   erc20Address: HexString;
-  root: HexString;
+  customRoot: HexString;
   logo: string;
   supabaseId: number;
   claimCount: number;
@@ -22,7 +22,7 @@ export default function AirdropHeader({
   expiresAt,
   companyName,
   erc20Address,
-  root,
+  customRoot,
   logo,
   supabaseId,
   claimCount,
@@ -46,7 +46,7 @@ export default function AirdropHeader({
       <ClaimButton
         claimCount={claimCount}
         setClaimCount={setClaimCount}
-        root={root}
+        customRoot={customRoot}
         contractId={contractId}
         supabaseId={supabaseId}
         setError={setError}

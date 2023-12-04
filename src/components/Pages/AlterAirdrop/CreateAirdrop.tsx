@@ -1,6 +1,5 @@
 import { getTreeData } from '@/async_fns/backendCalls';
 import { getAirdropIds, newAirdrop } from '@/async_fns/viemAsync';
-import { returnErrString } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import { HexString } from '@/types/cryptoGenerics';
 import { SupabaseClient } from '@supabase/auth-helpers-react';
@@ -21,7 +20,6 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
   const [summary, setSummary] = useState('');
   const [logo, setLogo] = useState('');
   const [url, setUrl] = useState('');
-  const [onlyRegistered, setOnlyRegistered] = useState(false);
   const [claimAmount, setClaimAmount] = useState('');
   const [startsAt, setStartsAt] = useState(0);
   const [expiresAt, setExpiresAt] = useState(0);
@@ -46,7 +44,6 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
       const preparedAirdropCall = await newAirdrop(
         account,
         merkleRoot as HexString,
-        onlyRegistered,
         erc20 as HexString,
         parseEther(claimAmount),
         BigInt(startsAt),
@@ -195,16 +192,6 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         className="p-2 bg-secondary-700 text-white"
         placeholder="expires at"
       />
-      <div className="flex gap-4 pt-2">
-        <input
-          type="checkbox"
-          onChange={() => setOnlyRegistered(!onlyRegistered)}
-          checked={onlyRegistered}
-          className="p-2 bg-secondary-700 text-white"
-          placeholder="onlyRegistered"
-        />
-        <span>Only allow registered users? {onlyRegistered ? 'true' : 'false'}</span>
-      </div>
       <button className="border p-4 w-60 my-4 bg-green-900" onClick={createAirdrop}>
         Create Airdrop
       </button>

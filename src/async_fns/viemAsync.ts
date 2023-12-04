@@ -17,7 +17,6 @@ export async function verify(proof: Proof, account: HexString) {
 export async function newAirdrop(
   address: HexString,
   proof: HexString,
-  onlyRegistered: boolean,
   erc20: HexString,
   claimAmount: bigint,
   startsAt: bigint,
@@ -28,7 +27,7 @@ export async function newAirdrop(
     address: process.env.NEXT_PUBLIC_PANDASIA_ADDRESS as HexString,
     abi: Pandasia,
     functionName: 'newAirdrop',
-    args: [proof, onlyRegistered, erc20, claimAmount, startsAt, expiresAt],
+    args: [proof, erc20, claimAmount, startsAt, expiresAt],
   });
 
   return newAirdrop;
