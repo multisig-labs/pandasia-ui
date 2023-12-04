@@ -1,925 +1,937 @@
 const Pandasia = [
   {
+    type: 'constructor',
     inputs: [],
     stateMutability: 'nonpayable',
-    type: 'constructor',
   },
   {
-    inputs: [],
-    name: 'AddressAlreadyClaimed',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'AddressNotEligible',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'AirdropExpired',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'AirdropNotStarted',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'AirdropOutOfFunds',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'AirdropStillActive',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'InvalidAddress',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'InvalidAmount',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'InvalidInitialization',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'InvalidWithdrawRequest',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'NotInitializing',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'NotOwner',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-    ],
-    name: 'OwnableInvalidOwner',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'OwnableUnauthorizedAccount',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'PAddrAlreadyRegistered',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'PAddrNotInValidatorMerkleTree',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'ZeroAmount',
-    type: 'error',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint64',
-        name: 'version',
-        type: 'uint64',
-      },
-    ],
-    name: 'Initialized',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'previousOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'OwnershipTransferred',
-    type: 'event',
-  },
-  {
-    inputs: [],
+    type: 'function',
     name: 'airdropCount',
+    inputs: [],
     outputs: [
       {
-        internalType: 'uint64',
         name: '',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'airdropIds',
     inputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'uint256',
         name: '',
         type: 'uint256',
+        internalType: 'uint256',
       },
     ],
-    name: 'airdropIds',
     outputs: [
       {
-        internalType: 'uint64',
         name: '',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'airdrops',
     inputs: [
       {
-        internalType: 'uint64',
         name: '',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
-    name: 'airdrops',
     outputs: [
       {
-        internalType: 'uint64',
         name: 'id',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'address',
         name: 'owner',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'address',
         name: 'erc20',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'uint256',
         name: 'balance',
         type: 'uint256',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'root',
-        type: 'bytes32',
-      },
-      {
         internalType: 'uint256',
+      },
+      {
+        name: 'customRoot',
+        type: 'bytes32',
+        internalType: 'bytes32',
+      },
+      {
         name: 'claimAmount',
         type: 'uint256',
+        internalType: 'uint256',
       },
       {
-        internalType: 'uint64',
         name: 'startsAt',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'uint64',
         name: 'expiresAt',
         type: 'uint64',
-      },
-      {
-        internalType: 'bool',
-        name: 'onlyRegistered',
-        type: 'bool',
+        internalType: 'uint64',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'c2p',
     inputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'c2p',
     outputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'canClaimAirdrop',
     inputs: [
       {
-        internalType: 'address',
         name: 'cChainAddr',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'bytes32[]',
         name: 'proof',
         type: 'bytes32[]',
+        internalType: 'bytes32[]',
       },
     ],
-    name: 'canClaimAirdrop',
     outputs: [
       {
-        internalType: 'bool',
         name: '',
         type: 'bool',
+        internalType: 'bool',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'claimAirdrop',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'bytes32[]',
         name: 'proof',
         type: 'bytes32[]',
+        internalType: 'bytes32[]',
       },
     ],
-    name: 'claimAirdrop',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'claimed',
     inputs: [
       {
-        internalType: 'uint64',
         name: '',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'claimed',
     outputs: [
       {
-        internalType: 'bool',
         name: '',
         type: 'bool',
+        internalType: 'bool',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'emergencyWithdraw',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'uint256',
         name: 'withdrawAmt',
         type: 'uint256',
+        internalType: 'uint256',
       },
     ],
-    name: 'emergencyWithdraw',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    type: 'function',
     name: 'feePct',
+    inputs: [],
     outputs: [
       {
-        internalType: 'uint32',
         name: '',
         type: 'uint32',
+        internalType: 'uint32',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'fundAirdrop',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'uint256',
         name: 'fundAmount',
         type: 'uint256',
+        internalType: 'uint256',
       },
     ],
-    name: 'fundAirdrop',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'getAirdrop',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
-    name: 'getAirdrop',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint64',
-            name: 'id',
-            type: 'uint64',
-          },
-          {
-            internalType: 'address',
-            name: 'owner',
-            type: 'address',
-          },
-          {
-            internalType: 'address',
-            name: 'erc20',
-            type: 'address',
-          },
-          {
-            internalType: 'uint256',
-            name: 'balance',
-            type: 'uint256',
-          },
-          {
-            internalType: 'bytes32',
-            name: 'root',
-            type: 'bytes32',
-          },
-          {
-            internalType: 'uint256',
-            name: 'claimAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint64',
-            name: 'startsAt',
-            type: 'uint64',
-          },
-          {
-            internalType: 'uint64',
-            name: 'expiresAt',
-            type: 'uint64',
-          },
-          {
-            internalType: 'bool',
-            name: 'onlyRegistered',
-            type: 'bool',
-          },
-        ],
-        internalType: 'struct Pandasia.Airdrop',
         name: '',
         type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-    ],
-    name: 'getAirdropIds',
-    outputs: [
-      {
-        internalType: 'uint64[]',
-        name: '',
-        type: 'uint64[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint64',
-        name: 'offset',
-        type: 'uint64',
-      },
-      {
-        internalType: 'uint64',
-        name: 'limit',
-        type: 'uint64',
-      },
-    ],
-    name: 'getAirdrops',
-    outputs: [
-      {
+        internalType: 'struct Pandasia.Airdrop',
         components: [
           {
-            internalType: 'uint64',
             name: 'id',
             type: 'uint64',
+            internalType: 'uint64',
           },
           {
-            internalType: 'address',
             name: 'owner',
             type: 'address',
+            internalType: 'address',
           },
           {
-            internalType: 'address',
             name: 'erc20',
             type: 'address',
+            internalType: 'address',
           },
           {
-            internalType: 'uint256',
             name: 'balance',
             type: 'uint256',
-          },
-          {
-            internalType: 'bytes32',
-            name: 'root',
-            type: 'bytes32',
-          },
-          {
             internalType: 'uint256',
+          },
+          {
+            name: 'customRoot',
+            type: 'bytes32',
+            internalType: 'bytes32',
+          },
+          {
             name: 'claimAmount',
             type: 'uint256',
+            internalType: 'uint256',
           },
           {
-            internalType: 'uint64',
             name: 'startsAt',
             type: 'uint64',
+            internalType: 'uint64',
           },
           {
-            internalType: 'uint64',
             name: 'expiresAt',
             type: 'uint64',
-          },
-          {
-            internalType: 'bool',
-            name: 'onlyRegistered',
-            type: 'bool',
+            internalType: 'uint64',
           },
         ],
-        internalType: 'struct Pandasia.Airdrop[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'getAirdropIds',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+        internalType: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint64[]',
+        internalType: 'uint64[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'getAirdrops',
+    inputs: [
+      {
+        name: 'offset',
+        type: 'uint64',
+        internalType: 'uint64',
+      },
+      {
+        name: 'limit',
+        type: 'uint64',
+        internalType: 'uint64',
+      },
+    ],
+    outputs: [
+      {
         name: 'pageOfAirdrops',
         type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint64',
-        name: 'airdropId',
-        type: 'uint64',
-      },
-      {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
-      },
-    ],
-    name: 'hasClaimed',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: 'struct Pandasia.Airdrop[]',
+        components: [
+          {
+            name: 'id',
+            type: 'uint64',
+            internalType: 'uint64',
+          },
+          {
+            name: 'owner',
+            type: 'address',
+            internalType: 'address',
+          },
+          {
+            name: 'erc20',
+            type: 'address',
+            internalType: 'address',
+          },
+          {
+            name: 'balance',
+            type: 'uint256',
+            internalType: 'uint256',
+          },
+          {
+            name: 'customRoot',
+            type: 'bytes32',
+            internalType: 'bytes32',
+          },
+          {
+            name: 'claimAmount',
+            type: 'uint256',
+            internalType: 'uint256',
+          },
+          {
+            name: 'startsAt',
+            type: 'uint64',
+            internalType: 'uint64',
+          },
+          {
+            name: 'expiresAt',
+            type: 'uint64',
+            internalType: 'uint64',
+          },
+        ],
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'hasClaimed',
     inputs: [
       {
-        internalType: 'address',
+        name: 'airdropId',
+        type: 'uint64',
+        internalType: 'uint64',
+      },
+      {
         name: 'addr',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'hashChecksummedMessage',
     outputs: [
       {
-        internalType: 'bytes32',
+        name: '',
+        type: 'bool',
+        internalType: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'hashChecksummedMessage',
+    inputs: [
+      {
+        name: 'addr',
+        type: 'address',
+        internalType: 'address',
+      },
+    ],
+    outputs: [
+      {
         name: '',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
     ],
     stateMutability: 'pure',
-    type: 'function',
   },
   {
-    inputs: [],
+    type: 'function',
     name: 'initialize',
+    inputs: [],
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
-      },
-    ],
+    type: 'function',
     name: 'isMinipoolOperator',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
-        internalType: 'address',
         name: 'addr',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'isRegisteredValidator',
     outputs: [
       {
-        internalType: 'bool',
         name: '',
         type: 'bool',
+        internalType: 'bool',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [],
-    name: 'merkleRoot',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
-  },
-  {
+    name: 'isRegisteredValidator',
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'root',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'bool',
-        name: 'onlyRegistered',
-        type: 'bool',
-      },
-      {
+        name: 'addr',
+        type: 'address',
         internalType: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+        internalType: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'merkleRoot',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+        internalType: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'newAirdrop',
+    inputs: [
+      {
+        name: 'customRoot',
+        type: 'bytes32',
+        internalType: 'bytes32',
+      },
+      {
         name: 'erc20',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'uint256',
         name: 'claimAmount',
         type: 'uint256',
+        internalType: 'uint256',
       },
       {
-        internalType: 'uint64',
         name: 'startsAt',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'uint64',
         name: 'expiresAt',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
-    name: 'newAirdrop',
     outputs: [
       {
-        internalType: 'uint64',
         name: '',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    type: 'function',
     name: 'owner',
+    inputs: [],
     outputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    type: 'function',
     name: 'p2c',
-    outputs: [
+    inputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'pubKeyBytesToAvaAddressBytes',
     inputs: [
       {
-        internalType: 'uint256',
         name: 'x',
         type: 'uint256',
+        internalType: 'uint256',
       },
       {
-        internalType: 'uint256',
         name: 'y',
         type: 'uint256',
+        internalType: 'uint256',
       },
     ],
-    name: 'pubKeyBytesToAvaAddressBytes',
     outputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'pure',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'recoverMessage',
     inputs: [
       {
-        internalType: 'uint8',
         name: 'v',
         type: 'uint8',
+        internalType: 'uint8',
       },
       {
-        internalType: 'bytes32',
         name: 'r',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
       {
-        internalType: 'bytes32',
         name: 's',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
     ],
-    name: 'recoverMessage',
     outputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'registerPChainAddr',
     inputs: [
       {
-        internalType: 'uint8',
         name: 'v',
         type: 'uint8',
+        internalType: 'uint8',
       },
       {
-        internalType: 'bytes32',
         name: 'r',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
       {
-        internalType: 'bytes32',
         name: 's',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
       {
-        internalType: 'bytes32[]',
         name: 'proof',
         type: 'bytes32[]',
+        internalType: 'bytes32[]',
       },
     ],
-    name: 'registerPChainAddr',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    type: 'function',
     name: 'renounceOwnership',
+    inputs: [],
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'setFee',
     inputs: [
       {
-        internalType: 'uint32',
         name: 'fee',
         type: 'uint32',
+        internalType: 'uint32',
       },
     ],
-    name: 'setFee',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'setMerkleRoot',
     inputs: [
       {
-        internalType: 'bytes32',
         name: 'root',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
     ],
-    name: 'setMerkleRoot',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'setStorageContract',
     inputs: [
       {
-        internalType: 'address',
         name: 'addr',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'setStakingContract',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'storageContract',
     inputs: [],
-    name: 'stakingContract',
     outputs: [
       {
-        internalType: 'address',
         name: '',
         type: 'address',
+        internalType: 'address',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'transferOwnership',
     inputs: [
       {
-        internalType: 'address',
         name: 'newOwner',
         type: 'address',
+        internalType: 'address',
       },
     ],
-    name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    type: 'function',
     name: 'unregisterPChainAddr',
+    inputs: [],
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'verify',
     inputs: [
       {
-        internalType: 'bytes32',
         name: 'root',
         type: 'bytes32',
+        internalType: 'bytes32',
       },
       {
-        internalType: 'address',
         name: 'account',
         type: 'address',
+        internalType: 'address',
       },
       {
-        internalType: 'bytes32[]',
         name: 'proof',
         type: 'bytes32[]',
+        internalType: 'bytes32[]',
       },
     ],
-    name: 'verify',
     outputs: [
       {
-        internalType: 'bool',
         name: '',
         type: 'bool',
+        internalType: 'bool',
       },
     ],
     stateMutability: 'pure',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'withdrawFees',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
     ],
-    name: 'withdrawFees',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    type: 'function',
+    name: 'withdrawFunding',
     inputs: [
       {
-        internalType: 'uint64',
         name: 'airdropId',
         type: 'uint64',
+        internalType: 'uint64',
       },
       {
-        internalType: 'uint256',
         name: 'withdrawAmt',
         type: 'uint256',
+        internalType: 'uint256',
       },
     ],
-    name: 'withdrawFunding',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+  },
+  {
+    type: 'event',
+    name: 'AirdropClaimed',
+    inputs: [
+      {
+        name: 'id',
+        type: 'uint64',
+        indexed: true,
+        internalType: 'uint64',
+      },
+      {
+        name: 'claimant',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'event',
+    name: 'AirdropCreated',
+    inputs: [
+      {
+        name: 'id',
+        type: 'uint64',
+        indexed: true,
+        internalType: 'uint64',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'event',
+    name: 'Initialized',
+    inputs: [
+      {
+        name: 'version',
+        type: 'uint64',
+        indexed: false,
+        internalType: 'uint64',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'event',
+    name: 'OwnershipTransferred',
+    inputs: [
+      {
+        name: 'previousOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+      {
+        name: 'newOwner',
+        type: 'address',
+        indexed: true,
+        internalType: 'address',
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: 'error',
+    name: 'AddressAlreadyClaimed',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'AddressNotEligible',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'AirdropExpired',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'AirdropNotStarted',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'AirdropOutOfFunds',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'AirdropStillActive',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'InvalidAddress',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'InvalidAmount',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'InvalidInitialization',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'InvalidWithdrawRequest',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'NotInitializing',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'NotOwner',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'OwnableInvalidOwner',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+        internalType: 'address',
+      },
+    ],
+  },
+  {
+    type: 'error',
+    name: 'OwnableUnauthorizedAccount',
+    inputs: [
+      {
+        name: 'account',
+        type: 'address',
+        internalType: 'address',
+      },
+    ],
+  },
+  {
+    type: 'error',
+    name: 'PAddrAlreadyRegistered',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'PAddrNotInMerkleTree',
+    inputs: [],
+  },
+  {
+    type: 'error',
+    name: 'ZeroAmount',
+    inputs: [],
   },
 ] as const;
 

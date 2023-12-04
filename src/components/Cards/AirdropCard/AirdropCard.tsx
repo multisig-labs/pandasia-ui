@@ -26,7 +26,7 @@ export default function AirdropCard({
     contractId,
     erc20,
     claimAmount,
-    root,
+    customRoot,
     startsAt,
     expiresAt,
     balance,
@@ -39,7 +39,7 @@ export default function AirdropCard({
   return (
     <section className="flex min-h-[260px] max-w-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
       <AirdropHeader
-        root={root}
+        customRoot={customRoot}
         contractId={contractId}
         supabaseId={id}
         companyName={companyName}

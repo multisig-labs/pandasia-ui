@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useContractWrite } from 'wagmi';
 
 type Props = {
-  root: HexString;
+  customRoot: HexString;
   contractId: bigint;
   supabaseId: number;
   claimCount: number;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function ClaimButton({
-  root,
+  customRoot,
   contractId,
   supabaseId,
   claimCount,
@@ -41,7 +41,7 @@ export default function ClaimButton({
   }, [setError, error]);
 
   async function fetchProof() {
-    const { data: fetchedProof } = await getProof(root, pChainAddr || '', '');
+    const { data: fetchedProof } = await getProof(customRoot, pChainAddr || '', '');
     if (fetchedProof === undefined) {
       console.warn('Proof undefined');
       return;
