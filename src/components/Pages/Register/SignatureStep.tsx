@@ -5,7 +5,6 @@ type Props = {
   setSignature: (s: string) => void;
   submitSignature: () => void;
   sigError: string;
-  sigErrorContext: string;
 };
 
 export default function SignatureStep({
@@ -13,7 +12,6 @@ export default function SignatureStep({
   setSignature,
   submitSignature,
   sigError,
-  sigErrorContext,
 }: Props) {
   return (
     <section
@@ -74,7 +72,6 @@ export default function SignatureStep({
           />
         </div>
         <span className="text-center text-red-800">{sigError}</span>
-        <span className="text-center text-red-800">{sigErrorContext}</span>
         <div className="flex justify-center pt-5">
           <button
             className="basis-56 bg-black p-4 text-sm font-semibold tracking-[2px]"
