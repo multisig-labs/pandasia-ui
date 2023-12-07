@@ -1,13 +1,25 @@
 import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { avalanche, forky } from './chainsConfig';
+import { avalanche, forky, fuji } from './chainsConfig';
 
-// -- Production --
-export const { chains, publicClient } = configureChains([avalanche], [publicProvider()]);
+const productionChains = [avalanche];
+const localChains = [forky];
+const testChains = [fuji];
 
-// -- Local Testing --
-// export const { chains, publicClient } = configureChains([forky], [publicProvider()]);
+let chainsToUse = productionChains;
+
+if (process.env.NEXT_PUBLIC_ENV == 'PRODUCTION') {
+  chainsToUse = productionChains;
+}
+if (process.env.NEXT_PUBLIC_ENV == 'LOCAL') {
+  chainsToUse = localChains;
+}
+if (process.env.NEXT_PUBLIC_ENV == 'TEST') {
+  chainsToUse = testChains;
+}
+
+export const { chains, publicClient } = configureChains(chainsToUse, [publicProvider()]);
 
 export const { connectors } = getDefaultWallets({
   appName: 'Pandasia',

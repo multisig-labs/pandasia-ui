@@ -21,6 +21,8 @@ export const forky = {
   id: 43114,
   name: 'anvil-fork',
   network: 'anvil',
+  iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/5805.png',
+  iconBackground: '#fff',
   nativeCurrency: {
     decimals: 18,
     name: 'AVAX',
@@ -32,6 +34,7 @@ export const forky = {
   },
   blockExplorers: {
     default: { name: 'Blockscout', url: 'https://todo.com' },
+    etherscan: { name: 'SnowTrace', url: 'https://todo.com' },
   },
   testnet: true,
 };
@@ -64,4 +67,26 @@ export const avalanche = {
     etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
   },
   testnet: false,
+};
+
+export const fuji = {
+  id: 43_113,
+  name: 'Fuji',
+  network: 'fuji',
+  iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/5805.png',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Avalanche',
+    symbol: 'AVAX',
+  },
+  rpcUrls: {
+    default: { http: ['https://api.avax-test.network/ext/bc/C/rpc'] },
+    public: { http: ['https://api.avax-test.network/ext/bc/C/rpc'] },
+  },
+  blockExplorers: {
+    default: { name: 'SnowTrace', url: 'https://testnet.snowtrace.io' },
+    etherscan: { name: 'SnowTrace', url: 'https://testnet.snowtrace.io' },
+  },
+  testnet: true,
 };
