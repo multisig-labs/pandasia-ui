@@ -41,16 +41,11 @@ export default function Home() {
       );
     }
     return (
-      <button className="hover-underline-animation tracking-[4px] text-primary-500">
-        COMING SOON
-      </button>
-      /*
-        <Link href={'/register'}>
-          <button className="hover-underline-animation tracking-[4px] text-primary-500">
-            REGISTER
-          </button>
-        </Link>
-      */
+      <Link href={'/register'}>
+        <button className="hover-underline-animation tracking-[4px] text-primary-500">
+          REGISTER
+        </button>
+      </Link>
     );
   };
 

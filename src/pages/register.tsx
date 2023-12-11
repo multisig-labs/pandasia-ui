@@ -5,7 +5,7 @@ import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
-import { returnErrString } from '@/config/axiosConfig';
+import { makeErrorFriendly, returnErrString } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import axios from 'axios';
 import { useState } from 'react';
@@ -49,6 +49,7 @@ export default function Register() {
 
   const submitSignature = async () => {
     try {
+      setSigError('');
       // Gets SigV, SigR, SigS from a given signature
       const { data: sig } = await getSig(signature);
       if (sig === undefined) {
@@ -73,10 +74,9 @@ export default function Register() {
       const txnHash = await walletClient.writeContract(register);
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
       setTransaction(txn);
-      setSigError('');
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const error = returnErrString(err);
+        const error = makeErrorFriendly(err);
         console.warn(err);
         setSigError(error);
         setTransaction(null);

@@ -1,3 +1,4 @@
+import { errorMap } from '@/config/axiosConfig';
 import Image from 'next/image';
 
 type Props = {
@@ -71,8 +72,14 @@ export default function SignatureStep({
             placeholder="Paste your signature here..."
           />
         </div>
-        <span className="text-center text-red-800">{sigError}</span>
-        <div className="flex justify-center pt-5">
+        {sigError && (
+          <div className="flex flex-col">
+            <span className="text-center text-red-800">
+              {errorMap[sigError as keyof typeof errorMap] || 'Unknown Error'}
+            </span>
+          </div>
+        )}
+        <div className="flex justify-center pt-3">
           <button
             className="basis-56 bg-black p-4 text-sm font-semibold tracking-[2px]"
             onClick={submitSignature}
