@@ -6,7 +6,7 @@ import Lottie from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { BsGithub } from 'react-icons/bs';
+import { BsGithub, BsTwitter } from 'react-icons/bs';
 import { useAccount } from 'wagmi';
 
 export default function Home() {
@@ -91,30 +91,25 @@ export default function Home() {
               <Lottie
                 animationData={pandasiaBg}
                 loop={false}
-                style={{ height: '100vh', position: 'relative' }}
+                // 14 px of margin to center the background image
+                style={{ height: '100vh', position: 'relative', marginRight: '14px' }}
               />
             </div>
-            <div className="absolute top-1/2 z-10 mt-[-12px] border-4 border-primary-600 bg-secondary-900 p-1">
+            <div className="absolute top-1/2 z-10 mt-[-12px] border-4 border-primary-600 bg-secondary-900 p-2">
               {displayButton()}
             </div>
             <hr className="absolute top-1/2 mt-[12px] w-full border border-primary-600"></hr>
             <div className="flex z-10 gap-12 absolute bottom-3 text-xs tracking-widest text-primary-600">
-              <Link
-                href={'https://github.com/multisig-labs/pandasia-ui'}
-                target="_blank"
-                className="flex gap-2"
-              >
-                <BsGithub size={16} />
-                Pandasia-FE
+              <Link href={'https://twitter.com/GoGoPool_'} target="_blank" className="flex gap-2">
+                <BsTwitter size={16} />
               </Link>
-              <span>MADE WITH FIRE BY MULTISIGLABS</span>
+              <span>THE SECRETS OUT. ARE YOU IN?</span>
               <Link
                 href={'https://github.com/multisig-labs/pandasia'}
                 target="_blank"
                 className="flex gap-2"
               >
                 <BsGithub size={16} />
-                Pandasia-BE
               </Link>
             </div>
           </div>
