@@ -5,7 +5,7 @@ import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
-import { makeErrorFriendly, returnErrString } from '@/config/axiosConfig';
+import { makeErrorFriendly } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import axios from 'axios';
 import { useState } from 'react';
@@ -82,6 +82,7 @@ export default function Register() {
         setTransaction(null);
       } else {
         setTransaction(null);
+        setSigError(err as string);
         console.warn(err);
       }
     }

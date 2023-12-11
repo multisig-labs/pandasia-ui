@@ -6,6 +6,7 @@ import Lottie from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { BsGithub } from 'react-icons/bs';
 import { useAccount } from 'wagmi';
 
 export default function Home() {
@@ -97,9 +98,25 @@ export default function Home() {
               {displayButton()}
             </div>
             <hr className="absolute top-1/2 mt-[12px] w-full border border-primary-600"></hr>
-            <span className="z-10 absolute bottom-0 text-xs tracking-widest text-primary-600">
-              MADE WITH FIRE BY MULTISIGLABS
-            </span>
+            <div className="flex z-10 gap-12 absolute bottom-3 text-xs tracking-widest text-primary-600">
+              <Link
+                href={'https://github.com/multisig-labs/pandasia-ui'}
+                target="_blank"
+                className="flex gap-2"
+              >
+                <BsGithub size={16} />
+                Pandasia-FE
+              </Link>
+              <span>MADE WITH FIRE BY MULTISIGLABS</span>
+              <Link
+                href={'https://github.com/multisig-labs/pandasia'}
+                target="_blank"
+                className="flex gap-2"
+              >
+                <BsGithub size={16} />
+                Pandasia-BE
+              </Link>
+            </div>
           </div>
         )}
       </main>
