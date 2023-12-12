@@ -41,12 +41,20 @@ export default function ClaimButton({
   }, [setError, error]);
 
   async function fetchProof() {
-    const { data: fetchedProof } = await getProof(customRoot, pChainAddr || '', '');
-    if (fetchedProof === undefined) {
-      console.warn('Proof undefined');
+    // if there's no custom root, the getProof call to the backend will fail
+    if (customRoot == '0x0000000000000000000000000000000000000000000000000000000000000000') {
       return;
     }
-    setProof(fetchedProof.Proof);
+    try {
+      const { data: fetchedProof } = await getProof(customRoot, pChainAddr || '', '');
+      if (fetchedProof === undefined) {
+        console.warn('Proof undefined');
+        return;
+      }
+      setProof(fetchedProof.Proof);
+    } catch (err) {
+      console.warn('err fetching proof', err);
+    }
   }
 
   async function recordClick() {

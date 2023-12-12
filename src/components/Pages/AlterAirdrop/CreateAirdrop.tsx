@@ -24,7 +24,9 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
   const [startsAt, setStartsAt] = useState(0);
   const [expiresAt, setExpiresAt] = useState(0);
   const [erc20, setErc20] = useState<HexString>('0x0');
-  const [customMerkleRoot, setCustomMerkleRoot] = useState<HexString>('0x0');
+  const [customMerkleRoot, setCustomMerkleRoot] = useState<HexString>(
+    '0x0000000000000000000000000000000000000000000000000000000000000000',
+  );
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
   const [viemError, setViemError] = useState<BaseError | null>(null);
   const [axiosError, setAxiosError] = useState<AxiosError | null>(null);
@@ -33,17 +35,9 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
     try {
       const treeData = await getTreeData();
 
-      let merkleRoot;
-
-      if (!customMerkleRoot || customMerkleRoot != '0x0') {
-        merkleRoot = customMerkleRoot;
-      } else {
-        merkleRoot = treeData[0].Root;
-      }
-
       const preparedAirdropCall = await newAirdrop(
         account,
-        merkleRoot as HexString,
+        customMerkleRoot,
         erc20 as HexString,
         parseEther(claimAmount),
         BigInt(startsAt),
