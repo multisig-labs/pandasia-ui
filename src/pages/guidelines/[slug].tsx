@@ -106,7 +106,7 @@ export default function Guidelines(props: { supabaseId: number }) {
                 <span className="flex pt-2 text-2xl font-semibold tracking-[4px]">
                   {combinedAirdrop.companyName}
                 </span>
-                <span className="text-md flex font-semibold tracking-[4px] text-secondary-700">
+                <span className="text-md flex font-semibold tracking-[4px] text-secondary-700 whitespace-pre-line">
                   {combinedAirdrop.summary}
                 </span>
                 {combinedAirdrop?.erc20 ? (
@@ -115,7 +115,9 @@ export default function Guidelines(props: { supabaseId: number }) {
                   <AddTokenToWalletLoading />
                 )}
                 <hr className="h-[1px] w-full border-none bg-secondary-700"></hr>
-                <span className="flex pb-12 pt-4">{combinedAirdrop.description}</span>
+                <span className="flex pb-12 pt-4 whitespace-pre-line">
+                  {combinedAirdrop.description}
+                </span>
               </div>
             </div>
 
@@ -130,7 +132,7 @@ export default function Guidelines(props: { supabaseId: number }) {
                 <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
                   SUMMARY
                 </span>
-                <span className="flex pt-2">{combinedAirdrop.summary}</span>
+                <span className="flex pt-2 whitespace-pre-line">{combinedAirdrop.summary}</span>
                 <span className="flex pt-8 font-semibold tracking-[4px] text-secondary-700">
                   AIRDROP INFO
                 </span>
