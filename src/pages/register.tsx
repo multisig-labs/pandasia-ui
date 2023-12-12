@@ -90,6 +90,7 @@ export default function Register() {
     }
   };
 
+  // 404 during maintenance
   return (
     <div className="flex w-full flex-col items-center justify-center pt-12">
       <Image width={120} height={150} alt="pandasia logo" src={'/favicon.svg'} />
@@ -100,21 +101,23 @@ export default function Register() {
     </div>
   );
 
-  return (
-    <FadeTransition>
-      <main className="flex">
-        <HalfScreenLogo />
-        {transaction ? (
-          <SuccessStep transaction={transaction} />
-        ) : (
-          <SignatureStep
-            signature={signature}
-            setSignature={setSignature}
-            submitSignature={submitSignature}
-            sigError={sigError}
-          />
-        )}
-      </main>
-    </FadeTransition>
-  );
+  /* 
+    return (
+      <FadeTransition>
+        <main className="flex">
+          <HalfScreenLogo />
+          {transaction ? (
+            <SuccessStep transaction={transaction} />
+          ) : (
+            <SignatureStep
+              signature={signature}
+              setSignature={setSignature}
+              submitSignature={submitSignature}
+              sigError={sigError}
+            />
+          )}
+        </main>
+      </FadeTransition>
+    );
+    */
 }

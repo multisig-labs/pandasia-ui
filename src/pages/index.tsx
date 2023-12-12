@@ -30,14 +30,14 @@ export default function Home() {
     if ((pChainAddr && parseInt(pChainAddr, 16) != 0) || isOperator) {
       return (
         <>
-          <button className="tracking-[4px] text-primary-600">DOWN FOR MAINTAINENCE</button>
+          <button className="tracking-[4px] text-primary-600">DOWN FOR MAINTENANCE</button>
           {/*
         <UnregisterButton />
         */}
         </>
       );
     }
-    return <button className="tracking-[4px] text-primary-500">DOWN FOR MAINTAINENCE</button>;
+    return <button className="tracking-[4px] text-primary-500">DOWN FOR MAINTENANCE</button>;
   };
 
   if (s1 && s2 && s3 && s4) {

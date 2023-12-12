@@ -127,6 +127,7 @@ export default function Pandasia() {
     setSupabaseMap(pMap);
   }
 
+  // 404 during maintenance
   return (
     <div className="flex w-full flex-col items-center justify-center pt-12">
       <Image width={120} height={150} alt="pandasia logo" src={'/favicon.svg'} />
@@ -137,43 +138,45 @@ export default function Pandasia() {
     </div>
   );
 
-  return (
-    <FadeTransition>
-      {isClient && (
-        <LayoutAndNavbar>
-          {(pChainAddr && parseInt(pChainAddr, 16) !== 0) || isOperator ? (
-            <div className="flex w-full flex-col items-center">
-              <Image
-                className="pt-11"
-                src={'/claim-airdrop.svg'}
-                alt="Claim Airdrop"
-                width={574}
-                height={103}
-              />
-              <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
-                <span className="text-2xl font-bold text-white tracking-[4px]">
-                  CLAIM AIRDROP REWARDS
-                </span>
-                <span className="text-primary-600">
-                  These are the airdrops you are eligible to claim.
-                </span>
+  /*
+    return (
+      <FadeTransition>
+        {isClient && (
+          <LayoutAndNavbar>
+            {(pChainAddr && parseInt(pChainAddr, 16) !== 0) || isOperator ? (
+              <div className="flex w-full flex-col items-center">
+                <Image
+                  className="pt-11"
+                  src={'/claim-airdrop.svg'}
+                  alt="Claim Airdrop"
+                  width={574}
+                  height={103}
+                />
+                <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+                  <span className="text-2xl font-bold text-white tracking-[4px]">
+                    CLAIM AIRDROP REWARDS
+                  </span>
+                  <span className="text-primary-600">
+                    These are the airdrops you are eligible to claim.
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
+                  {combinedAirdrops.map((item) => (
+                    <AirdropCard
+                      claimCount={item.claimCount}
+                      key={item.id}
+                      cardInfo={item}
+                      showGuidelines={true}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
-                {combinedAirdrops.map((item) => (
-                  <AirdropCard
-                    claimCount={item.claimCount}
-                    key={item.id}
-                    cardInfo={item}
-                    showGuidelines={true}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <NotAuthorized />
-          )}
-        </LayoutAndNavbar>
-      )}
-    </FadeTransition>
-  );
+            ) : (
+              <NotAuthorized />
+            )}
+          </LayoutAndNavbar>
+        )}
+      </FadeTransition>
+    );
+    */
 }
