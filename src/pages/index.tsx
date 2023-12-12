@@ -30,24 +30,14 @@ export default function Home() {
     if ((pChainAddr && parseInt(pChainAddr, 16) != 0) || isOperator) {
       return (
         <>
-          <Link href={'/airdrops'}>
-            <button className="hover-underline-animation tracking-[4px] text-primary-600">
-              ENTER PANDASIA
-            </button>
-          </Link>
+          <button className="tracking-[4px] text-primary-600">DOWN FOR MAINTAINENCE</button>
           {/*
         <UnregisterButton />
         */}
         </>
       );
     }
-    return (
-      <Link href={'/register'}>
-        <button className="hover-underline-animation tracking-[4px] text-primary-500">
-          REGISTER
-        </button>
-      </Link>
-    );
+    return <button className="tracking-[4px] text-primary-500">DOWN FOR MAINTAINENCE</button>;
   };
 
   if (s1 && s2 && s3 && s4) {
