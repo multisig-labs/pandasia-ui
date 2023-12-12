@@ -100,7 +100,11 @@ export default function Home() {
             </div>
             <hr className="absolute top-1/2 mt-[12px] w-full border border-primary-600"></hr>
             <div className="flex z-10 gap-12 absolute bottom-3 text-xs tracking-widest text-primary-600">
-              <Link href={'https://twitter.com/GoGoPool_'} target="_blank" className="flex gap-2">
+              <Link
+                href={'https://twitter.com/GoGoPool_/status/1734639202879361151'}
+                target="_blank"
+                className="flex gap-2"
+              >
                 <BsTwitter size={16} />
               </Link>
               <span>THE SECRETS OUT. ARE YOU IN?</span>
