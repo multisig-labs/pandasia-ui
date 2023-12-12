@@ -37,7 +37,7 @@ export default function AirdropCard({
   const [error, setError] = useState('');
 
   return (
-    <section className="flex min-h-[260px] max-w-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
+    <section className="text-white flex min-h-[260px] max-w-[560px] flex-col rounded-2xl border border-secondary-700 bg-secondary-800 shadow-xl">
       <AirdropHeader
         customRoot={customRoot}
         contractId={contractId}
