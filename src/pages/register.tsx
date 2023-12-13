@@ -2,14 +2,12 @@ import { getProof, getSig, getTreeData } from '@/async_fns/backendCalls';
 import { recoverMessage, registerPChainAdrr } from '@/async_fns/viemAsync';
 import { useGetMerkleRoot } from '@/async_fns/wagmiHooks';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
-import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
 import { makeErrorFriendly } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import axios from 'axios';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { TransactionReceipt } from 'viem';
@@ -90,34 +88,21 @@ export default function Register() {
     }
   };
 
-  // 404 during maintenance
   return (
-    <div className="flex w-full flex-col items-center justify-center pt-12">
-      <Image width={120} height={150} alt="pandasia logo" src={'/favicon.svg'} />
-      <span className="pt-4 text-xl text-primary-500">
-        <span className="text-red-400">Error 404:&nbsp;</span>
-        <span>Page not found.</span>
-      </span>
-    </div>
+    <FadeTransition>
+      <main className="flex">
+        <HalfScreenLogo />
+        {transaction ? (
+          <SuccessStep transaction={transaction} />
+        ) : (
+          <SignatureStep
+            signature={signature}
+            setSignature={setSignature}
+            submitSignature={submitSignature}
+            sigError={sigError}
+          />
+        )}
+      </main>
+    </FadeTransition>
   );
-
-  /* 
-    return (
-      <FadeTransition>
-        <main className="flex">
-          <HalfScreenLogo />
-          {transaction ? (
-            <SuccessStep transaction={transaction} />
-          ) : (
-            <SignatureStep
-              signature={signature}
-              setSignature={setSignature}
-              submitSignature={submitSignature}
-              sigError={sigError}
-            />
-          )}
-        </main>
-      </FadeTransition>
-    );
-    */
 }

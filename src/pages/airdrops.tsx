@@ -4,7 +4,6 @@ import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
 import NotAuthorized from '@/components/Pages/NotAuthorized/NotAuthorized';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import { supabase } from '@/config/supabaseConfig';
-import { walletClient } from '@/config/viemConfig';
 import { CombinedAirdrop, SupabaseReturnType } from '@/types/pandasiaTypes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -127,56 +126,43 @@ export default function Pandasia() {
     setSupabaseMap(pMap);
   }
 
-  // 404 during maintenance
   return (
-    <div className="flex w-full flex-col items-center justify-center pt-12">
-      <Image width={120} height={150} alt="pandasia logo" src={'/favicon.svg'} />
-      <span className="pt-4 text-xl text-primary-500">
-        <span className="text-red-400">Error 404:&nbsp;</span>
-        <span>Page not found.</span>
-      </span>
-    </div>
-  );
-
-  /*
-    return (
-      <FadeTransition>
-        {isClient && (
-          <LayoutAndNavbar>
-            {(pChainAddr && parseInt(pChainAddr, 16) !== 0) || isOperator ? (
-              <div className="flex w-full flex-col items-center">
-                <Image
-                  className="pt-11"
-                  src={'/claim-airdrop.svg'}
-                  alt="Claim Airdrop"
-                  width={574}
-                  height={103}
-                />
-                <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
-                  <span className="text-2xl font-bold text-white tracking-[4px]">
-                    CLAIM AIRDROP REWARDS
-                  </span>
-                  <span className="text-primary-600">
-                    These are the airdrops you are eligible to claim.
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
-                  {combinedAirdrops.map((item) => (
-                    <AirdropCard
-                      claimCount={item.claimCount}
-                      key={item.id}
-                      cardInfo={item}
-                      showGuidelines={true}
-                    />
-                  ))}
-                </div>
+    <FadeTransition>
+      {isClient && (
+        <LayoutAndNavbar>
+          {(pChainAddr && parseInt(pChainAddr, 16) !== 0) || isOperator ? (
+            <div className="flex w-full flex-col items-center">
+              <Image
+                className="pt-11"
+                src={'/claim-airdrop.svg'}
+                alt="Claim Airdrop"
+                width={574}
+                height={103}
+              />
+              <div className="flex w-[500px] flex-col border-b border-b-primary-900 py-4 text-center">
+                <span className="text-2xl font-bold text-white tracking-[4px]">
+                  CLAIM AIRDROP REWARDS
+                </span>
+                <span className="text-primary-600">
+                  These are the airdrops you are eligible to claim.
+                </span>
               </div>
-            ) : (
-              <NotAuthorized />
-            )}
-          </LayoutAndNavbar>
-        )}
-      </FadeTransition>
-    );
-    */
+              <div className="grid grid-cols-1 justify-center gap-8 p-8 md:grid-cols-2">
+                {combinedAirdrops.map((item) => (
+                  <AirdropCard
+                    claimCount={item.claimCount}
+                    key={item.id}
+                    cardInfo={item}
+                    showGuidelines={true}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <NotAuthorized />
+          )}
+        </LayoutAndNavbar>
+      )}
+    </FadeTransition>
+  );
 }
