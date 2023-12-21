@@ -16,10 +16,9 @@ import { TransactionReceipt } from 'viem';
 export default function Register() {
   const [signature, setSignature] = useState('');
   const [sigError, setSigError] = useState('');
-  const [verifyError, setVerifyError] = useState('');
   const [exists, setExists] = useState<null | boolean>(null);
+  const [verifyMessage, setVerifyMessage] = useState('');
   const [pChainAddr, setPChainAddr] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
@@ -53,10 +52,15 @@ export default function Register() {
   }
 
   const submitAddress = async () => {
-    setVerifyError('');
+    if (!pChainAddr) {
+      setVerifyMessage('Please enter an address');
+      return;
+    }
     const { data } = await verifyPChain(merkleRoot, pChainAddr);
-    console.log('DOES IT ?? ', data.exists);
     setExists(data.exists);
+    data.exists
+      ? setVerifyMessage('Verified!')
+      : setVerifyMessage('Address will not be able to register');
   };
 
   const submitSignature = async () => {
@@ -112,8 +116,8 @@ export default function Register() {
               pChainAddr={pChainAddr}
               setPChainAddr={setPChainAddr}
               submitAddress={submitAddress}
-              verifyError={verifyError}
               exists={exists}
+              verifyMessage={verifyMessage}
             />
             <SignatureStep
               signature={signature}

@@ -1,23 +1,23 @@
-import { errorMap } from '@/config/axiosConfig';
-
-import { BsCheckLg, BsXLg } from 'react-icons/bs';
-
 type Props = {
   pChainAddr: string;
   setPChainAddr: (s: string) => void;
   submitAddress: () => void;
-  verifyError: string;
   exists: null | boolean;
+  verifyMessage: string;
 };
 
 export default function VerifyPChain({
   pChainAddr,
   setPChainAddr,
   submitAddress,
-  verifyError,
   exists,
+  verifyMessage,
 }: Props) {
-  console.log('exists', exists);
+  let message;
+  if (exists != null) {
+    message = exists ? 'Verified!' : 'Address invalid';
+  }
+  console;
   return (
     <section
       className={`flex w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12 pb-0`}
@@ -37,21 +37,17 @@ export default function VerifyPChain({
             className="basis-[460px] border-2 border-primary-700 bg-primary-400 p-4 text-secondary-800 focus-within:outline-2 focus-within:outline-primary-900"
             placeholder="P-Chain rewards address..."
           />
-          {exists === false && (
-            <BsXLg color={'black'} size={36} className="absolute right-20 inset-y-3" />
-          )}
-          {exists === true && (
-            <BsCheckLg color={'black'} size={36} className="absolute right-20 inset-y-3" />
-          )}
         </div>
-        {verifyError && (
-          <div className="flex flex-col">
-            <span className="text-center text-red-800">
-              {errorMap[verifyError as keyof typeof errorMap] || 'Unknown Error'}
-            </span>
+        {verifyMessage && (
+          <div className="flex flex-col p-2">
+            {exists ? (
+              <span className="text-center text-green-800">{verifyMessage}</span>
+            ) : (
+              <span className="text-center text-red-800">{verifyMessage}</span>
+            )}
           </div>
         )}
-        <div className="flex justify-center p-4">
+        <div className="flex justify-center pt-2 p-4">
           <button
             className="basis-56 bg-black p-4 text-sm font-semibold tracking-[2px]"
             onClick={submitAddress}
