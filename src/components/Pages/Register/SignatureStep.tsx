@@ -16,11 +16,11 @@ export default function SignatureStep({
 }: Props) {
   return (
     <section
-      className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12`}
+      className={`flex w-full flex-col items-center justify-center gap-2 bg-primary-400 pt-4 p-12`}
     >
-      <div className="flex h-full flex-col justify-center p-12">
+      <div className="flex h-full flex-col justify-center">
         <div className="flex items-center justify-between pb-2 font-semibold text-black">
-          <span className="text-2xl">S I G N</span>
+          <span className="text-2xl">SIGN</span>
         </div>
         <hr className="border border-black"></hr>
         <span className="pt-5 font-bold tracking-[4px] text-black">STEPS TO COMPLETE</span>
@@ -60,7 +60,7 @@ export default function SignatureStep({
           <Image src="/sign-icon.svg" alt="Signature Icon" width={56} height={50} priority />
         </span>
         <div className="flex w-full justify-center">
-          <span className="flex max-w-sm py-4 text-center font-bold tracking-[4px] text-black">
+          <span className="flex max-w-sm py-4 text-center font-bold tracking-[2px] text-black">
             PASTE SIGNATURE TO COMPLETE VERIFICATION
           </span>
         </div>
