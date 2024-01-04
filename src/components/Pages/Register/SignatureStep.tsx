@@ -1,4 +1,6 @@
 import { nodeIdDetails } from '@/async_fns/backendCalls';
+import { errorMap, makeErrorFriendly } from '@/config/axiosConfig';
+import axios from 'axios';
 import { useState } from 'react';
 import { FaArrowRight, FaCheck } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
@@ -24,27 +26,36 @@ export default function SignatureStep({
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const submitNodeId = async () => {
-    if (!nodeId) {
-      setNodeIdError('Please enter your NodeId');
-      return;
-    }
-    const { data } = await nodeIdDetails(nodeId);
-    const validators = data.validators;
-    if (validators.length > 1) {
-      setNodeIdError('More than one active validator with that NodeId');
-      return;
-    } else if (validators.length < 1) {
-      setNodeIdError('NodeId not found');
-      return;
-    }
-    const pAddr = validators[0].potentialRewards?.rewardAddresses[0];
-    if (pAddr === null || pAddr === undefined) {
-      setNodeIdError('Unable to fetch P-Chain address');
-      return;
-    }
-    setPChainAddr(pAddr);
-    if (!hasLoaded) {
-      setHasLoaded(true);
+    try {
+      if (!nodeId) {
+        setNodeIdError('Please enter your NodeId');
+        return;
+      }
+      const { data } = await nodeIdDetails(nodeId);
+      const validators = data.validators;
+      if (validators.length > 1) {
+        setNodeIdError('More than one active validator with that NodeId');
+        return;
+      } else if (validators.length < 1) {
+        setNodeIdError('NodeId not found');
+        return;
+      }
+      const pAddr = validators[0].potentialRewards?.rewardAddresses[0];
+      if (pAddr === null || pAddr === undefined) {
+        setNodeIdError('Unable to fetch P-Chain address');
+        return;
+      }
+      setPChainAddr(pAddr);
+      if (!hasLoaded) {
+        setHasLoaded(true);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const error = makeErrorFriendly(err);
+        console.warn(error);
+        const friendlyError = errorMap[error as keyof typeof errorMap] || 'Unknown Error';
+        setNodeIdError(friendlyError);
+      }
     }
   };
 
@@ -73,14 +84,12 @@ export default function SignatureStep({
             <span className="text-2xl">S I G N</span>
           </div>
           <hr className="border border-black"></hr>
-          <span className="pt-5 font-bold tracking-[4px] text-black">STEPS TO COMPLETE</span>
-          <div className="flex flex-col gap-2 text-black pt-8">
-            <div className="flex gap-2">
-              <span>
-                First enter your NodeID and we'll make sure you're eligible and show the P-Chain
-                address you should use.
-              </span>
-            </div>
+          <div className="flex justify-center">
+            <span className="flex max-w-sm pt-8 text-center font-bold tracking-[2px] text-black">
+              FIRST ENTER YOUR NODEID TO VERIFY ELIGIBILTY
+            </span>
+          </div>
+          <div className="flex flex-col gap-2 text-black pt-4">
             <div className="flex justify-center">
               <div className="flex basis-[460px] justify-center mt-4 border-2 border-transparent focus-within:border-2 focus-within:border-black">
                 <input
@@ -99,11 +108,10 @@ export default function SignatureStep({
             </div>
             {nodeIdError && (
               <div className="flex flex-col">
-                <span className="text-center text-red-800">{nodeIdError}</span>
+                <span className="max-w-sm text-center text-red-800">{nodeIdError}</span>
               </div>
             )}
           </div>
-
           {hasLoaded && (
             <div className="fade-in">
               <RegisterSteps pChainAddr={pChainAddr} />
