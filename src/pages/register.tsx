@@ -1,4 +1,4 @@
-import { getProof, getSig, getTreeData, verifyPChain } from '@/async_fns/backendCalls';
+import { getProof, getSig, getTreeData } from '@/async_fns/backendCalls';
 import { recoverMessage, registerPChainAdrr } from '@/async_fns/viemAsync';
 import { useGetMerkleRoot } from '@/async_fns/wagmiHooks';
 import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
@@ -16,8 +16,6 @@ export default function Register() {
   const [signature, setSignature] = useState('');
 
   const [sigError, setSigError] = useState('');
-  const [exists, setExists] = useState<null | boolean>(null);
-  const [verifyMessage, setVerifyMessage] = useState('');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
@@ -49,18 +47,6 @@ export default function Register() {
   if (!serverContainsRoot) {
     return <span>Backend does not contain contract root</span>;
   }
-
-  const submitAddress = async () => {
-    if (!pChainAddr) {
-      setVerifyMessage('Please enter an address');
-      return;
-    }
-    const { data } = await verifyPChain(merkleRoot, pChainAddr);
-    setExists(data.exists);
-    data.exists
-      ? setVerifyMessage('Verified!')
-      : setVerifyMessage('Address will not be able to register');
-  };
 
   const submitSignature = async () => {
     try {
@@ -111,13 +97,6 @@ export default function Register() {
           <SuccessStep transaction={transaction} />
         ) : (
           <div className="flex flex-col min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12">
-            {/* <VerifyPChain
-              pChainAddr={pChainAddr}
-              setPChainAddr={setPChainAddr}
-              submitAddress={submitAddress}
-              exists={exists}
-              verifyMessage={verifyMessage}
-            /> */}
             <SignatureStep
               signature={signature}
               setSignature={setSignature}
