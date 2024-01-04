@@ -5,7 +5,6 @@ import HalfScreenLogo from '@/components/Pages/HalfScreenLogo';
 import { FadeTransition } from '@/components/Pages/PageTransitions';
 import SignatureStep from '@/components/Pages/Register/SignatureStep';
 import SuccessStep from '@/components/Pages/Register/SuccessStep';
-import VerifyPChain from '@/components/Pages/Register/VerifyPChain';
 import { makeErrorFriendly } from '@/config/axiosConfig';
 import { publicClient, walletClient } from '@/config/viemConfig';
 import axios from 'axios';
@@ -15,10 +14,10 @@ import { TransactionReceipt } from 'viem';
 
 export default function Register() {
   const [signature, setSignature] = useState('');
+
   const [sigError, setSigError] = useState('');
   const [exists, setExists] = useState<null | boolean>(null);
   const [verifyMessage, setVerifyMessage] = useState('');
-  const [pChainAddr, setPChainAddr] = useState('');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 
   const { data: trees, isLoading: treesLoading } = useQuery('root-nodes', getTreeData);
@@ -112,13 +111,13 @@ export default function Register() {
           <SuccessStep transaction={transaction} />
         ) : (
           <div className="flex flex-col min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12">
-            <VerifyPChain
+            {/* <VerifyPChain
               pChainAddr={pChainAddr}
               setPChainAddr={setPChainAddr}
               submitAddress={submitAddress}
               exists={exists}
               verifyMessage={verifyMessage}
-            />
+            /> */}
             <SignatureStep
               signature={signature}
               setSignature={setSignature}
