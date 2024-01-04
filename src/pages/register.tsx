@@ -96,14 +96,12 @@ export default function Register() {
         {transaction ? (
           <SuccessStep transaction={transaction} />
         ) : (
-          <div className="flex flex-col min-h-screen w-full flex-col items-center justify-center gap-2 bg-primary-400 p-12">
-            <SignatureStep
-              signature={signature}
-              setSignature={setSignature}
-              submitSignature={submitSignature}
-              sigError={sigError}
-            />
-          </div>
+          <SignatureStep
+            signature={signature}
+            setSignature={setSignature}
+            submitSignature={submitSignature}
+            sigError={sigError}
+          />
         )}
       </main>
     </FadeTransition>

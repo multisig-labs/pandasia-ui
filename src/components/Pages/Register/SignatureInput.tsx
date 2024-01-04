@@ -15,7 +15,7 @@ export default function SignatureInput({
   sigError,
 }: Props) {
   return (
-    <div>
+    <>
       <span className="flex justify-center pt-8">
         <Image src="/sign-icon.svg" alt="Signature Icon" width={56} height={50} priority />
       </span>
@@ -25,12 +25,14 @@ export default function SignatureInput({
         </span>
       </div>
       <div className="flex justify-center">
-        <input
-          value={signature}
-          onChange={(e) => setSignature(e.target.value.trim())}
-          className="basis-[460px] border-2 border-primary-700 bg-primary-400 p-4 text-secondary-800 focus-within:outline-2 focus-within:outline-primary-900"
-          placeholder="Paste your signature here..."
-        />
+        <div className="flex basis-[460px] justify-center mt-4 border-2 border-transparent focus-within:border-2 focus-within:border-black">
+          <input
+            value={signature}
+            onChange={(e) => setSignature(e.target.value.trim())}
+            className="text-sm w-full border-2 border-primary-500 bg-black focus-within:outline-none bg-opacity-10 p-2 text-secondary-800"
+            placeholder="Paste your signature here..."
+          />
+        </div>
       </div>
       {sigError && (
         <div className="flex flex-col">
@@ -47,6 +49,6 @@ export default function SignatureInput({
           SUBMIT SIGNATURE
         </button>
       </div>
-    </div>
+    </>
   );
 }

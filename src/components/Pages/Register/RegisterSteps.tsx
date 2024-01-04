@@ -17,14 +17,14 @@ export default function RegisterSteps({ pChainAddr }: Props) {
           navigator.clipboard.writeText(`P-${pChainAddr}`);
           setShowToast(true);
         }}
-        className="text-nowrap font-bold cursor-pointer hover:underline"
+        className="truncate font-bold cursor-pointer hover:underline"
       >
         {text}
       </span>
     );
   }
   return (
-    <ol className="flex flex-col gap-4 py-8 text-black list-decimal">
+    <ol className="flex flex-col gap-4 py-8 text-black">
       <li className="flex gap-2 list-decimal">
         <span>1.</span>
         <span>

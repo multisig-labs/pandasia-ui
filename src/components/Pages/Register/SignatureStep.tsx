@@ -65,54 +65,58 @@ export default function SignatureStep({
 
   return (
     <section
-      className={`flex w-full flex-col items-center justify-center gap-2 bg-primary-400 pt-4 p-12`}
+      className={`flex w-full min-h-screen flex-col items-center justify-center gap-2 bg-primary-400 pt-4 p-12`}
     >
-      <div className="flex h-full flex-col justify-center">
-        <div className="flex items-center justify-between pb-2 font-semibold text-black">
-          <span className="text-2xl">SIGN</span>
-        </div>
-        <hr className="border border-black"></hr>
-        <span className="pt-5 font-bold tracking-[4px] text-black">STEPS TO COMPLETE</span>
-        <div className="flex flex-col gap-2 text-black pt-8">
-          <div className="flex gap-2">
-            <span>
-              First enter your NodeID and we'll make sure you're eligible and show the P-Chain
-              address you should use.
-            </span>
+      <div className="flex justify-center">
+        <div className="flex h-full w-full flex-col justify-center basis-[660px]">
+          <div className="flex items-center justify-between pb-2 font-semibold text-black">
+            <span className="text-2xl">S I G N</span>
           </div>
-          <div className="flex justify-center pt-4">
-            <input
-              value={nodeId}
-              onChange={handleChange}
-              className="text-sm basis-[460px] border-2 border-primary-700 bg-primary-400 p-1 text-secondary-800 focus-within:outline-2 focus-within:outline-primary-900"
-              placeholder="Paste NodeID here..."
-            />
-            <button
-              className="flex justify-center items-center basis-12 bg-black p-1 text-sm text-white font-semibold tracking-[2px]"
-              onClick={submitNodeId}
-            >
-              <DisplayNodeIcon />
-            </button>
+          <hr className="border border-black"></hr>
+          <span className="pt-5 font-bold tracking-[4px] text-black">STEPS TO COMPLETE</span>
+          <div className="flex flex-col gap-2 text-black pt-8">
+            <div className="flex gap-2">
+              <span>
+                First enter your NodeID and we'll make sure you're eligible and show the P-Chain
+                address you should use.
+              </span>
+            </div>
+            <div className="flex justify-center">
+              <div className="flex basis-[460px] justify-center mt-4 border-2 border-transparent focus-within:border-2 focus-within:border-black">
+                <input
+                  value={nodeId}
+                  onChange={handleChange}
+                  className="text-sm w-full border-2 border-primary-500 bg-black focus-within:outline-none bg-opacity-10 p-2 text-secondary-800"
+                  placeholder="Paste NodeID here..."
+                />
+                <button
+                  className="flex justify-center items-center basis-12 bg-black p-1 text-sm text-white font-semibold tracking-[2px]"
+                  onClick={submitNodeId}
+                >
+                  <DisplayNodeIcon />
+                </button>
+              </div>
+            </div>
+            {nodeIdError && (
+              <div className="flex flex-col">
+                <span className="text-center text-red-800">{nodeIdError}</span>
+              </div>
+            )}
           </div>
-          {nodeIdError && (
-            <div className="flex flex-col">
-              <span className="text-center text-red-800">{nodeIdError}</span>
+
+          {hasLoaded && (
+            <div className="fade-in">
+              <RegisterSteps pChainAddr={pChainAddr} />
+              <hr className="border border-black"></hr>
+              <SignatureInput
+                signature={signature}
+                setSignature={setSignature}
+                submitSignature={submitSignature}
+                sigError={sigError}
+              />
             </div>
           )}
         </div>
-
-        {hasLoaded && (
-          <div className="fade-in">
-            <RegisterSteps pChainAddr={pChainAddr} />
-            <hr className="border border-black"></hr>
-            <SignatureInput
-              signature={signature}
-              setSignature={setSignature}
-              submitSignature={submitSignature}
-              sigError={sigError}
-            />
-          </div>
-        )}
       </div>
     </section>
   );
