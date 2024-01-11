@@ -16,7 +16,7 @@ export default function RegisterSteps({ pChainAddr }: Props) {
       <div className="flex mt-4">
         <div
           onClick={() => {
-            navigator.clipboard.writeText(`P-${pChainAddr}`);
+            navigator.clipboard.writeText(text);
             setShowToast(true);
           }}
           className="flex justify-between w-full basis-[540px] border-2 border-primary-500 bg-black bg-opacity-10 p-2 truncate cursor-pointer hover:underline"
