@@ -16,12 +16,12 @@ export default function SignatureInput({
   return (
     <>
       <div className="flex w-full justify-center">
-        <span className="flex max-w-sm py-4 pt-8 text-center font-bold tracking-[2px] text-black">
+        <span className="flex max-w-sm py-4 pt-8 text-center font-bold tracking-[4px] text-black">
           PASTE SIGNATURE
         </span>
       </div>
       <div className="flex justify-center items-center">
-        <div className="flex basis-[480px] items-center justify-center m-0 p-1 border-2 border-primary-700">
+        <div className="flex basis-[480px] items-center justify-center m-0 p-1 border border-secondary-700">
           <div className="flex basis-[480px] justify-center items-center border-2 border-transparent focus-within:border-2 focus-within:border-black">
             <input
               value={signature}
@@ -41,10 +41,10 @@ export default function SignatureInput({
       )}
       <div className="flex justify-center pt-6">
         <button
-          className="basis-56 bg-black p-4 text-sm text-white font-semibold tracking-[2px]"
+          className="bg-gradient-to-t from-black to-secondary-700 drop-shadow-3xl rounded-xl p-4 px-8 text-sm text-white font-semibold tracking-[4px]"
           onClick={submitSignature}
         >
-          SUBMIT SIGNATURE
+          SUBMIT & COMPLETE
         </button>
       </div>
     </>

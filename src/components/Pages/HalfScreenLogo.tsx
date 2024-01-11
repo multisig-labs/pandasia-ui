@@ -5,7 +5,7 @@ import { CustomConnectButton } from '../Button/CustomConnectButton';
 
 export default function HalfScreenLogo() {
   return (
-    <section className={`hs-bg hidden min-h-screen w-full flex-col items-center p-6 register:flex`}>
+    <section className={`hs-bg hidden min-h-screen w-full flex-col items-center p-6 lg:flex`}>
       <div className="flex w-full items-center text-primary-500">
         <Link className="flex gap-2" href={'/'}>
           <BsArrowLeft size={'24px'} />
