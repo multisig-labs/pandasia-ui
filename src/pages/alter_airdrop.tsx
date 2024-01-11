@@ -1,16 +1,16 @@
 import { getTreeData } from '@/async_fns/backendCalls';
 import { useGetAirdropIds, useGetAirdrops } from '@/async_fns/wagmiHooks';
+import AddOrWithdrawFunds from '@/components/Pages/AlterAirdrop/AddOrWithdrawFunds';
 import CreateAirdrop from '@/components/Pages/AlterAirdrop/CreateAirdrop';
 import LayoutAndNavbar from '@/components/Pages/LayoutAndNavbar';
+import { supabase } from '@/config/supabaseConfig';
+import { CombinedAirdrop } from '@/types/pandasiaTypes';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useAccount } from 'wagmi';
 import { SupabaseMap } from './airdrops';
-import { CombinedAirdrop } from '@/types/pandasiaTypes';
-import { supabase } from '@/config/supabaseConfig';
-import AddOrWithdrawFunds from '@/components/Pages/AlterAirdrop/AddOrWithdrawFunds';
 
 export default function AlterAirdrop() {
   const supabaseClient = useSupabaseClient();
@@ -106,7 +106,6 @@ export default function AlterAirdrop() {
 
     let pMap: SupabaseMap = {};
 
-    console.log(airdrops);
     airdrops.forEach((airdrop) => {
       pMap[airdrop.airdrop_to_contract.contract_id] = airdrop;
     });

@@ -10,7 +10,6 @@ import { AxiosError } from 'axios';
 export function makeErrorFriendly(err: AxiosError<any>): string {
   if (err.response?.data?.message) {
     if (err.response?.data?.message?.length > 0) {
-      console.log('longer');
       return err.response.data.message[0];
     }
     return err.response.data.message;
