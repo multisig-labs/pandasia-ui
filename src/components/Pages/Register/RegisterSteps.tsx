@@ -29,7 +29,7 @@ export default function RegisterSteps({ pChainAddr }: Props) {
   }
   return (
     <div className="flex justify-center">
-      <ol className="flex w-full basis-[660px] flex-col align-center gap-4 py-10 px-10 text-black">
+      <ol className="flex basis-[660px] flex-col align-center gap-4 py-10 px-10 text-black">
         <li className="flex gap-2 list-decimal">
           <span>1.</span>
           <span>

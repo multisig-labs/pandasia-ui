@@ -85,29 +85,27 @@ export default function RegisterTop({ pChainAddr, setPChainAddr, hasLoaded, setH
         </span>
       </div>
       <div className="flex w-full justify-center">
-        <div className="flex w-full flex-col gap-2 text-black pt-4 basis-[520px]">
-          <div className="flex w-full justify-center mb-2">
-            <div className="flex w-full justify-center mt-4 border-2 border-transparent focus-within:border-2 focus-within:border-black">
-              <input
-                value={nodeId}
-                onChange={handleChange}
-                className="text-md w-full border-2 border-primary-500 bg-black focus-within:outline-none bg-opacity-10 p-3 text-secondary-800"
-                placeholder="Paste NodeID here..."
-              />
-              <button
-                className="flex justify-center items-center basis-16 bg-black p-3 px-5 text-sm text-white font-semibold tracking-[2px]"
-                onClick={submitNodeId}
-              >
-                <DisplayNodeIcon />
-              </button>
-            </div>
+        <div className="flex flex-col gap-2 text-black pt-4 basis-[520px]">
+          <div className="flex mt-4 mb-2 border-2 border-transparent focus-within:border-2 focus-within:border-black">
+            <input
+              value={nodeId}
+              onChange={handleChange}
+              className="text-md w-full border-2 border-primary-500 bg-black focus-within:outline-none bg-opacity-10 p-3 text-secondary-800"
+              placeholder="Paste NodeID here..."
+            />
+            <button
+              className="flex justify-center items-center basis-16 bg-black p-3 px-5 text-sm text-white font-semibold tracking-[2px]"
+              onClick={submitNodeId}
+            >
+              <DisplayNodeIcon />
+            </button>
           </div>
-          {nodeIdError && (
-            <div className="flex flex-col justify-center items-center">
-              <span className="max-w-sm text-center text-red-800">{nodeIdError}</span>
-            </div>
-          )}
         </div>
+        {nodeIdError && (
+          <div className="flex flex-col justify-center items-center">
+            <span className="max-w-sm text-center text-red-800">{nodeIdError}</span>
+          </div>
+        )}
       </div>
     </div>
   );
