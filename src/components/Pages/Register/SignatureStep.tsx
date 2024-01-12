@@ -24,8 +24,6 @@ export default function SignatureStep({
       className={`flex w-full min-h-screen flex-col items-center justify-center gap-2 bg-primary-400 pt-4 p-12`}
     >
       <div className="flex h-full w-full flex-col items-center justify-center basis-[460px]">
-        {/* I want to put this top part into it's own component I think. Right?
-        That way I can show or hide the top bit? */}
         <RegisterTop
           pChainAddr={pChainAddr}
           setPChainAddr={setPChainAddr}

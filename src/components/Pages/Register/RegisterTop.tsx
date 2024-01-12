@@ -17,11 +17,6 @@ type Props = {
 export default function RegisterTop({ pChainAddr, setPChainAddr, hasLoaded, setHasLoaded }: Props) {
   const [nodeId, setNodeId] = useState('');
   const [nodeIdError, setNodeIdError] = useState('');
-  const [context, setContext] = useState('First, enter your NodeID to verify your eligibility');
-
-  function setContextVerified() {
-    setContext('Complete the rest of the steps in order to qualify for those awesome airdrops!');
-  }
 
   const submitNodeId = async () => {
     try {
@@ -44,7 +39,6 @@ export default function RegisterTop({ pChainAddr, setPChainAddr, hasLoaded, setH
         return;
       }
       setPChainAddr(pAddr);
-      setContextVerified();
       if (!hasLoaded) {
         setHasLoaded(true);
       }
