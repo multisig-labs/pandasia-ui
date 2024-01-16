@@ -74,11 +74,11 @@ export default function RegisterTop({ pChainAddr, setPChainAddr, hasLoaded, setH
           <Image src="/sign-icon.svg" alt="Signature Icon" width={68} height={60} priority />
         </span>
       )}
-      <span className="w-full text-center text-2xl font-semibold text-black tracking-[4px]">
+      <span className="w-full text-center text-2xl font-semibold text-black tracking-[6px]">
         {hasLoaded ? 'NODE VERIFIED' : "LET'S GET STARTED"}
       </span>
       <div className="flex w-full justify-center">
-        <span className="w-full basis-[520px] pt-2 text-center tracking-[1px] text-black font-medium">
+        <span className="w-full basis-[520px] pt-2 text-center text-black font-medium">
           {hasLoaded
             ? 'Complete the rest of the steps in order to qualify for those awesome airdrops!'
             : 'First, enter your Node ID to verify your eligibility'}
