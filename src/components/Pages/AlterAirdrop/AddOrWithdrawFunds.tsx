@@ -46,7 +46,6 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
         account as HexString,
       );
       const txnHash = await walletClient.writeContract(preparedFund);
-      console.log({ walletClient });
       const txn = await publicClient.waitForTransactionReceipt({ hash: txnHash });
       setTransaction(txn);
       setViemError(null);
@@ -61,7 +60,6 @@ export default function AddOrWithdrawFunds({ combinedAirdrops }: Props) {
   const increase = async () => {
     try {
       let foundAirdrop = combinedAirdrops.find((obj) => obj.contractId === BigInt(contractId));
-      console.log({ foundObj: foundAirdrop });
       if (foundAirdrop) {
         const preparedIncrease = await increaseAllowance(
           foundAirdrop.erc20,

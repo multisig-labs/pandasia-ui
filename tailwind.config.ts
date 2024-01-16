@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        '3xl': '0 10px 15px rgba(0, 0, 0, 0.33)',
+      },
       colors: {
         primary: {
           900: '#453D31',

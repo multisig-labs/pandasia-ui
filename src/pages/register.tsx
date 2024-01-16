@@ -14,6 +14,7 @@ import { TransactionReceipt } from 'viem';
 
 export default function Register() {
   const [signature, setSignature] = useState('');
+
   const [sigError, setSigError] = useState('');
   const [transaction, setTransaction] = useState<TransactionReceipt | null>(null);
 

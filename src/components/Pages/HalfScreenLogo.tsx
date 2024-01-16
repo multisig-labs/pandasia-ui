@@ -5,7 +5,7 @@ import { CustomConnectButton } from '../Button/CustomConnectButton';
 
 export default function HalfScreenLogo() {
   return (
-    <section className={`hs-bg hidden min-h-screen w-full flex-col items-center p-6 md:flex`}>
+    <section className={`hs-bg hidden min-h-screen w-full flex-col items-center p-6 lg:flex`}>
       <div className="flex w-full items-center text-primary-500">
         <Link className="flex gap-2" href={'/'}>
           <BsArrowLeft size={'24px'} />
@@ -15,7 +15,9 @@ export default function HalfScreenLogo() {
 
       <div className="flex h-full flex-col items-center justify-center">
         <Image src="/pandasia-logo.svg" alt="Pandasia Logo" width={180} height={180} priority />
-        <span className="text-primary-500">BY MULTISIGLABS</span>
+        <span className="text-primary-600 font-semibold tracking-[4px] text-xs pt-2">
+          BY MULTISIG LABS
+        </span>
         <div className="pt-2">
           <CustomConnectButton />
         </div>

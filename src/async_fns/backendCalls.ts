@@ -27,3 +27,9 @@ export async function getTreeData() {
   );
   return trees;
 }
+
+export async function nodeIdDetails(nodeId: string) {
+  return await axios.get(
+    `https://glacier-api.avax.network/v1/networks/mainnet/validators/${nodeId}?pageSize=10&sortOrder=asc&validationStatus=active`,
+  );
+}

@@ -90,9 +90,6 @@ export default function CreateAirdrop({ account, supabaseClient, sb, setSb }: Pr
         .insert({ id: airdropInfo[0].id, claims: 0 })
         .select();
 
-      console.log({ airdropToContractData });
-      console.log({ claimCountData });
-
       setSb(airdropInfo[0].id);
       setAxiosError(null);
       setViemError(null);
